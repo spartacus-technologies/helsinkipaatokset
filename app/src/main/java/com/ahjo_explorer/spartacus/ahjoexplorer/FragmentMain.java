@@ -11,6 +11,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.ahjo_explorer.spartacus.ahjoexplorer.APIObjects.Meeting;
+import com.google.gson.Gson;
+
 import com.ahjo_explorer.spartacus.ahjoexplorer.data_access.DataAccess;
 
 
@@ -123,6 +126,22 @@ public class FragmentMain extends Fragment implements View.OnClickListener, Data
 
             Toast.makeText(getActivity(), "No connection. :-/", Toast.LENGTH_LONG).show();
         }
+
+        //Show received JSON:
+        //Examples & source: https://github.com/google/gson/blob/master/examples/android-proguard-example/src/com/google/gson/examples/android/GsonProguardExampleActivity.java
+        Gson gson = new Gson();
+
+        try {
+            Object root = gson.fromJson(data, Object.class);
+            Meeting[] meetings = gson.fromJson(root.toString(), Meeting[].class);
+            Log.i("FragmentMain", meetings.toString());
+        }
+        catch (Exception e){
+
+            Log.e("FragmentMain", e.getMessage());
+        }
+
+
         Log.v("FragmentMain", "DataAvailable: " + data);
     }
 

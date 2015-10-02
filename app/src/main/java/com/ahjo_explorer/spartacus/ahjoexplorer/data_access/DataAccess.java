@@ -33,7 +33,8 @@ public class DataAccess {
         NetworkTask task = new NetworkTask();
         task.setNetworkListener(listener);
 
-        task.execute("http://dev.hel.fi/paatokset/v1/agenda_item/");
+        task.execute("http://dev.hel.fi/paatokset/v1/meeting/");
+        //task.execute("http://dev.hel.fi/paatokset/v1/agenda_item/");
         /*
         try{
 
