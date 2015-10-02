@@ -19,7 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-public class MainActivity extends AppCompatActivity implements ActionBar.TabListener, View.OnClickListener, FragmentMain.OnFragmentInteractionListener {
+public class MainActivity extends AppCompatActivity implements ActionBar.TabListener, FragmentMain.OnFragmentInteractionListener {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -115,12 +115,6 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
 
     @Override
     public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
-    }
-
-    @Override
-    public void onClick(View v) {
-
-        int i = 0;
     }
 
     @Override

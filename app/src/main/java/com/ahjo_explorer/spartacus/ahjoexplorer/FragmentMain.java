@@ -21,7 +21,7 @@ import com.ahjo_explorer.spartacus.ahjoexplorer.data_access.DataAccess;
  * Use the {@link FragmentMain#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class FragmentMain extends Fragment implements View.OnClickListener {
+public class FragmentMain extends Fragment implements View.OnClickListener, DataAccess.NetworkListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -107,14 +107,21 @@ public class FragmentMain extends Fragment implements View.OnClickListener {
 
         Log.i("FragmentMain", "onClick");
 
-        if(DataAccess.testConnection()){
+        DataAccess.testConnection(this);
+    }
 
-            Toast.makeText(getActivity(), "OMG It works!", Toast.LENGTH_LONG).show();
+    @Override
+    public void DataAvailable(String data) {
+
+        if(data != null){
+
+            Toast.makeText(getActivity(), "OMG It works! Received " + data.length()*8/1000 + " kilobytes.", Toast.LENGTH_LONG).show();
         }
         else{
 
             Toast.makeText(getActivity(), "No connection. :-/", Toast.LENGTH_LONG).show();
         }
+        Log.v("FragmentMain", "DataAvailable: " + data);
     }
 
     /**
