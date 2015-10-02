@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ahjo_explorer.spartacus.ahjoexplorer.data_access.DataAccess;
@@ -116,6 +117,7 @@ public class FragmentMain extends Fragment implements View.OnClickListener, Data
         if(data != null){
 
             Toast.makeText(getActivity(), "OMG It works! Received " + data.length()*8/1000 + " kilobytes.", Toast.LENGTH_LONG).show();
+            ((TextView)getActivity().findViewById(R.id.textViewFragmentMainTest)).setText(data);
         }
         else{
 

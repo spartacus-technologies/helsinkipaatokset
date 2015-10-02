@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">AhjoExplorer</string>
 
-    <string name="title_section1">Käsittelyhistoria</string>
+    <string name="title_section1">Käsitt.historia</string>
     <string name="title_section2">Päätös</string>
     <string name="title_section3">Liitteet</string>
 
