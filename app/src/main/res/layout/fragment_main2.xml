@@ -4,11 +4,17 @@
     tools:context="com.ahjo_explorer.spartacus.ahjoexplorer.FragmentMain">
 
     <!-- TODO: Update blank fragment layout -->
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/linearLayoutFragmentMainMeetings"></LinearLayout>
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:id="@+id/scrollView" >
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/linearLayoutFragmentMainMeetings"></LinearLayout>
+    </ScrollView>
 
     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
         android:text="API Data"

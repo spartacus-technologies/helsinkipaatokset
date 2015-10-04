@@ -1,6 +1,7 @@
 package com.ahjo_explorer.spartacus.ahjoexplorer;
 
 import android.app.Activity;
+import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -189,22 +190,38 @@ public class FragmentMain extends Fragment implements View.OnClickListener, Data
 
             Map temp = (Map) meeting;
             String text = temp.get("date").toString() + " " + temp.get("policymaker_name").toString() + '\n';
-            //dates += text;
+
             ((TextView)getActivity().findViewById(R.id.textViewFragmentMainTest)).setText(dates);
+
+            //Create wrapping container for text data:
+            LinearLayout wrapper = new LinearLayout(getActivity());
+            wrapper.setOrientation(LinearLayout.VERTICAL);
+
+            //LinearLayout.LayoutParams params = new LinearLayout.LayoutParams();
+            //params.width = LinearLayout.Fi
+            //wrapper.setLayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 
             //Create textView for header
             TextView header = new TextView(getActivity());
             header.setText( temp.get("policymaker_name").toString());
-            header.setTextSize(20);
+            header.setTextSize(18);
 
             //Create textView for date
             TextView date = new TextView(getActivity());
-            date.setText( temp.get("date").toString());
+            date.setText(temp.get("date").toString());
             date.setTextSize(12);
 
-            ((LinearLayout) getActivity().findViewById(R.id.linearLayoutFragmentMainMeetings)).addView(header);
-            ((LinearLayout) getActivity().findViewById(R.id.linearLayoutFragmentMainMeetings)).addView(date);
+            //Create empty view as spacer
+            View spacer = new View(getActivity());
+            spacer.setMinimumHeight(30);
 
+            //Add all views to wrapper
+            wrapper.addView(header);
+            wrapper.addView(date);
+            wrapper.addView(spacer);
+
+            //Add wrapper to main linear layout
+            ((LinearLayout) getActivity().findViewById(R.id.linearLayoutFragmentMainMeetings)).addView(wrapper);
         }
 
     }
