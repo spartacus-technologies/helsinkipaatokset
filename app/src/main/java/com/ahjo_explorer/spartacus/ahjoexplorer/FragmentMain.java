@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -45,6 +46,7 @@ public class FragmentMain extends Fragment implements View.OnClickListener, Data
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+    private List meetings;
 
     /**
      * Use this factory method to create a new instance of
@@ -126,55 +128,85 @@ public class FragmentMain extends Fragment implements View.OnClickListener, Data
     @Override
     public void DataAvailable(String data) {
 
+        //Show received JSON:
+        //Examples & source: https://github.com/google/gson/blob/master/examples/android-proguard-example/src/com/google/gson/examples/android/GsonProguardExampleActivity.java
+        Gson gson = new Gson();
+
+        Map meetings_data;
+
+        try {
+
+            meetings_data = new Gson().fromJson(data, Map.class);
+            meetings = (List) meetings_data.get("objects");
+        }
+        catch (Exception e){
+
+            Log.e("FragmentMain", e.getMessage());
+        }
+        /*
+        String dates = null;
+
+        for (Object meeting:
+             meetings) {
+
+            Log.i("FragmentMain", "Meeting:" + ((Map)meeting).get("date").toString());
+            dates += ((Map)meeting).get("date").toString();
+        }
+        */
+
+        //Log.v("FragmentMain", "insEmpty(): " + meetings_data.isEmpty());
+
+        //Log.v("FragmentMain", "DataAvailable: " + data);
+
         if(data != null){
 
-            Toast.makeText(getActivity(), "OMG It works! Received " + data.length()*8/1000 + " kilobytes.", Toast.LENGTH_LONG).show();
-            ((TextView)getActivity().findViewById(R.id.textViewFragmentMainTest)).setText(data);
+            Toast.makeText(getActivity(), "It works! Received " + data.length()*8/1000 + " kilobytes.", Toast.LENGTH_LONG).show();
+            //((TextView)getActivity().findViewById(R.id.textViewFragmentMainTest)).setText(dates);
         }
         else{
 
             Toast.makeText(getActivity(), "No connection. :-/", Toast.LENGTH_LONG).show();
         }
 
+        //Call GUI data updater
+        fillMeetingsData();
+    }
 
-        Map jsonJavaRootObject = null;
+    /**
+     * Function for generating all UI components for queried meetings
+     */
+    private void fillMeetingsData(){
 
+        if(meetings == null){
 
-
-        //Show received JSON:
-        //Examples & source: https://github.com/google/gson/blob/master/examples/android-proguard-example/src/com/google/gson/examples/android/GsonProguardExampleActivity.java
-        Gson gson = new Gson();
-
-        try {
-
-            jsonJavaRootObject = new Gson().fromJson(data, Map.class);
-
-            /*
-            JsonElement jelement = new JsonParser().parse(data);
-            JsonObject jobject = jelement.getAsJsonObject();
-            jobject = jobject.getAsJsonObject("data");
-            JsonArray jarray = jobject.getAsJsonArray("translations");
-            jobject = jarray.get(0).getAsJsonObject();
-            String result = jobject.get("translatedText").toString();
-            */
-            //Log.i("FragmentMain", meetings.toString());
+            Log.e("FragmentMain", "Error: meetings data was empty!");
+            return;
         }
-        catch (Exception e){
-
-            Log.e("FragmentMain", e.getMessage());
-        }
-
-        List meetings = (List) jsonJavaRootObject.get("objects");
-
+        String dates = "";
+        //Loop all meetings and construct needed UI components with data:
         for (Object meeting:
              meetings) {
 
-            Log.i("FragmentMain", "Meeting:" + meeting.toString());
+            Map temp = (Map) meeting;
+            String text = temp.get("date").toString() + " " + temp.get("policymaker_name").toString() + '\n';
+            //dates += text;
+            ((TextView)getActivity().findViewById(R.id.textViewFragmentMainTest)).setText(dates);
+
+            //Create textView for header
+            TextView header = new TextView(getActivity());
+            header.setText( temp.get("policymaker_name").toString());
+            header.setTextSize(20);
+
+            //Create textView for date
+            TextView date = new TextView(getActivity());
+            date.setText( temp.get("date").toString());
+            date.setTextSize(12);
+
+            ((LinearLayout) getActivity().findViewById(R.id.linearLayoutFragmentMainMeetings)).addView(header);
+            ((LinearLayout) getActivity().findViewById(R.id.linearLayoutFragmentMainMeetings)).addView(date);
+
         }
 
-        Log.v("FragmentMain", "insEmpty(): " + jsonJavaRootObject.isEmpty());
-
-        Log.v("FragmentMain", "DataAvailable: " + data);
     }
 
     /**
