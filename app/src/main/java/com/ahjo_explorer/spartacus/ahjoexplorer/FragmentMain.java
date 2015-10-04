@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.ArrayMap;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +16,14 @@ import com.ahjo_explorer.spartacus.ahjoexplorer.APIObjects.Meeting;
 import com.google.gson.Gson;
 
 import com.ahjo_explorer.spartacus.ahjoexplorer.data_access.DataAccess;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
+import java.sql.Array;
+import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -127,20 +136,43 @@ public class FragmentMain extends Fragment implements View.OnClickListener, Data
             Toast.makeText(getActivity(), "No connection. :-/", Toast.LENGTH_LONG).show();
         }
 
+
+        Map jsonJavaRootObject = null;
+
+
+
         //Show received JSON:
         //Examples & source: https://github.com/google/gson/blob/master/examples/android-proguard-example/src/com/google/gson/examples/android/GsonProguardExampleActivity.java
         Gson gson = new Gson();
 
         try {
-            Object root = gson.fromJson(data, Object.class);
-            Meeting[] meetings = gson.fromJson(root.toString(), Meeting[].class);
-            Log.i("FragmentMain", meetings.toString());
+
+            jsonJavaRootObject = new Gson().fromJson(data, Map.class);
+
+            /*
+            JsonElement jelement = new JsonParser().parse(data);
+            JsonObject jobject = jelement.getAsJsonObject();
+            jobject = jobject.getAsJsonObject("data");
+            JsonArray jarray = jobject.getAsJsonArray("translations");
+            jobject = jarray.get(0).getAsJsonObject();
+            String result = jobject.get("translatedText").toString();
+            */
+            //Log.i("FragmentMain", meetings.toString());
         }
         catch (Exception e){
 
             Log.e("FragmentMain", e.getMessage());
         }
 
+        List meetings = (List) jsonJavaRootObject.get("objects");
+
+        for (Object meeting:
+             meetings) {
+
+            Log.i("FragmentMain", "Meeting:" + meeting.toString());
+        }
+
+        Log.v("FragmentMain", "insEmpty(): " + jsonJavaRootObject.isEmpty());
 
         Log.v("FragmentMain", "DataAvailable: " + data);
     }
