@@ -93,7 +93,7 @@ public class FragmentMain extends Fragment implements View.OnClickListener, Data
         //Register listeners
 
         //TODO for testing
-        //DataAccess.testConnection(this);
+        DataAccess.testConnection(this);
 
         return view;
     }
@@ -165,7 +165,7 @@ public class FragmentMain extends Fragment implements View.OnClickListener, Data
 
         if(data != null){
 
-            Toast.makeText(getActivity(), "It works! Received " + data.length()*8/1000 + " kilobytes.", Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity(), "It works! Received " + data.length()*8/1000 + " kilobytes.", Toast.LENGTH_SHORT).show();
             //((TextView)getActivity().findViewById(R.id.textViewFragmentMainTest)).setText(dates);
         }
         else{
@@ -208,6 +208,22 @@ public class FragmentMain extends Fragment implements View.OnClickListener, Data
             //=========
             ((TextView)view.findViewById(R.id.textViewHeader)).setText(temp.get("policymaker_name").toString());
             ((TextView)view.findViewById(R.id.textViewDate)).setText(temp.get("date").toString());
+
+            //Register listeners for link:
+            View link = view.findViewById(R.id.textViewMeetingLink);
+            link.setTag(temp.get("policymaker_name").toString()); //TODO: add retrieved JSON as metadata
+            link.setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View v) {
+
+                    //((TextView)((View)v.getParent()).findViewById(R.id.textViewHeader)).getText()
+
+                    Toast.makeText(getActivity(), "You clicked meeting '"
+                            + v.getTag()
+                            + "' but nothing to show here yet.", Toast.LENGTH_LONG).show();
+                }
+            });
 
 
 

@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">AhjoExplorer</string>
 
-    <string name="title_section1">Käsitt.historia</string>
-    <string name="title_section2">Päätös</string>
+    <string name="title_section1">Kokoukset</string>
+    <string name="title_section2">Päätökset</string>
     <string name="title_section3">Liitteet</string>
 
     <string name="hello_world">Hello world!</string>
