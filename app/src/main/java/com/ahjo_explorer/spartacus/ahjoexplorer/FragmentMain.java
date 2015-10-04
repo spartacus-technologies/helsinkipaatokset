@@ -93,7 +93,7 @@ public class FragmentMain extends Fragment implements View.OnClickListener, Data
         //Register listeners
 
         //TODO for testing
-        DataAccess.testConnection(this);
+        //DataAccess.testConnection(this);
 
         return view;
     }
@@ -175,6 +175,12 @@ public class FragmentMain extends Fragment implements View.OnClickListener, Data
 
         //Call GUI data updater
         fillMeetingsData();
+
+        //TODO: error handling
+
+        //Hide spinner to indicate loading is complete:
+        getActivity().findViewById(R.id.progressBarContentLoading).setVisibility(View.INVISIBLE);
+
     }
 
     /**
