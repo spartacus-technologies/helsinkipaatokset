@@ -90,8 +90,12 @@ public class FragmentMain extends Fragment implements View.OnClickListener, Data
         View view = inflater.inflate(R.layout.fragment_main2, container, false);
         view.findViewById(R.id.buttonTestAPI).setOnClickListener(this);
 
-        return view;
         //Register listeners
+
+        //TODO for testing
+        DataAccess.testConnection(this);
+
+        return view;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -191,12 +195,23 @@ public class FragmentMain extends Fragment implements View.OnClickListener, Data
             Map temp = (Map) meeting;
             String text = temp.get("date").toString() + " " + temp.get("policymaker_name").toString() + '\n';
 
+            View view = getActivity().getLayoutInflater().inflate(R.layout.layout_single_meeting, null, false);
+            ((LinearLayout)getActivity().findViewById(R.id.linearLayoutFragmentMainMeetings)).addView(view);
+
+            //Set data:
+            //=========
+            ((TextView)view.findViewById(R.id.textViewHeader)).setText(temp.get("policymaker_name").toString());
+            ((TextView)view.findViewById(R.id.textViewDate)).setText(temp.get("date").toString());
+
+
+
+            /*
             ((TextView)getActivity().findViewById(R.id.textViewFragmentMainTest)).setText(dates);
 
             //Create wrapping container for text data:
             LinearLayout wrapper = new LinearLayout(getActivity());
             wrapper.setOrientation(LinearLayout.VERTICAL);
-
+            wrapper.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
             //LinearLayout.LayoutParams params = new LinearLayout.LayoutParams();
             //params.width = LinearLayout.Fi
             //wrapper.setLayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -222,6 +237,7 @@ public class FragmentMain extends Fragment implements View.OnClickListener, Data
 
             //Add wrapper to main linear layout
             ((LinearLayout) getActivity().findViewById(R.id.linearLayoutFragmentMainMeetings)).addView(wrapper);
+            */
         }
 
     }
