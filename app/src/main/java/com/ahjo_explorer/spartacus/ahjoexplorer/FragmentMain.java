@@ -93,7 +93,8 @@ public class FragmentMain extends Fragment implements View.OnClickListener, Data
         //Register listeners
 
         //TODO for testing
-        DataAccess.testConnection(this);
+        //DataAccess.testConnection(this);
+        view.findViewById(R.id.progressBarContentLoading).setVisibility(View.INVISIBLE);
 
         return view;
     }
@@ -126,7 +127,7 @@ public class FragmentMain extends Fragment implements View.OnClickListener, Data
     public void onClick(View v) {
 
         Log.i("FragmentMain", "onClick");
-
+        getActivity().findViewById(R.id.progressBarContentLoading).setVisibility(View.VISIBLE);
         DataAccess.testConnection(this);
     }
 
