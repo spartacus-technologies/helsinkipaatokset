@@ -1,5 +1,7 @@
 package com.ahjo_explorer.spartacus.ahjoexplorer.data_access;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,6 +9,24 @@ import java.util.List;
  * Created by Eetu on 1.10.2015.
  */
 public class DataAccess {
+
+    final static String API_PATH = "http://dev.hel.fi";
+
+    //Registers listener and executes GET Method. After completion executes listeners callback function.
+    public static void requestData(NetworkListener listener, String path) {
+
+        //Check if whole path is already present -> add if not:
+        if(!path.contains(API_PATH)){
+
+            path = API_PATH + path;
+        }
+        Log.i("DataAccess:requestData", "path=" + path);
+
+        NetworkTask task = new NetworkTask();
+        task.setNetworkListener(listener);
+
+        task.execute(path);
+    }
 
     //private static List<NetworkListener> listeners;
 

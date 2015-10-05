@@ -1,6 +1,8 @@
 package com.ahjo_explorer.spartacus.ahjoexplorer;
 
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
@@ -11,6 +13,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -19,7 +22,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-public class MainActivity extends AppCompatActivity implements ActionBar.TabListener, FragmentMain.OnFragmentInteractionListener {
+import com.ahjo_explorer.spartacus.ahjoexplorer.data_access.FragmentDecisions;
+import com.ahjo_explorer.spartacus.ahjoexplorer.data_access.iFragmentDataExchange;
+
+public class MainActivity extends AppCompatActivity implements ActionBar.TabListener, FragmentMain.OnFragmentInteractionListener, iFragmentDataExchange {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -122,21 +128,76 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
 
     }
 
+    public ViewPager getmViewPager() {
+        return mViewPager;
+    }
+
+    @Override
+    public void exchange(int target, Object data) {
+
+        Fragment frag = mSectionsPagerAdapter.getFragmentByPosition(target);
+
+        if(frag == null){
+
+            Log.e("MainActivity", "Fragment with id " + target + " not found");
+        }
+        else{
+
+            Log.i("MainActivity", "ID=" + frag.getId());
+
+            //Pass actual data:
+            ((iFragmentDataExchange)frag).exchange(target, data);
+        }
+
+
+    }
+
     /**
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
      * one of the sections/tabs/pages.
      */
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
+        Map<Integer, Fragment> fragment_container;   //TODO: this is a bit ghetto solution but works for now.
+
         public SectionsPagerAdapter(FragmentManager fm) {
             super(fm);
+            fragment_container = new HashMap<>();
+        }
+
+        Fragment getFragmentByPosition(int pos){
+
+            return fragment_container.get(pos);
         }
 
         @Override
         public Fragment getItem(int position) {
+
+            Fragment frag;
+
+            switch (position){
+
+                case 0:
+
+                    frag = FragmentMain.newInstance(null, null);
+                    break;
+                case 1:
+                    frag =  FragmentDecisions.newInstance();
+                    break;
+                case 2:
+                    //TODO
+                    frag =  FragmentDecisions.newInstance();
+                    break;
+                default:
+                    frag =  null;
+            }
+
+            fragment_container.put(position, frag);
+            return frag;
+
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
-            return FragmentMain.newInstance(null, null);
+            //return FragmentMain.newInstance(null, null);
         }
 
         @Override

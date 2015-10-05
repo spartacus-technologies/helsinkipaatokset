@@ -15,6 +15,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ahjo_explorer.spartacus.ahjoexplorer.APIObjects.Meeting;
+import com.ahjo_explorer.spartacus.ahjoexplorer.data_access.FragmentDecisions;
+import com.ahjo_explorer.spartacus.ahjoexplorer.data_access.iFragmentDataExchange;
 import com.google.gson.Gson;
 
 import com.ahjo_explorer.spartacus.ahjoexplorer.data_access.DataAccess;
@@ -36,15 +38,12 @@ import java.util.Map;
  * Use the {@link FragmentMain#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class FragmentMain extends Fragment implements View.OnClickListener, DataAccess.NetworkListener {
+public class FragmentMain extends Fragment implements View.OnClickListener, DataAccess.NetworkListener, iFragmentDataExchange {
+
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    //private static final String ARG_PARAM1 = "param1";
+    //private static final String ARG_PARAM2 = "param2";
 
     private OnFragmentInteractionListener mListener;
     private List meetings;
@@ -61,8 +60,9 @@ public class FragmentMain extends Fragment implements View.OnClickListener, Data
     public static FragmentMain newInstance(String param1, String param2) {
         FragmentMain fragment = new FragmentMain();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+        args.putString("FragmentName", fragment.getClass().toString());
+        //args.putString(ARG_PARAM2, param2);
+
         fragment.setArguments(args);
         return fragment;
     }
@@ -74,10 +74,12 @@ public class FragmentMain extends Fragment implements View.OnClickListener, Data
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        /*
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        */
     }
 
     @Override
@@ -212,7 +214,7 @@ public class FragmentMain extends Fragment implements View.OnClickListener, Data
 
             //Register listeners for link:
             View link = view.findViewById(R.id.textViewMeetingLink);
-            link.setTag(temp.get("policymaker_name").toString()); //TODO: add retrieved JSON as metadata
+            link.setTag(temp); //TODO: add retrieved JSON as metadata
             link.setOnClickListener(new View.OnClickListener() {
 
                 @Override
@@ -221,8 +223,19 @@ public class FragmentMain extends Fragment implements View.OnClickListener, Data
                     //((TextView)((View)v.getParent()).findViewById(R.id.textViewHeader)).getText()
 
                     Toast.makeText(getActivity(), "You clicked meeting '"
-                            + v.getTag()
+                            + ((Map)v.getTag()).get("policymaker_name").toString()
                             + "' but nothing to show here yet.", Toast.LENGTH_LONG).show();
+
+                    //Invoke new data request in decisions fragment:
+                    //Fragment fragment = getActivity().getSupportFragmentManager().getFragment(null, "FragmentName");
+
+                    //Log.i("FragmentMain", "Fragment tag: " + fragment.getTag());
+
+                    //Fire event to target fragment:
+                    ((MainActivity)getActivity()).exchange(1, ((Map)v.getTag()).get("resource_uri").toString());
+
+                    //Switch tab after clicking link
+                    ((MainActivity) getActivity()).getmViewPager().setCurrentItem(1);
                 }
             });
 
@@ -264,7 +277,10 @@ public class FragmentMain extends Fragment implements View.OnClickListener, Data
         }
 
     }
+    @Override
+    public void exchange(int target, Object data) {
 
+    }
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated

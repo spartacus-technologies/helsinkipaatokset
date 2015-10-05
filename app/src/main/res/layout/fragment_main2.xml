@@ -26,6 +26,12 @@
         android:id="@+id/buttonTestAPI"
         android:layout_gravity="top|center" />
 
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:text="New Text"
+        android:id="@+id/textViewDebug" />
+
     <ProgressBar
         style="?android:attr/progressBarStyleLarge"
         android:layout_width="wrap_content"
