@@ -232,7 +232,8 @@ public class FragmentMain extends Fragment implements View.OnClickListener, Data
                     //Log.i("FragmentMain", "Fragment tag: " + fragment.getTag());
 
                     //Fire event to target fragment:
-                    ((MainActivity)getActivity()).exchange(1, ((Map)v.getTag()).get("resource_uri").toString());
+                    Integer meeting_id = Double.valueOf(((Map) v.getTag()).get("id").toString()).intValue();
+                    ((MainActivity)getActivity()).exchange(1, meeting_id);
 
                     //Switch tab after clicking link
                     ((MainActivity) getActivity()).getmViewPager().setCurrentItem(1);

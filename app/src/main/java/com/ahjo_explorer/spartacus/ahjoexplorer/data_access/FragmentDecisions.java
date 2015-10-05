@@ -1,5 +1,8 @@
 package com.ahjo_explorer.spartacus.ahjoexplorer.data_access;
 
+import android.content.ActivityNotFoundException;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -7,6 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
+import android.widget.VideoView;
 
 import com.ahjo_explorer.spartacus.ahjoexplorer.R;
 import com.google.gson.Gson;
@@ -22,6 +27,9 @@ public class FragmentDecisions extends Fragment implements View.OnClickListener,
     String decision_path_ = "";
     private List decisions = null;
     View view_;
+    final String EXTRA_POSITION	= "position";
+    private String video_path;
+
     public static FragmentDecisions newInstance() {
 
         FragmentDecisions fragment = new FragmentDecisions();
@@ -49,8 +57,12 @@ public class FragmentDecisions extends Fragment implements View.OnClickListener,
 
 
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_main2, container, false);
+        View view = inflater.inflate(R.layout.fragment_decision, container, false);
         view_ = view;
+
+        //Register listeners
+        view.findViewById(R.id.buttonPlayVideo).setOnClickListener(this);
+
         return view;
     }
 
@@ -59,11 +71,20 @@ public class FragmentDecisions extends Fragment implements View.OnClickListener,
 
         view_.findViewById(R.id.progressBarContentLoading).setVisibility(View.INVISIBLE);
 
-        Map decision_data = new Gson().fromJson(data, Map.class);
+        Map video_data = new Gson().fromJson(data, Map.class);
+
+        //TODO: just a dummy
+        video_path = "http://dev.hel.fi/paatokset/media/video/valtuusto180112b.ogv";
+
         //decisions = (List) decision_data.get("objects");
 
         //All good -> inflate decisions table
         inflateDecisions();
+
+        //TODO: debugging:
+        //((VideoView)view_.findViewById(R.id.videoView)).setVideoPath("http://dev.hel.fi/paatokset/media/video/valtuusto180112b.ogv");
+        //((VideoView)view_.findViewById(R.id.videoView)).pla
+
     }
 
     private void inflateDecisions() {
@@ -89,14 +110,31 @@ public class FragmentDecisions extends Fragment implements View.OnClickListener,
     @Override
     public void onClick(View v) {
 
+        if(v.getId() == R.id.buttonPlayVideo){
+
+            Uri uri = Uri.parse(video_path);
+            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+            //intent.putExtra( EXTRA_POSITION, v.getId()*1000);
+
+            try {
+                startActivity(intent);
+            } catch (ActivityNotFoundException e) {
+
+                Log.w("FragmentDefault.onClick()", "ActivityNotFoundException");
+                Toast.makeText(getActivity(), "Warning: video player not found. Consider installing MX Player.", Toast.LENGTH_LONG).show();
+            }
+        }
+
     }
 
     @Override
     public void exchange(int target, Object data) {
 
         getActivity().findViewById(R.id.progressBarContentLoading).setVisibility(View.VISIBLE);
-        //In case of data exchange, check for URL and begin HTTP get:
-        DataAccess.requestData(this, data.toString());
+
+        //Data contains meeting id -> execute queries for video data
+        DataAccess.requestData(this, "http://dev.hel.fi/paatokset/v1/video/" + data.toString());
+        //DataAccess.requestData(this, data.toString());
 
     }
 }
