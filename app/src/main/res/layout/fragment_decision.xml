@@ -45,6 +45,7 @@
     <VideoView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/videoView" />
+        android:id="@+id/videoView"
+        android:visibility="gone" />
 
 </FrameLayout>

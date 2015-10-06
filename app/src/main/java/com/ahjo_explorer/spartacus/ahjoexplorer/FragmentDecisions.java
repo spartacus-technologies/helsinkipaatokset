@@ -1,4 +1,4 @@
-package com.ahjo_explorer.spartacus.ahjoexplorer.data_access;
+package com.ahjo_explorer.spartacus.ahjoexplorer;
 
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
@@ -11,9 +11,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.VideoView;
 
-import com.ahjo_explorer.spartacus.ahjoexplorer.R;
+import com.ahjo_explorer.spartacus.ahjoexplorer.data_access.DataAccess;
+import com.ahjo_explorer.spartacus.ahjoexplorer.data_access.iFragmentDataExchange;
 import com.google.gson.Gson;
 
 import java.util.List;
@@ -71,7 +71,7 @@ public class FragmentDecisions extends Fragment implements View.OnClickListener,
 
         view_.findViewById(R.id.progressBarContentLoading).setVisibility(View.INVISIBLE);
 
-        Map video_data = new Gson().fromJson(data, Map.class);
+        Map m_data = new Gson().fromJson(data, Map.class);
 
         //TODO: just a dummy
         video_path = "http://dev.hel.fi/paatokset/media/video/valtuusto180112b.ogv";
@@ -84,6 +84,7 @@ public class FragmentDecisions extends Fragment implements View.OnClickListener,
         //TODO: debugging:
         //((VideoView)view_.findViewById(R.id.videoView)).setVideoPath("http://dev.hel.fi/paatokset/media/video/valtuusto180112b.ogv");
         //((VideoView)view_.findViewById(R.id.videoView)).pla
+        ((TextView)view_.findViewById(R.id.textViewDebug)).setText(((Map)((List)m_data.get("content")).get(0)).get("text").toString());
 
     }
 
@@ -133,7 +134,8 @@ public class FragmentDecisions extends Fragment implements View.OnClickListener,
         getActivity().findViewById(R.id.progressBarContentLoading).setVisibility(View.VISIBLE);
 
         //Data contains meeting id -> execute queries for video data
-        DataAccess.requestData(this, "http://dev.hel.fi/paatokset/v1/video/" + data.toString());
+        //DataAccess.requestData(this, "http://dev.hel.fi/paatokset/v1/" + data.toString());
+        DataAccess.requestData(this, "http://dev.hel.fi/paatokset/v1/agenda_item/" + data.toString());
         //DataAccess.requestData(this, data.toString());
 
     }

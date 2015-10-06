@@ -207,21 +207,31 @@ public class FragmentMain extends Fragment implements View.OnClickListener, Data
             //=========
             ((TextView)view.findViewById(R.id.textViewHeader)).setText(temp.get("subject").toString());
             //((TextView)view.findViewById(R.id.textViewDate)).setText(((Map)temp.get("meeting")).get("date").toString());
-            ((TextView)view.findViewById(R.id.textViewDate)).setText(temp.get("id").toString() + "  " + ((Map)temp.get("meeting")).get("date").toString() + "  " + ((Map)temp.get("meeting")).get("id").toString());
+            ((TextView)view.findViewById(R.id.textViewDate)).setText(/*temp.get("id").toString()
+                                                                      + "  " + */
+                                                                    ((Map)temp.get("meeting")).get("date").toString()
+                                                                     /*
+                                                                     + "  " +
+                                                                    ((Map)temp.get("meeting")).get("id").toString()*/
+                                                                    );
+
 
             //Register listeners for link:
-            View link = view.findViewById(R.id.textViewMeetingLink);
-            link.setTag(temp); //TODO: add retrieved JSON as metadata
-            link.setOnClickListener(new View.OnClickListener() {
+            //View link = view.findViewById(R.id.textViewMeetingLink);
+            //link.setTag(temp); //TODO: add retrieved JSON as metadata
+            ((TextView)view.findViewById(R.id.textViewHeader)).setTag(temp);
+            ((TextView)view.findViewById(R.id.textViewHeader)).setOnClickListener(new View.OnClickListener() {
 
                 @Override
                 public void onClick(View v) {
 
                     //((TextView)((View)v.getParent()).findViewById(R.id.textViewHeader)).getText()
 
-                    Toast.makeText(getActivity(), "You clicked meeting '"
-                            + ((Map)v.getTag()).get("policymaker_name").toString()
-                            + "' but nothing to show here yet.", Toast.LENGTH_LONG).show();
+                    Object tag_data =  v.getTag();
+
+                    Toast.makeText(getActivity(), "You clicked agenda item '"
+                            + ((Map) tag_data).get("subject").toString()
+                            + "'.", Toast.LENGTH_LONG).show();
 
                     //Invoke new data request in decisions fragment:
                     //Fragment fragment = getActivity().getSupportFragmentManager().getFragment(null, "FragmentName");
@@ -230,7 +240,7 @@ public class FragmentMain extends Fragment implements View.OnClickListener, Data
 
                     //Fire event to target fragment:
                     Integer meeting_id = Double.valueOf(((Map) v.getTag()).get("id").toString()).intValue();
-                    ((MainActivity)getActivity()).exchange(1, meeting_id);
+                    ((MainActivity) getActivity()).exchange(1, meeting_id);
 
                     //Switch tab after clicking link
                     ((MainActivity) getActivity()).getmViewPager().setCurrentItem(1);

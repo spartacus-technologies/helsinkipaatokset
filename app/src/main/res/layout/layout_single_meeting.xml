@@ -44,5 +44,6 @@
 		android:text=">"
 		android:id="@+id/textViewMeetingLink"
 		android:gravity="center_vertical|right"
-        android:textSize="45dp" />
+        android:textSize="45dp"
+		android:visibility="gone" />
 </LinearLayout>
