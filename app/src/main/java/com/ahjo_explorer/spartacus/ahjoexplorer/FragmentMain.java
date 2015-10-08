@@ -88,6 +88,7 @@ public class FragmentMain extends Fragment implements View.OnClickListener, Data
         //Register listeners
         view.findViewById(R.id.buttonTestAPI).setOnClickListener(this);
         view.findViewById(R.id.scrollView).setOnScrollChangeListener(this);
+        view.findViewById(R.id.buttonBackToUpFragmentMain).setOnClickListener(this);
 
         //Request data
         DataAccess.requestData(this, "/paatokset/v1/agenda_item/?order_by=-meeting");
@@ -131,51 +132,19 @@ public class FragmentMain extends Fragment implements View.OnClickListener, Data
 
                 //Display loading spinner and remove all children:
                 getActivity().findViewById(R.id.progressBarContentLoadingFragmentMain).setVisibility(View.VISIBLE);
+                //Clear current content
                 ((LinearLayout)getActivity().findViewById(R.id.linearLayoutFragmentMainMeetings)).removeAllViews();
+                DataAccess.requestData(this, "/paatokset/v1/agenda_item/?order_by=-meeting");
+                break;
+            case R.id.buttonBackToUpFragmentMain:
 
+                ((ScrollView) getActivity().findViewById(R.id.scrollView)).smoothScrollTo(0, 0);
                 break;
         }
-
-        //Clear current content
-
-        DataAccess.requestData(this, "/paatokset/v1/agenda_item/?order_by=-meeting");
-        //DataAccess.requestData(this, "/paatokset/v1/agenda_item/?order_by=-origin_last_modified_time");
     }
 
     @Override
     public void DataAvailable(String data) {
-
-        //Show received JSON:
-        //Examples & source: https://github.com/google/gson/blob/master/examples/android-proguard-example/src/com/google/gson/examples/android/GsonProguardExampleActivity.java
-        Gson gson = new Gson();
-
-        Map m_data;
-
-
-        try {
-
-            m_data = new Gson().fromJson(data, Map.class);
-            agenda_items = (List) m_data.get("objects");
-            next_path = (String)((Map)m_data.get("meta")).get("next");
-        }
-        catch (Exception e){
-
-            Log.e("FragmentMain", e.getMessage());
-        }
-        /*
-        String dates = null;
-
-        for (Object meeting:
-             meetings) {
-
-            Log.i("FragmentMain", "Meeting:" + ((Map)meeting).get("date").toString());
-            dates += ((Map)meeting).get("date").toString();
-        }
-        */
-
-        //Log.v("FragmentMain", "insEmpty(): " + m_data.isEmpty());
-
-        //Log.v("FragmentMain", "DataAvailable: " + data);
 
         if(data != null){
 
@@ -188,13 +157,31 @@ public class FragmentMain extends Fragment implements View.OnClickListener, Data
         }
         else{
 
-            Toast.makeText(getActivity(), "No connection. :-/", Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity(), "Ei yhteyttä.", Toast.LENGTH_LONG).show();
+            return;
+        }
+
+
+        //Show received JSON:
+        //Examples & source: https://github.com/google/gson/blob/master/examples/android-proguard-example/src/com/google/gson/examples/android/GsonProguardExampleActivity.java
+        Gson gson = new Gson();
+
+        Map m_data;
+
+        try {
+
+            m_data = new Gson().fromJson(data, Map.class);
+            agenda_items = (List) m_data.get("objects");
+            next_path = (String)((Map)m_data.get("meta")).get("next");
+        }
+        catch (Exception e){
+
+            Log.e("FragmentMain", e.getMessage());
+            Toast.makeText(getActivity(), "Datahaun yhteydessä tapahtui virhe.", Toast.LENGTH_LONG).show();
         }
 
         //Call GUI data updater
         fillMeetingsData();
-
-        //TODO: error handling
 
         //Hide spinner to indicate loading is complete:
         getActivity().findViewById(R.id.progressBarContentLoadingFragmentMain).setVisibility(View.INVISIBLE);
@@ -202,7 +189,7 @@ public class FragmentMain extends Fragment implements View.OnClickListener, Data
     }
 
     /**
-     * Function for generating all UI components for queried meetings
+     * Function for generating all UI components for queried agendas
      */
     private void fillMeetingsData(){
 

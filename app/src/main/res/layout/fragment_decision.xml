@@ -34,16 +34,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:id="@+id/webViewFragmentDecisions" />
+
         </LinearLayout>
     </ScrollView>
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Play video"
+        android:text="► video"
         android:id="@+id/buttonPlayVideo"
         android:layout_gravity="top|center"
-        android:visibility="gone" />
+        android:visibility="visible"
+        android:typeface="serif" />
 
     <ProgressBar
         style="?android:attr/progressBarStyleLarge"
@@ -51,12 +53,21 @@
         android:layout_height="wrap_content"
         android:id="@+id/progressBarContentLoadingFragmentDecisions"
         android:layout_gravity="center"
-        android:indeterminate="false" />
+        android:indeterminate="false"
+        android:visibility="invisible" />
 
     <VideoView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/videoView"
         android:visibility="gone" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="↑ ylös"
+        android:id="@+id/buttonBackToUpFragmentDecisions"
+        android:visibility="visible"
+        android:layout_gravity="center_horizontal|bottom" />
 
 </FrameLayout>

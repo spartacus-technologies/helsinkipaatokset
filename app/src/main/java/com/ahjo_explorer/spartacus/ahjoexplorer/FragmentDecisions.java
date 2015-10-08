@@ -2,6 +2,7 @@ package com.ahjo_explorer.spartacus.ahjoexplorer;
 
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
+import android.graphics.Picture;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -10,6 +11,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.Toast;
 
 import com.ahjo_explorer.spartacus.ahjoexplorer.data_access.DataAccess;
@@ -61,10 +64,55 @@ public class FragmentDecisions extends Fragment implements View.OnClickListener,
         View view = inflater.inflate(R.layout.fragment_decision, container, false);
         view_ = view;
 
+        //Hide spinner by default
+        //view_.findViewById(R.id.progressBarContentLoadingFragmentDecisions).setVisibility(View.INVISIBLE);
+
         //Register listeners
         view.findViewById(R.id.buttonPlayVideo).setOnClickListener(this);
+        view.findViewById(R.id.buttonBackToUpFragmentDecisions).setOnClickListener(this);
+
+        //Add new listener for webview content loading
+        //TODO: workaround implemented
+        /*
+        final WebView webview =  ((WebView) view_.findViewById(R.id.webViewFragmentDecisions));
+        webview.setPictureListener(new WebView.PictureListener() {
+
+            @Override
+            public void onNewPicture(WebView view, Picture picture) {
+
+                //Check show scroll to top button
+                checkTopButtonState();
+
+                //Invalidate container if content is loaded
+                //if (webview.getProgress() == 100)
+                    view_.findViewById(R.id.linearLayoutFragmentDecisions).invalidate();
+            }
+        });
+        */
+        //Set some default values for webview
+        if(agenda_data_html == null || agenda_data_html.length() == 0){
+
+            ((WebView)view_.findViewById(R.id.webViewFragmentDecisions)).loadData("Valitse agenda.", "utf-8", null);
+        }
 
         return view;
+    }
+
+    private void checkTopButtonState() {
+
+        //Check if back to top button is needed:
+        ScrollView scrollView = (ScrollView) view_.findViewById(R.id.scrollView);
+        int childHeight = ((LinearLayout)view_.findViewById(R.id.linearLayoutFragmentDecisions)).getHeight();
+        int scrollViewHeight = scrollView.getHeight();
+        boolean isScrollable = scrollView.getHeight() < childHeight + scrollView.getPaddingTop() + scrollView.getPaddingBottom();
+
+        //Hide/show scroll to top if needed:
+        if(isScrollable){
+
+            view_.findViewById(R.id.buttonBackToUpFragmentDecisions).setVisibility(View.VISIBLE);
+        }else{
+            view_.findViewById(R.id.buttonBackToUpFragmentDecisions).setVisibility(View.INVISIBLE);
+        }
     }
 
     @Override
@@ -95,6 +143,8 @@ public class FragmentDecisions extends Fragment implements View.OnClickListener,
         }
 
         ((WebView)getActivity().findViewById(R.id.webViewFragmentDecisions)).loadDataWithBaseURL(null, agenda_data_html, "text/html", "UTF-8", null);
+
+        view_.findViewById(R.id.linearLayoutFragmentDecisions).invalidate();
     }
 
     @Override
@@ -104,15 +154,19 @@ public class FragmentDecisions extends Fragment implements View.OnClickListener,
 
             Uri uri = Uri.parse(video_path);
             Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-            //intent.putExtra( EXTRA_POSITION, v.getId()*1000);
+            //intent.putExtra( EXTRA_POSITION, v.getId()*1000); //MX player: video position - if needed
 
             try {
                 startActivity(intent);
             } catch (ActivityNotFoundException e) {
 
-                Log.w("FragmentDefault.onClick()", "ActivityNotFoundException");
+                Log.w("FragmentDefault", "onClick():ActivityNotFoundException");
                 Toast.makeText(getActivity(), "Warning: video player not found. Consider installing MX Player.", Toast.LENGTH_LONG).show();
             }
+        }
+        else if(v.getId() == R.id.buttonBackToUpFragmentDecisions){
+
+            ((ScrollView) view_.findViewById(R.id.scrollView)).smoothScrollTo(0, 0);
         }
 
     }
@@ -122,10 +176,10 @@ public class FragmentDecisions extends Fragment implements View.OnClickListener,
 
         getActivity().findViewById(R.id.progressBarContentLoadingFragmentDecisions).setVisibility(View.VISIBLE);
 
-        //Data contains meeting id -> execute queries for video data
         //DataAccess.requestData(this, "http://dev.hel.fi/paatokset/v1/" + data.toString());
-        DataAccess.requestData(this, "http://dev.hel.fi/paatokset/v1/agenda_item/" + data.toString());
-        //DataAccess.requestData(this, data.toString());
+        Log.d("FragmentDecisions", "exchange: " + data.toString());
 
+        //Data contains agenda id -> execute queries for detailed data
+        DataAccess.requestData(this, "http://dev.hel.fi/paatokset/v1/agenda_item/" + data.toString());
     }
 }
