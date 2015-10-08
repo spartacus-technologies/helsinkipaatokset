@@ -16,6 +16,11 @@ import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.ahjo_explorer.spartacus.ahjoexplorer.data_access.iFragmentDataExchange;
 
@@ -74,6 +79,22 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
                             .setText(mSectionsPagerAdapter.getPageTitle(i))
                             .setTabListener(this));
         }
+
+        //Add spinner to main layout
+        //TODO: doesn't really show anything...
+        /*
+        FrameLayout.LayoutParams full_window = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+
+        FrameLayout frame = new FrameLayout(this);
+        frame.setLayoutParams(full_window);
+
+        TextView prog = new TextView(this);
+        prog.setText("jeejee");
+        prog.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+
+                ((ViewPager) findViewById(R.id.pager)).addView(frame);
+        frame.addView(prog);
+        */
 
         //Register listeners:
         //findViewById(R.id.buttonTestAPIConnection).setOnClickListener(this);

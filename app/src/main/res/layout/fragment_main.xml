@@ -30,13 +30,14 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:text="New Text"
-        android:id="@+id/textViewDebug" />
+        android:id="@+id/textViewDebug"
+        android:visibility="gone" />
 
     <ProgressBar
         style="?android:attr/progressBarStyleLarge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/progressBarContentLoading"
+        android:id="@+id/progressBarContentLoadingFragmentMain"
         android:layout_gravity="center"
         android:indeterminate="false" />
 

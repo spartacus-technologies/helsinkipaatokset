@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -69,7 +70,7 @@ public class FragmentDecisions extends Fragment implements View.OnClickListener,
     @Override
     public void DataAvailable(String data) {
 
-        view_.findViewById(R.id.progressBarContentLoading).setVisibility(View.INVISIBLE);
+        view_.findViewById(R.id.progressBarContentLoadingFragmentDecisions).setVisibility(View.INVISIBLE);
 
         Map m_data = new Gson().fromJson(data, Map.class);
 
@@ -79,18 +80,21 @@ public class FragmentDecisions extends Fragment implements View.OnClickListener,
         //decisions = (List) decision_data.get("objects");
 
         //All good -> inflate decisions table
-        inflateDecisions();
+        //inflateDecisions();
 
         //TODO: debugging:
         //((VideoView)view_.findViewById(R.id.videoView)).setVideoPath("http://dev.hel.fi/paatokset/media/video/valtuusto180112b.ogv");
         //((VideoView)view_.findViewById(R.id.videoView)).pla
-        ((TextView)view_.findViewById(R.id.textViewDebug)).setText(((Map)((List)m_data.get("content")).get(0)).get("text").toString());
+        //((TextView)view_.findViewById(R.id.textViewDebug)).setText(((Map)((List)m_data.get("content")).get(0)).get("text").toString());
 
+        String agenda_data = ((Map)((List)m_data.get("content")).get(0)).get("text").toString();
+
+        //((WebView)getActivity().findViewById(R.id.webViewFragmentDecisions)).loadData(agenda_data, "text/html", "utf-8");
+        ((WebView)getActivity().findViewById(R.id.webViewFragmentDecisions)).loadDataWithBaseURL(null, agenda_data, "text/html", "UTF-8", null);
     }
 
     private void inflateDecisions() {
 
-        //TODO: for debugging. Remove.
 
         if(decisions == null){
 
@@ -98,7 +102,11 @@ public class FragmentDecisions extends Fragment implements View.OnClickListener,
             return;
         }
 
-        ((TextView)view_.findViewById(R.id.textViewDebug)).setText(decisions.toString());
+        //((WebView)getActivity().findViewById(R.id.webViewFragmentDecisions)).loadData(decisions.toString(), "text/html", null);
+        //((WebView)getActivity().findViewById(R.id.webViewFragmentDecisions)).loadDataWithBaseURL(null, decisions.toString(), "text/html", null);
+
+        //TODO: for debugging. Remove.
+        //((TextView) view_.findViewById(R.id.textViewDebug)).setText(decisions.toString());
 
         //Loop all decisions and construct needed UI components with data:
         for (Object meeting:
@@ -131,7 +139,7 @@ public class FragmentDecisions extends Fragment implements View.OnClickListener,
     @Override
     public void exchange(int target, Object data) {
 
-        getActivity().findViewById(R.id.progressBarContentLoading).setVisibility(View.VISIBLE);
+        getActivity().findViewById(R.id.progressBarContentLoadingFragmentDecisions).setVisibility(View.VISIBLE);
 
         //Data contains meeting id -> execute queries for video data
         //DataAccess.requestData(this, "http://dev.hel.fi/paatokset/v1/" + data.toString());

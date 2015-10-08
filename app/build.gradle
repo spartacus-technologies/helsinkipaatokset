@@ -8,8 +8,8 @@ android {
         applicationId "com.spartacus.ahjoexplorer"
         minSdkVersion 15
         targetSdkVersion 23
-        versionCode 3
-        versionName "1.2a"
+        versionCode 4
+        versionName "1.3a"
     }
     buildTypes {
         release {

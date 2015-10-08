@@ -12,12 +12,22 @@
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:id="@+id/linearLayoutFragmentDecisions"
             android:gravity="center_horizontal"
             android:paddingLeft="30dp"
             android:paddingRight="30dp">
 
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:text=""
+                android:id="@+id/textViewDebug" />
+
+            <WebView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/webViewFragmentDecisions" />
         </LinearLayout>
     </ScrollView>
 
@@ -26,19 +36,14 @@
         android:layout_height="wrap_content"
         android:text="Play video"
         android:id="@+id/buttonPlayVideo"
-        android:layout_gravity="top|center" />
-
-    <TextView
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:text="New Text"
-        android:id="@+id/textViewDebug" />
+        android:layout_gravity="top|center"
+        android:visibility="gone" />
 
     <ProgressBar
         style="?android:attr/progressBarStyleLarge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/progressBarContentLoading"
+        android:id="@+id/progressBarContentLoadingFragmentDecisions"
         android:layout_gravity="center"
         android:indeterminate="false" />
 

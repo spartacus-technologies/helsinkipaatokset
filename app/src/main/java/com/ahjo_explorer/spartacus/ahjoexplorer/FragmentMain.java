@@ -82,14 +82,15 @@ public class FragmentMain extends Fragment implements View.OnClickListener, Data
 
         // Inflate the layout for this fragment
 
-        View view = inflater.inflate(R.layout.fragment_main2, container, false);
+        View view = inflater.inflate(R.layout.fragment_main, container, false);
 
         //Register listeners
         view.findViewById(R.id.buttonTestAPI).setOnClickListener(this);
         view.findViewById(R.id.scrollView).setOnScrollChangeListener(this);
-        //TODO for testing
-        //DataAccess.testConnection(this);
-        view.findViewById(R.id.progressBarContentLoading).setVisibility(View.INVISIBLE);
+
+        //Request data
+        DataAccess.requestData(this, "/paatokset/v1/agenda_item/?order_by=-meeting");
+        view.findViewById(R.id.progressBarContentLoadingFragmentMain).setVisibility(View.INVISIBLE);
 
         return view;
     }
@@ -122,7 +123,7 @@ public class FragmentMain extends Fragment implements View.OnClickListener, Data
     public void onClick(View v) {
 
         Log.i("FragmentMain", "onClick");
-        getActivity().findViewById(R.id.progressBarContentLoading).setVisibility(View.VISIBLE);
+        getActivity().findViewById(R.id.progressBarContentLoadingFragmentMain).setVisibility(View.VISIBLE);
         DataAccess.requestData(this, "/paatokset/v1/agenda_item/?order_by=-meeting");
         //DataAccess.requestData(this, "/paatokset/v1/agenda_item/?order_by=-origin_last_modified_time");
     }
@@ -178,7 +179,7 @@ public class FragmentMain extends Fragment implements View.OnClickListener, Data
         //TODO: error handling
 
         //Hide spinner to indicate loading is complete:
-        getActivity().findViewById(R.id.progressBarContentLoading).setVisibility(View.INVISIBLE);
+        getActivity().findViewById(R.id.progressBarContentLoadingFragmentMain).setVisibility(View.INVISIBLE);
 
     }
 
@@ -306,14 +307,14 @@ public class FragmentMain extends Fragment implements View.OnClickListener, Data
 
             //Request more data & show spinner:
             DataAccess.requestData(this, next_path);
-            getActivity().findViewById(R.id.progressBarContentLoading).setVisibility(View.VISIBLE);
+            getActivity().findViewById(R.id.progressBarContentLoadingFragmentMain).setVisibility(View.VISIBLE);
         }
     }
 
     //TODO: this is a bit ghetto
     boolean isDataRequestActive(){
 
-        return getActivity().findViewById(R.id.progressBarContentLoading).getVisibility() == View.VISIBLE;
+        return getActivity().findViewById(R.id.progressBarContentLoadingFragmentMain).getVisibility() == View.VISIBLE;
     }
 
     /**
