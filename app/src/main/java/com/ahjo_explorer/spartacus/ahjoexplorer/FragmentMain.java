@@ -18,6 +18,7 @@ import com.google.gson.Gson;
 
 import com.ahjo_explorer.spartacus.ahjoexplorer.data_access.DataAccess;
 
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.Map;
 
@@ -123,7 +124,20 @@ public class FragmentMain extends Fragment implements View.OnClickListener, Data
     public void onClick(View v) {
 
         Log.i("FragmentMain", "onClick");
-        getActivity().findViewById(R.id.progressBarContentLoadingFragmentMain).setVisibility(View.VISIBLE);
+
+        switch (v.getId()){
+
+            case R.id.buttonTestAPI:
+
+                //Display loading spinner and remove all children:
+                getActivity().findViewById(R.id.progressBarContentLoadingFragmentMain).setVisibility(View.VISIBLE);
+                ((LinearLayout)getActivity().findViewById(R.id.linearLayoutFragmentMainMeetings)).removeAllViews();
+
+                break;
+        }
+
+        //Clear current content
+
         DataAccess.requestData(this, "/paatokset/v1/agenda_item/?order_by=-meeting");
         //DataAccess.requestData(this, "/paatokset/v1/agenda_item/?order_by=-origin_last_modified_time");
     }
@@ -165,7 +179,11 @@ public class FragmentMain extends Fragment implements View.OnClickListener, Data
 
         if(data != null){
 
-            Toast.makeText(getActivity(), "It works! Received " + data.length()*8/1000 + " kilobytes.", Toast.LENGTH_SHORT).show();
+            try {
+                Toast.makeText(getActivity(), "Ladattiin " + data.getBytes("UTF-8").length/1000 + " kilobittiä.", Toast.LENGTH_SHORT).show();
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
             //((TextView)getActivity().findViewById(R.id.textViewFragmentMainTest)).setText(dates);
         }
         else{
@@ -230,9 +248,11 @@ public class FragmentMain extends Fragment implements View.OnClickListener, Data
 
                     Object tag_data =  v.getTag();
 
+                    /*
                     Toast.makeText(getActivity(), "You clicked agenda item '"
                             + ((Map) tag_data).get("subject").toString()
                             + "'.", Toast.LENGTH_LONG).show();
+                    */
 
                     //Invoke new data request in decisions fragment:
                     //Fragment fragment = getActivity().getSupportFragmentManager().getFragment(null, "FragmentName");

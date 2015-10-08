@@ -19,6 +19,12 @@
             android:paddingRight="30dp">
 
             <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:id="@+id/textViewHeaderFragmentDecision" />
+
+            <TextView
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:text=""

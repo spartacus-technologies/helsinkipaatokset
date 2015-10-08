@@ -10,7 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ahjo_explorer.spartacus.ahjoexplorer.data_access.DataAccess;
@@ -30,6 +29,7 @@ public class FragmentDecisions extends Fragment implements View.OnClickListener,
     View view_;
     final String EXTRA_POSITION	= "position";
     private String video_path;
+    private String agenda_data_html;
 
     public static FragmentDecisions newInstance() {
 
@@ -72,7 +72,9 @@ public class FragmentDecisions extends Fragment implements View.OnClickListener,
 
         view_.findViewById(R.id.progressBarContentLoadingFragmentDecisions).setVisibility(View.INVISIBLE);
 
+        //Fill in agenda content
         Map m_data = new Gson().fromJson(data, Map.class);
+        agenda_data_html = ((Map)((List)m_data.get("content")).get(0)).get("text").toString();
 
         //TODO: just a dummy
         video_path = "http://dev.hel.fi/paatokset/media/video/valtuusto180112b.ogv";
@@ -80,40 +82,19 @@ public class FragmentDecisions extends Fragment implements View.OnClickListener,
         //decisions = (List) decision_data.get("objects");
 
         //All good -> inflate decisions table
-        //inflateDecisions();
-
-        //TODO: debugging:
-        //((VideoView)view_.findViewById(R.id.videoView)).setVideoPath("http://dev.hel.fi/paatokset/media/video/valtuusto180112b.ogv");
-        //((VideoView)view_.findViewById(R.id.videoView)).pla
-        //((TextView)view_.findViewById(R.id.textViewDebug)).setText(((Map)((List)m_data.get("content")).get(0)).get("text").toString());
-
-        String agenda_data = ((Map)((List)m_data.get("content")).get(0)).get("text").toString();
-
-        //((WebView)getActivity().findViewById(R.id.webViewFragmentDecisions)).loadData(agenda_data, "text/html", "utf-8");
-        ((WebView)getActivity().findViewById(R.id.webViewFragmentDecisions)).loadDataWithBaseURL(null, agenda_data, "text/html", "UTF-8", null);
+        inflateDecisions();
     }
 
+    //Shows data
     private void inflateDecisions() {
 
-
-        if(decisions == null){
+        if(agenda_data_html == null){
 
             Log.e("FragmentDecisions", "Error: decision data was empty!");
             return;
         }
 
-        //((WebView)getActivity().findViewById(R.id.webViewFragmentDecisions)).loadData(decisions.toString(), "text/html", null);
-        //((WebView)getActivity().findViewById(R.id.webViewFragmentDecisions)).loadDataWithBaseURL(null, decisions.toString(), "text/html", null);
-
-        //TODO: for debugging. Remove.
-        //((TextView) view_.findViewById(R.id.textViewDebug)).setText(decisions.toString());
-
-        //Loop all decisions and construct needed UI components with data:
-        for (Object meeting:
-                decisions) {
-
-
-        }
+        ((WebView)getActivity().findViewById(R.id.webViewFragmentDecisions)).loadDataWithBaseURL(null, agenda_data_html, "text/html", "UTF-8", null);
     }
 
     @Override

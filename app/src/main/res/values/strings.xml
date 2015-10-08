@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">AhjoExplorer</string>
 
-    <string name="title_section1">Kokoukset</string>
+    <string name="title_section1">Agenda</string>
     <string name="title_section2">Päätökset</string>
     <string name="title_section3">Liitteet</string>
 

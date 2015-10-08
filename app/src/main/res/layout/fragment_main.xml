@@ -9,22 +9,29 @@
         android:layout_height="fill_parent"
         android:id="@+id/scrollView" >
 
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/linearLayoutFragmentMainMeetings"
-            android:gravity="center_horizontal"
-            android:paddingLeft="30dp"
-            android:paddingRight="30dp"></LinearLayout>
-    </ScrollView>
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Test API"
-        android:id="@+id/buttonTestAPI"
-        android:layout_gravity="top|center" />
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Päivitä"
+                    android:id="@+id/buttonTestAPI"
+                    android:layout_gravity="top|center" />
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/linearLayoutFragmentMainMeetings"
+                    android:gravity="center_horizontal"
+                    android:paddingLeft="30dp"
+                    android:paddingRight="30dp"></LinearLayout>
+
+            </LinearLayout>
+    </ScrollView>
 
     <TextView
         android:layout_width="fill_parent"
