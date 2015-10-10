@@ -41,6 +41,7 @@ public class FragmentMain extends Fragment implements View.OnClickListener, Data
     private OnFragmentInteractionListener mListener;
     private List agenda_items;
     private String next_path;
+    View view_ = null;
 
     /**
      * Use this factory method to create a new instance of
@@ -84,16 +85,22 @@ public class FragmentMain extends Fragment implements View.OnClickListener, Data
         // Inflate the layout for this fragment
 
         View view = inflater.inflate(R.layout.fragment_main, container, false);
+        view_ = view;
 
         //Register listeners
         view.findViewById(R.id.buttonTestAPI).setOnClickListener(this);
         view.findViewById(R.id.scrollView).setOnScrollChangeListener(this);
         view.findViewById(R.id.buttonBackToUpFragmentMain).setOnClickListener(this);
 
-        //Request data
-        DataAccess.requestData(this, "/paatokset/v1/agenda_item/?order_by=-meeting");
-        view.findViewById(R.id.progressBarContentLoadingFragmentMain).setVisibility(View.INVISIBLE);
+        //Request data if not already available
+        if(agenda_items == null){
 
+            DataAccess.requestData(this, "/paatokset/v1/agenda_item/?order_by=-meeting");
+            view.findViewById(R.id.progressBarContentLoadingFragmentMain).setVisibility(View.VISIBLE);
+        }
+        else{
+            fillMeetingsData();
+        }
         return view;
     }
 
@@ -207,7 +214,7 @@ public class FragmentMain extends Fragment implements View.OnClickListener, Data
             //String text = temp.get("date").toString() + " " + temp.get("subject").toString() + '\n';
 
             View view = getActivity().getLayoutInflater().inflate(R.layout.layout_single_meeting, null, false);
-            ((LinearLayout)getActivity().findViewById(R.id.linearLayoutFragmentMainMeetings)).addView(view);
+            ((LinearLayout)view_.findViewById(R.id.linearLayoutFragmentMainMeetings)).addView(view);
 
             //Set data:
             //=========

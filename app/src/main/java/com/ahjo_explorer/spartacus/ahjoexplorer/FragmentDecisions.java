@@ -118,19 +118,34 @@ public class FragmentDecisions extends Fragment implements View.OnClickListener,
     @Override
     public void DataAvailable(String data) {
 
-        view_.findViewById(R.id.progressBarContentLoadingFragmentDecisions).setVisibility(View.INVISIBLE);
+        //Check what data we received:
+        try {
 
-        //Fill in agenda content
-        Map m_data = new Gson().fromJson(data, Map.class);
-        agenda_data_html = ((Map)((List)m_data.get("content")).get(0)).get("text").toString();
+            //Fill in agenda content
+            Map m_data = new Gson().fromJson(data, Map.class);
+            agenda_data_html = ((Map)((List)m_data.get("content")).get(0)).get("text").toString();
+            view_.findViewById(R.id.progressBarContentLoadingFragmentDecisions).setVisibility(View.INVISIBLE);
+            //TODO: add second spinner for video data
+
+            //All good -> inflate decisions table
+            inflateDecisions();
+
+            //Request for video data related to this agenda item's meeting
+            String meeting_id = ((Map)m_data.get("meeting")).get("id").toString();
+            //DataAccess.requestData(this, meeting_id);
+        }
+        catch (Exception e){
+
+
+        }
+
+
 
         //TODO: just a dummy
         video_path = "http://dev.hel.fi/paatokset/media/video/valtuusto180112b.ogv";
 
         //decisions = (List) decision_data.get("objects");
 
-        //All good -> inflate decisions table
-        inflateDecisions();
     }
 
     //Shows data
