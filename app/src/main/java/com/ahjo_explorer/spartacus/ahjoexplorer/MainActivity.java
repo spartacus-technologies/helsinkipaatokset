@@ -14,6 +14,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewGroup;
@@ -100,6 +101,24 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
         //findViewById(R.id.buttonTestAPIConnection).setOnClickListener(this);
     }
 
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            
+            if(mViewPager.getCurrentItem() == 0){
+
+                return super.onKeyDown(keyCode, event);
+
+            }else{
+
+                mViewPager.setCurrentItem(0, true);
+            }
+            return true;
+
+        } else {
+            return super.onKeyDown(keyCode, event);
+        }
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
