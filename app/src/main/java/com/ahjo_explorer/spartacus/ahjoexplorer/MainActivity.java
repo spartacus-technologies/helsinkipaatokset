@@ -104,7 +104,7 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            
+
             if(mViewPager.getCurrentItem() == 0){
 
                 return super.onKeyDown(keyCode, event);
@@ -136,6 +136,10 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            return true;
+        }
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_h_kanava_videot) {
             return true;
         }
 

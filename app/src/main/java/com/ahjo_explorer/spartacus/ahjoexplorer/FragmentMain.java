@@ -178,7 +178,13 @@ public class FragmentMain extends Fragment implements View.OnClickListener, Data
         try {
 
             m_data = new Gson().fromJson(data, Map.class);
-            agenda_items = (List) m_data.get("objects");
+
+            if(agenda_items == null){
+
+                agenda_items = (List) m_data.get("objects");
+            }else{
+                agenda_items.addAll((List) m_data.get("objects"));
+            }
             next_path = (String)((Map)m_data.get("meta")).get("next");
         }
         catch (Exception e){
@@ -205,6 +211,10 @@ public class FragmentMain extends Fragment implements View.OnClickListener, Data
             Log.e("FragmentMain", "Error: meetings data was empty!");
             return;
         }
+
+        //Empty current list:
+        ((LinearLayout)view_.findViewById(R.id.linearLayoutFragmentMainMeetings)).removeAllViews();
+
         String dates = "";
         //Loop all meetings and construct needed UI components with data:
         for (Object agenda_item:
@@ -309,9 +319,10 @@ public class FragmentMain extends Fragment implements View.OnClickListener, Data
     public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
 
         //Get scrollview and determine if we have reached bottom:
-        ScrollView scrollview = (ScrollView) getActivity().findViewById(R.id.scrollView);
+        ScrollView scrollview = (ScrollView) view_.findViewById(R.id.scrollView);
         int maxScrollAmount = scrollview.getChildAt(0).getMeasuredHeight();
-        int currentScroll = scrollview.getScrollY() + scrollview.getHeight();
+        int scrollViewHeight = scrollview.getHeight();
+        int currentScroll = scrollViewHeight + scrollview.getScrollY();
 
         Log.i("FragmentMain", "NewScroll=" + scrollY + " OldScroll=" + oldScrollY + " MaxScrollAmount=" + maxScrollAmount);
         Log.w("ScrollHeight", scrollview.getScrollY() + scrollview.getHeight() + " / " + scrollview.getChildAt(0).getMeasuredHeight());

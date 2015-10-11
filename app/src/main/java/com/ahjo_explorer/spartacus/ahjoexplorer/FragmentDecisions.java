@@ -159,7 +159,9 @@ public class FragmentDecisions extends Fragment implements View.OnClickListener,
 
         ((WebView)getActivity().findViewById(R.id.webViewFragmentDecisions)).loadDataWithBaseURL(null, agenda_data_html, "text/html", "UTF-8", null);
 
-        view_.findViewById(R.id.linearLayoutFragmentDecisions).invalidate();
+        //view_.findViewById(R.id.linearLayoutFragmentDecisions).invalidate();
+        //view_.findViewById(R.id.scrollViewFragmentDecisions).invalidate();
+        view_.invalidate();
     }
 
     @Override
