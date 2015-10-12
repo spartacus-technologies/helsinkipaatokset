@@ -23,4 +23,9 @@ dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.android.support:appcompat-v7:23.0.0'
     compile files('F:/Dropbox/Projektit/Android/AhjoExplorer/libs/gson-2.3.1.jar')
+    compile files('F:/Dropbox/Projektit/Android/AhjoExplorer/libs/jackson-annotations-2.3.0.jar')
+    compile files('F:/Dropbox/Projektit/Android/AhjoExplorer/libs/jackson-databind-2.3.3.jar')
+    compile files('F:/Dropbox/Projektit/Android/AhjoExplorer/libs/jackson-core-2.3.1.jar')
+    compile files('F:/Dropbox/Projektit/Android/AhjoExplorer/libs/quick-json-1.0.2.3.jar')
+    compile files('F:/Dropbox/Projektit/Android/AhjoExplorer/libs/httpclient-4.5.1.jar')
 }
