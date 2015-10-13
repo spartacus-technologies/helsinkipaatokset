@@ -133,7 +133,8 @@ public class FragmentAttachments extends Fragment implements iFragmentDataExchan
             }
             else{
 
-                String html_data = "<a href=" + ((Map)attachment).get("file_uri").toString() + ">" + ((Map)attachment).get("name").toString();
+                String html_data = "<a href=" + ((Map)attachment).get("file_uri").toString() + ">" + ((Map)attachment).get("name").toString()
+                        + " (" + ((Map)attachment).get("file_type").toString() + ")";
                 tv_att.setText(Html.fromHtml(html_data));
                 tv_att.setMovementMethod(LinkMovementMethod.getInstance());
 
@@ -142,7 +143,7 @@ public class FragmentAttachments extends Fragment implements iFragmentDataExchan
                 //tv_att.setText(((Map) attachment).get("name").toString());
             }
             inner_container.addView(tv_att);
-            inner_container.addView(tv_type);
+            //inner_container.addView(tv_type);
             container.addView(inner_container);
         }
     }
