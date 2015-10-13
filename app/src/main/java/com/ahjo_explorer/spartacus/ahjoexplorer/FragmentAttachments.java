@@ -70,6 +70,11 @@ public class FragmentAttachments extends Fragment implements iFragmentDataExchan
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view_ =  inflater.inflate(R.layout.fragment_attachments, container, false);
+        if(attachments != null){
+
+            inflateAttachmentsData();
+        }
+
        return view_;
     }
 
@@ -98,13 +103,28 @@ public class FragmentAttachments extends Fragment implements iFragmentDataExchan
 
     void inflateAttachmentsData(){
 
-
         LinearLayout container = (LinearLayout) view_.findViewById(R.id.FragmentAttachmentsLinearLayoutContent);
+
+        //Clear current content:
+        container.removeAllViews();
+
+
+        if(attachments.size() == 0){
+
+            TextView tv_att = new TextView(getActivity());
+            tv_att.setText("(ei liitteitä)");
+            container.addView(tv_att);
+            return;
+        }
 
         for (Object attachment : attachments) {
 
             TextView tv_att = new TextView(getActivity());
+            TextView tv_type = new TextView(getActivity());
 
+            LinearLayout inner_container = new LinearLayout(getActivity());
+            inner_container.setLayoutParams(container.getLayoutParams());
+            inner_container.setOrientation(LinearLayout.VERTICAL);
 
             //Check if attachment is public
             if(!(boolean)((Map)attachment).get("public")){
@@ -116,9 +136,14 @@ public class FragmentAttachments extends Fragment implements iFragmentDataExchan
                 String html_data = "<a href=" + ((Map)attachment).get("file_uri").toString() + ">" + ((Map)attachment).get("name").toString();
                 tv_att.setText(Html.fromHtml(html_data));
                 tv_att.setMovementMethod(LinkMovementMethod.getInstance());
+
+                tv_type.setText(" (" + ((Map)attachment).get("file_type").toString() + ")");
+
                 //tv_att.setText(((Map) attachment).get("name").toString());
             }
-            container.addView(tv_att);
+            inner_container.addView(tv_att);
+            inner_container.addView(tv_type);
+            container.addView(inner_container);
         }
     }
 
