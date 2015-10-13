@@ -2,7 +2,6 @@ package com.ahjo_explorer.spartacus.ahjoexplorer;
 
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
-import android.graphics.Picture;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -33,6 +32,7 @@ public class FragmentDecisions extends Fragment implements View.OnClickListener,
     final String EXTRA_POSITION	= "position";
     private String video_path;
     private String agenda_data_html;
+    private String agenda_id;
 
     public static FragmentDecisions newInstance() {
 
@@ -139,7 +139,8 @@ public class FragmentDecisions extends Fragment implements View.OnClickListener,
 
         }
 
-
+        //Also pass parameters to AttachmentFragment:
+        ((MainActivity) getActivity()).exchange(2, agenda_id);
 
         //TODO: just a dummy
         video_path = "http://dev.hel.fi/paatokset/media/video/valtuusto180112b.ogv";
@@ -192,11 +193,13 @@ public class FragmentDecisions extends Fragment implements View.OnClickListener,
     public void exchange(int target, Object data) {
 
         getActivity().findViewById(R.id.progressBarContentLoadingFragmentDecisions).setVisibility(View.VISIBLE);
+        agenda_id = data.toString();
 
         //DataAccess.requestData(this, "http://dev.hel.fi/paatokset/v1/" + data.toString());
         Log.d("FragmentDecisions", "exchange: " + data.toString());
 
+
         //Data contains agenda id -> execute queries for detailed data
-        DataAccess.requestData(this, "http://dev.hel.fi/paatokset/v1/agenda_item/" + data.toString());
+        DataAccess.requestData(this, "http://dev.hel.fi/paatokset/v1/agenda_item/" + agenda_id);
     }
 }

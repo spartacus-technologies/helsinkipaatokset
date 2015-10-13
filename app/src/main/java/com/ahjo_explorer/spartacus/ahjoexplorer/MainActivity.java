@@ -224,7 +224,7 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
                     break;
                 case 2:
                     //TODO
-                    frag =  FragmentDecisions.newInstance();
+                    frag =  FragmentAttachments.newInstance();
                     break;
                 default:
                     frag =  null;

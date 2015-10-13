@@ -96,6 +96,7 @@ public class FragmentMain extends Fragment implements View.OnClickListener, Data
         if(agenda_items == null){
 
             DataAccess.requestData(this, "/paatokset/v1/agenda_item/?order_by=-meeting");
+            DataAccess.requestData(this, "/paatokset/v1/agenda_item/?order_by=-meeting__date&limit=20&from_minutes=true");
             view.findViewById(R.id.progressBarContentLoadingFragmentMain).setVisibility(View.VISIBLE);
         }
         else{
