@@ -68,7 +68,7 @@ public class FragmentDecisions extends Fragment implements View.OnClickListener,
         //view_.findViewById(R.id.progressBarContentLoadingFragmentDecisions).setVisibility(View.INVISIBLE);
 
         //Register listeners
-        view.findViewById(R.id.buttonPlayVideo).setOnClickListener(this);
+        view.findViewById(R.id.buttonPlayVideoMP4).setOnClickListener(this);
         view.findViewById(R.id.buttonBackToUpFragmentDecisions).setOnClickListener(this);
 
         //Add new listener for webview content loading
@@ -133,17 +133,38 @@ public class FragmentDecisions extends Fragment implements View.OnClickListener,
             //Request for video data related to this agenda item's meeting
             String meeting_id = ((Map)m_data.get("meeting")).get("id").toString();
             //DataAccess.requestData(this, meeting_id);
+
+            //Also pass parameters to AttachmentFragment:
+            ((MainActivity) getActivity()).exchange(2, agenda_id);
+
         }
+        //Exception is thrown if data was not in correct format or we received something else than expected:
         catch (Exception e){
 
+            try {
+
+                Map m_data = new Gson().fromJson(data, Map.class);
+                //video_path = ((Map)((Map)((List)m_data.get("objects")).get(0)).get("local_copies")).get("video/mp4").toString();
+                video_path = ((Map)((Map)((List)m_data.get("objects")).get(0)).get("local_copies")).get("video/ogg").toString();
+
+                if(video_path != null){
+
+                    view_.findViewById(R.id.buttonPlayVideoMP4).setEnabled(true);
+                }
+                return;
+
+            }catch (NullPointerException e2){
+
+                Log.e("FragmentDecisions", "Error: " + e2.getMessage());
+                return;
+            }
 
         }
 
-        //Also pass parameters to AttachmentFragment:
-        ((MainActivity) getActivity()).exchange(2, agenda_id);
+        return;
 
         //TODO: just a dummy
-        video_path = "http://dev.hel.fi/paatokset/media/video/valtuusto180112b.ogv";
+        //video_path = "http://dev.hel.fi/paatokset/media/video/valtuusto180112b.ogv";
 
         //decisions = (List) decision_data.get("objects");
 
@@ -168,7 +189,7 @@ public class FragmentDecisions extends Fragment implements View.OnClickListener,
     @Override
     public void onClick(View v) {
 
-        if(v.getId() == R.id.buttonPlayVideo){
+        if(v.getId() == R.id.buttonPlayVideoMP4){
 
             Uri uri = Uri.parse(video_path);
             Intent intent = new Intent(Intent.ACTION_VIEW, uri);
@@ -186,7 +207,6 @@ public class FragmentDecisions extends Fragment implements View.OnClickListener,
 
             ((ScrollView) view_.findViewById(R.id.scrollView)).smoothScrollTo(0, 0);
         }
-
     }
 
     @Override
@@ -201,5 +221,12 @@ public class FragmentDecisions extends Fragment implements View.OnClickListener,
 
         //Data contains agenda id -> execute queries for detailed data
         DataAccess.requestData(this, "http://dev.hel.fi/paatokset/v1/agenda_item/" + agenda_id);
+
+        //Also query for matching video:
+        //Note: disable video button as there is no quarantee that video file exists before querying:
+        view_.findViewById(R.id.buttonPlayVideoMP4).setEnabled(false);
+
+        DataAccess.requestData(this, "http://dev.hel.fi/paatokset/v1/video/?agenda_item_=" + agenda_id);
+
     }
 }
