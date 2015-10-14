@@ -19,6 +19,40 @@
             android:paddingLeft="30dp"
             android:paddingRight="30dp">
 
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal">
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="► video (MP4)"
+                    android:id="@+id/buttonPlayVideoMP4"
+                    android:layout_gravity="top|center"
+                    android:visibility="visible"
+                    android:typeface="serif"
+                    android:enabled="false" />
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="► video (OGV)"
+                    android:id="@+id/buttonPlayVideoOGV"
+                    android:layout_gravity="top|center"
+                    android:visibility="visible"
+                    android:typeface="serif"
+                    android:enabled="false" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/imageLayoutVideoPreview"
+                android:orientation="horizontal"
+                android:layout_gravity="center"
+                android:gravity="center" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -38,32 +72,6 @@
 
         </LinearLayout>
     </ScrollView>
-
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal">
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="► video (MP4)"
-            android:id="@+id/buttonPlayVideoMP4"
-            android:layout_gravity="top|center"
-            android:visibility="visible"
-            android:typeface="serif"
-            android:enabled="false" />
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="► video (OGV)"
-            android:id="@+id/buttonPlayVideoOGV"
-            android:layout_gravity="top|center"
-            android:visibility="visible"
-            android:typeface="serif"
-            android:enabled="false" />
-    </LinearLayout>
 
     <ProgressBar
         style="?android:attr/progressBarStyleLarge"

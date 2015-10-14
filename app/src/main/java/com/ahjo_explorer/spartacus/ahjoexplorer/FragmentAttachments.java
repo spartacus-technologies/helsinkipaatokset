@@ -101,6 +101,11 @@ public class FragmentAttachments extends Fragment implements iFragmentDataExchan
         inflateAttachmentsData();
     }
 
+    @Override
+    public void BinaryDataAvailable(Object data) {
+
+    }
+
     void inflateAttachmentsData(){
 
         LinearLayout container = (LinearLayout) view_.findViewById(R.id.FragmentAttachmentsLinearLayoutContent);

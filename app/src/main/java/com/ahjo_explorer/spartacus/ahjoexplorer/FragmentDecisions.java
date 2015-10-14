@@ -2,6 +2,7 @@ package com.ahjo_explorer.spartacus.ahjoexplorer;
 
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -10,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.Toast;
@@ -34,6 +36,7 @@ public class FragmentDecisions extends Fragment implements View.OnClickListener,
     private String agenda_data_html;
     private String agenda_id;
     private String video_path_pm4;
+    private String video_screenshot_url;
 
     public static FragmentDecisions newInstance() {
 
@@ -147,6 +150,7 @@ public class FragmentDecisions extends Fragment implements View.OnClickListener,
             try {
 
                 Map m_data = new Gson().fromJson(data, Map.class);
+                video_screenshot_url = ((Map)((List)m_data.get("objects")).get(0)).get("screenshot_uri").toString();
                 video_path_pm4 = ((Map)((Map)((List)m_data.get("objects")).get(0)).get("local_copies")).get("video/mp4").toString();
                 video_path_ogv = ((Map)((Map)((List)m_data.get("objects")).get(0)).get("local_copies")).get("video/ogg").toString();
 
@@ -157,6 +161,10 @@ public class FragmentDecisions extends Fragment implements View.OnClickListener,
                 if(video_path_ogv != null){
 
                     view_.findViewById(R.id.buttonPlayVideoOGV).setEnabled(true);
+                }
+                if(video_screenshot_url != null){
+
+                    DataAccess.requestImageData(this, video_screenshot_url);
                 }
 
                 return;
@@ -176,6 +184,16 @@ public class FragmentDecisions extends Fragment implements View.OnClickListener,
 
         //decisions = (List) decision_data.get("objects");
 
+    }
+
+    @Override
+    public void BinaryDataAvailable(Object data) {
+
+        //Bitmap received: add to layout
+        ImageView img_view = new ImageView(getActivity());
+        img_view.setImageBitmap((Bitmap)data);
+        ((LinearLayout) view_.findViewById(R.id.imageLayoutVideoPreview)).removeAllViews();
+        ((LinearLayout) view_.findViewById(R.id.imageLayoutVideoPreview)).addView(img_view);
     }
 
     //Shows data

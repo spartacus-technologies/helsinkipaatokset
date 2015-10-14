@@ -28,11 +28,28 @@ public class DataAccess {
         task.execute(path);
     }
 
+    //Registers listener and executes GET Method. After completion executes listeners callback function.
+    public static void requestImageData(NetworkListener listener, String path) {
+
+        //Check if whole path is already present -> add if not:
+        if(!path.contains(API_PATH)){
+
+            path = API_PATH + path;
+        }
+        Log.i("DataAccess:requestData", "path=" + path);
+
+        ImageDownloadTask task = new ImageDownloadTask();
+        task.setNetworkListener(listener);
+
+        task.execute(path);
+    }
+
     //private static List<NetworkListener> listeners;
 
     public interface NetworkListener{
 
         void DataAvailable(String data);
+        void BinaryDataAvailable(Object data);
     }
     /*
     //Adds new listener to array

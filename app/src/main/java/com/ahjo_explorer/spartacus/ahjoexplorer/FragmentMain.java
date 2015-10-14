@@ -202,6 +202,11 @@ public class FragmentMain extends Fragment implements View.OnClickListener, Data
 
     }
 
+    @Override
+    public void BinaryDataAvailable(Object data) {
+
+    }
+
     /**
      * Function for generating all UI components for queried agendas
      */
