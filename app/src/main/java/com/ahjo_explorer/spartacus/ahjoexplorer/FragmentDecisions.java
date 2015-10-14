@@ -30,9 +30,10 @@ public class FragmentDecisions extends Fragment implements View.OnClickListener,
     private List decisions = null;
     View view_;
     final String EXTRA_POSITION	= "position";
-    private String video_path;
+    private String video_path_ogv;
     private String agenda_data_html;
     private String agenda_id;
+    private String video_path_pm4;
 
     public static FragmentDecisions newInstance() {
 
@@ -69,6 +70,7 @@ public class FragmentDecisions extends Fragment implements View.OnClickListener,
 
         //Register listeners
         view.findViewById(R.id.buttonPlayVideoMP4).setOnClickListener(this);
+        view.findViewById(R.id.buttonPlayVideoOGV).setOnClickListener(this);
         view.findViewById(R.id.buttonBackToUpFragmentDecisions).setOnClickListener(this);
 
         //Add new listener for webview content loading
@@ -89,6 +91,7 @@ public class FragmentDecisions extends Fragment implements View.OnClickListener,
             }
         });
         */
+
         //Set some default values for webview
         if(agenda_data_html == null || agenda_data_html.length() == 0){
 
@@ -144,13 +147,18 @@ public class FragmentDecisions extends Fragment implements View.OnClickListener,
             try {
 
                 Map m_data = new Gson().fromJson(data, Map.class);
-                //video_path = ((Map)((Map)((List)m_data.get("objects")).get(0)).get("local_copies")).get("video/mp4").toString();
-                video_path = ((Map)((Map)((List)m_data.get("objects")).get(0)).get("local_copies")).get("video/ogg").toString();
+                video_path_pm4 = ((Map)((Map)((List)m_data.get("objects")).get(0)).get("local_copies")).get("video/mp4").toString();
+                video_path_ogv = ((Map)((Map)((List)m_data.get("objects")).get(0)).get("local_copies")).get("video/ogg").toString();
 
-                if(video_path != null){
+                if(video_path_pm4 != null){
 
                     view_.findViewById(R.id.buttonPlayVideoMP4).setEnabled(true);
                 }
+                if(video_path_ogv != null){
+
+                    view_.findViewById(R.id.buttonPlayVideoOGV).setEnabled(true);
+                }
+
                 return;
 
             }catch (NullPointerException e2){
@@ -189,24 +197,46 @@ public class FragmentDecisions extends Fragment implements View.OnClickListener,
     @Override
     public void onClick(View v) {
 
-        if(v.getId() == R.id.buttonPlayVideoMP4){
+        switch (v.getId()){
 
-            Uri uri = Uri.parse(video_path);
-            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-            //intent.putExtra( EXTRA_POSITION, v.getId()*1000); //MX player: video position - if needed
+            case R.id.buttonPlayVideoMP4:
 
-            try {
-                startActivity(intent);
-            } catch (ActivityNotFoundException e) {
+                Uri uri = Uri.parse(video_path_pm4);
+                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                try {
+                    startActivity(intent);
+                } catch (ActivityNotFoundException e) {
 
-                Log.w("FragmentDefault", "onClick():ActivityNotFoundException");
-                Toast.makeText(getActivity(), "Warning: video player not found. Consider installing MX Player.", Toast.LENGTH_LONG).show();
-            }
+                    Log.w("FragmentDefault", "onClick():ActivityNotFoundException");
+                    Toast.makeText(getActivity(), "Warning: video player not found. Consider installing MX Player.", Toast.LENGTH_LONG).show();
+                }
+
+                break;
+
+            case R.id.buttonPlayVideoOGV:
+
+                uri = Uri.parse(video_path_ogv);
+                intent = new Intent(Intent.ACTION_VIEW, uri);
+                try {
+                    startActivity(intent);
+                } catch (ActivityNotFoundException e) {
+
+                    Log.w("FragmentDefault", "onClick():ActivityNotFoundException");
+                    Toast.makeText(getActivity(), "Warning: video player not found. Consider installing MX Player.", Toast.LENGTH_LONG).show();
+                }
+                break;
+
+            case R.id.buttonBackToUpFragmentDecisions:
+
+                ((ScrollView) view_.findViewById(R.id.scrollViewFragmentDecisions)).smoothScrollTo(0, 0);
+                break;
+
+
+            default:
+                Log.w("FragmentDecisions", "Unknown button");
+                break;
         }
-        else if(v.getId() == R.id.buttonBackToUpFragmentDecisions){
 
-            ((ScrollView) view_.findViewById(R.id.scrollView)).smoothScrollTo(0, 0);
-        }
     }
 
     @Override
@@ -225,6 +255,7 @@ public class FragmentDecisions extends Fragment implements View.OnClickListener,
         //Also query for matching video:
         //Note: disable video button as there is no quarantee that video file exists before querying:
         view_.findViewById(R.id.buttonPlayVideoMP4).setEnabled(false);
+        view_.findViewById(R.id.buttonPlayVideoOGV).setEnabled(false);
 
         DataAccess.requestData(this, "http://dev.hel.fi/paatokset/v1/video/?agenda_item_=" + agenda_id);
 

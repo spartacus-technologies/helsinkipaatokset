@@ -4,31 +4,6 @@
     tools:context="com.ahjo_explorer.spartacus.ahjoexplorer.FragmentMain">
 
     <!-- TODO: Update blank fragment layout -->
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal">
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="► video (MP4)"
-            android:id="@+id/buttonPlayVideoMP4"
-            android:layout_gravity="top|center"
-            android:visibility="visible"
-            android:typeface="serif"
-            android:enabled="false" />
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="► video (OGV)"
-            android:id="@+id/buttonPlayVideoOGG"
-            android:layout_gravity="top|center"
-            android:visibility="visible"
-            android:typeface="serif"
-            android:enabled="false" />
-    </LinearLayout>
 
     <ScrollView
         android:layout_width="fill_parent"
@@ -63,6 +38,32 @@
 
         </LinearLayout>
     </ScrollView>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="► video (MP4)"
+            android:id="@+id/buttonPlayVideoMP4"
+            android:layout_gravity="top|center"
+            android:visibility="visible"
+            android:typeface="serif"
+            android:enabled="false" />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="► video (OGV)"
+            android:id="@+id/buttonPlayVideoOGV"
+            android:layout_gravity="top|center"
+            android:visibility="visible"
+            android:typeface="serif"
+            android:enabled="false" />
+    </LinearLayout>
 
     <ProgressBar
         style="?android:attr/progressBarStyleLarge"
