@@ -1,4 +1,4 @@
-package com.ahjo_explorer.spartacus.ahjoexplorer;
+package com.spartacus.ahjoexplorer;
 
 import android.app.Activity;
 import android.net.Uri;
@@ -13,10 +13,10 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.ahjo_explorer.spartacus.ahjoexplorer.data_access.iFragmentDataExchange;
+import com.spartacus.ahjoexplorer.data_access.iFragmentDataExchange;
 import com.google.gson.Gson;
 
-import com.ahjo_explorer.spartacus.ahjoexplorer.data_access.DataAccess;
+import com.spartacus.ahjoexplorer.data_access.DataAccess;
 
 import java.io.UnsupportedEncodingException;
 import java.util.List;

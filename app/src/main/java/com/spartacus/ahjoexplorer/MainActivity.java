@@ -1,4 +1,4 @@
-package com.ahjo_explorer.spartacus.ahjoexplorer;
+package com.spartacus.ahjoexplorer;
 
 import java.util.HashMap;
 import java.util.Locale;
@@ -23,7 +23,7 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.ahjo_explorer.spartacus.ahjoexplorer.data_access.iFragmentDataExchange;
+import com.spartacus.ahjoexplorer.data_access.iFragmentDataExchange;
 
 public class MainActivity extends AppCompatActivity implements ActionBar.TabListener, FragmentMain.OnFragmentInteractionListener, iFragmentDataExchange {
 

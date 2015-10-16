@@ -1,4 +1,4 @@
-package com.ahjo_explorer.spartacus.ahjoexplorer;
+package com.spartacus.ahjoexplorer;
 
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
@@ -16,8 +16,8 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.Toast;
 
-import com.ahjo_explorer.spartacus.ahjoexplorer.data_access.DataAccess;
-import com.ahjo_explorer.spartacus.ahjoexplorer.data_access.iFragmentDataExchange;
+import com.spartacus.ahjoexplorer.data_access.DataAccess;
+import com.spartacus.ahjoexplorer.data_access.iFragmentDataExchange;
 import com.google.gson.Gson;
 
 import java.util.List;

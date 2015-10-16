@@ -1,4 +1,4 @@
-package com.ahjo_explorer.spartacus.ahjoexplorer.data_access;
+package com.spartacus.ahjoexplorer.data_access;
 
 /**
  * Created by Eetu on 2.10.2015.

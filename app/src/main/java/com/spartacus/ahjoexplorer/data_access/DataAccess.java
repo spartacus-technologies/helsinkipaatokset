@@ -1,4 +1,4 @@
-package com.ahjo_explorer.spartacus.ahjoexplorer.data_access;
+package com.spartacus.ahjoexplorer.data_access;
 
 import android.util.Log;
 

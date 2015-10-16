@@ -1,4 +1,4 @@
-package com.ahjo_explorer.spartacus.ahjoexplorer;
+package com.spartacus.ahjoexplorer;
 
 import android.app.ActionBar;
 import android.app.Activity;
@@ -13,10 +13,8 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.ahjo_explorer.spartacus.ahjoexplorer.R;
-import com.ahjo_explorer.spartacus.ahjoexplorer.data_access.DataAccess;
-import com.ahjo_explorer.spartacus.ahjoexplorer.data_access.iFragmentDataExchange;
 import com.google.gson.Gson;
+import com.spartacus.ahjoexplorer.data_access.DataAccess;
 
 import java.util.List;
 import java.util.Map;
@@ -29,7 +27,7 @@ import java.util.Map;
  * Use the {@link FragmentAttachments#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class FragmentAttachments extends Fragment implements iFragmentDataExchange, DataAccess.NetworkListener {
+public class FragmentAttachments extends Fragment implements com.spartacus.ahjoexplorer.data_access.iFragmentDataExchange, DataAccess.NetworkListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
