@@ -2,7 +2,6 @@ package com.spartacus.ahjoexplorer;
 
 import java.util.Locale;
 
-import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
@@ -19,7 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-public class MainActivity2 extends AppCompatActivity implements ActionBar.TabListener {
+public class MainActivity3 extends AppCompatActivity implements ActionBar.TabListener {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -39,7 +38,7 @@ public class MainActivity2 extends AppCompatActivity implements ActionBar.TabLis
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_main3);
 
         // Set up the action bar.
         final ActionBar actionBar = getSupportActionBar();
@@ -56,7 +55,7 @@ public class MainActivity2 extends AppCompatActivity implements ActionBar.TabLis
         // When swiping between different sections, select the corresponding
         // tab. We can also use ActionBar.Tab#select() to do this if we have
         // a reference to the Tab.
-        mViewPager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
+        mViewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
                 actionBar.setSelectedNavigationItem(position);
@@ -80,7 +79,7 @@ public class MainActivity2 extends AppCompatActivity implements ActionBar.TabLis
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main_activity2, menu);
+        getMenuInflater().inflate(R.menu.menu_main_activity3, menu);
         return true;
     }
 
@@ -128,8 +127,7 @@ public class MainActivity2 extends AppCompatActivity implements ActionBar.TabLis
         public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
-            //return FragmentMain.newInstance(position + 1);
-            return null;
+            return FragmentMain.newInstance(position + 1);
         }
 
         @Override
@@ -181,7 +179,7 @@ public class MainActivity2 extends AppCompatActivity implements ActionBar.TabLis
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_main_activity2, container, false);
+            View rootView = inflater.inflate(R.layout.fragment_main_activity3, container, false);
             return rootView;
         }
     }

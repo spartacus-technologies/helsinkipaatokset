@@ -48,7 +48,7 @@ public class ActivitySplashScreen extends AppCompatActivity implements View.OnCl
 
             case R.id.buttonContinueToApllication:
 
-                Intent intent = new Intent(this, MainActivity2.class);
+                Intent intent = new Intent(this, MainActivity3.class);
                 startActivity(intent);
 
 
