@@ -1,9 +1,9 @@
 package com.spartacus.ahjoexplorer;
 
 import android.app.Activity;
+import android.support.v4.app.Fragment;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,10 +13,11 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+/*
 import com.spartacus.ahjoexplorer.data_access.iFragmentDataExchange;
 import com.google.gson.Gson;
-
 import com.spartacus.ahjoexplorer.data_access.DataAccess;
+*/
 
 import java.io.UnsupportedEncodingException;
 import java.util.List;
@@ -30,7 +31,7 @@ import java.util.Map;
  * Use the {@link FragmentMain#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class FragmentMain extends Fragment implements View.OnClickListener, DataAccess.NetworkListener, iFragmentDataExchange, View.OnScrollChangeListener {
+public class FragmentMain extends Fragment implements View.OnClickListener, /*DataAccess.NetworkListener, iFragmentDataExchange, */ View.OnScrollChangeListener{
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -49,8 +50,41 @@ public class FragmentMain extends Fragment implements View.OnClickListener, Data
      * @param param2 Parameter 2.
      * @return A new instance of fragment FragmentMain.
      */
+    /**
+     * The fragment argument representing the section number for this
+     * fragment.
+     */
+    private static final String ARG_SECTION_NUMBER = "section_number";
+
+    /**
+     * Returns a new instance of this fragment for the given section
+     * number.
+     */
+    public static FragmentMain newInstance(int sectionNumber) {
+        FragmentMain fragment = new FragmentMain();
+        Bundle args = new Bundle();
+        args.putInt(ARG_SECTION_NUMBER, sectionNumber);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    public FragmentMain() {
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View rootView = inflater.inflate(R.layout.fragment_main, container, false);
+        return rootView;
+    }
+
+
+
+
+    /*
     // TODO: Rename and change types and number of parameters
-    public static FragmentMain newInstance(String param1, String param2) {
+    public static FragmentMain newInstance(int index) {
+
         FragmentMain fragment = new FragmentMain();
         Bundle args = new Bundle();
         args.putString("FragmentName", fragment.getClass().toString());
@@ -63,18 +97,8 @@ public class FragmentMain extends Fragment implements View.OnClickListener, Data
     public FragmentMain() {
         // Required empty public constructor
     }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        /*
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-        */
-    }
-
+    */
+/*
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -84,6 +108,8 @@ public class FragmentMain extends Fragment implements View.OnClickListener, Data
 
         View view = inflater.inflate(R.layout.fragment_main, container, false);
         view_ = view;
+        return view;
+
 
         //Register listeners
         view.findViewById(R.id.buttonTestAPI).setOnClickListener(this);
@@ -93,31 +119,23 @@ public class FragmentMain extends Fragment implements View.OnClickListener, Data
         //Request data if not already available
         if(agenda_items == null){
 
-            DataAccess.requestData(this, "/paatokset/v1/agenda_item/?order_by=-meeting");
-            DataAccess.requestData(this, "/paatokset/v1/agenda_item/?order_by=-meeting__date&limit=20&from_minutes=true");
+            //DataAccess.requestData(this, "/paatokset/v1/agenda_item/?order_by=-meeting");
+            //DataAccess.requestData(this, "/paatokset/v1/agenda_item/?order_by=-meeting__date&limit=20&from_minutes=true");
             view.findViewById(R.id.progressBarContentLoadingFragmentMain).setVisibility(View.VISIBLE);
         }
         else{
             fillMeetingsData();
         }
         return view;
-    }
 
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
     }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-    }
+    */
 
     @Override
     public void onClick(View v) {
 
-        Log.i("FragmentMain", "onClick");
-
+        //Log.i("FragmentMain", "onClick");
+        /*
         switch (v.getId()){
 
             case R.id.buttonTestAPI:
@@ -126,15 +144,17 @@ public class FragmentMain extends Fragment implements View.OnClickListener, Data
                 getActivity().findViewById(R.id.progressBarContentLoadingFragmentMain).setVisibility(View.VISIBLE);
                 //Clear current content
                 ((LinearLayout)getActivity().findViewById(R.id.linearLayoutFragmentMainMeetings)).removeAllViews();
-                DataAccess.requestData(this, "/paatokset/v1/agenda_item/?order_by=-meeting");
+                //DataAccess.requestData(this, "/paatokset/v1/agenda_item/?order_by=-meeting");
                 break;
             case R.id.buttonBackToUpFragmentMain:
 
                 ((ScrollView) getActivity().findViewById(R.id.scrollView)).smoothScrollTo(0, 0);
                 break;
         }
+        */
     }
 
+/*
     @Override
     public void DataAvailable(String data) {
 
@@ -153,31 +173,6 @@ public class FragmentMain extends Fragment implements View.OnClickListener, Data
             return;
         }
 
-
-        //Show received JSON:
-        //Examples & source: https://github.com/google/gson/blob/master/examples/android-proguard-example/src/com/google/gson/examples/android/GsonProguardExampleActivity.java
-        Gson gson = new Gson();
-
-        Map m_data;
-
-        try {
-
-            m_data = new Gson().fromJson(data, Map.class);
-
-            if(agenda_items == null){
-
-                agenda_items = (List) m_data.get("objects");
-            }else{
-                agenda_items.addAll((List) m_data.get("objects"));
-            }
-            next_path = (String)((Map)m_data.get("meta")).get("next");
-        }
-        catch (Exception e){
-
-            Log.e("FragmentMain", e.getMessage());
-            Toast.makeText(getActivity(), "Datahaun yhteydessä tapahtui virhe.", Toast.LENGTH_LONG).show();
-        }
-
         //Call GUI data updater
         fillMeetingsData();
 
@@ -190,7 +185,7 @@ public class FragmentMain extends Fragment implements View.OnClickListener, Data
     public void BinaryDataAvailable(Object data) {
 
     }
-
+*/
     /**
      * Function for generating all UI components for queried agendas
      */
@@ -255,10 +250,10 @@ public class FragmentMain extends Fragment implements View.OnClickListener, Data
 
                     //Fire event to target fragment:
                     Integer meeting_id = Double.valueOf(((Map) v.getTag()).get("id").toString()).intValue();
-                    ((MainActivity) getActivity()).exchange(1, meeting_id);
+                    //((MainActivity) getActivity()).exchange(1, meeting_id);
 
                     //Switch tab after clicking link
-                    ((MainActivity) getActivity()).getmViewPager().setCurrentItem(1);
+                    //((MainActivity) getActivity()).getmViewPager().setCurrentItem(1);
                 }
             });
 
@@ -300,14 +295,15 @@ public class FragmentMain extends Fragment implements View.OnClickListener, Data
         }
 
     }
+    /*
     @Override
     public void exchange(int target, Object data) {
 
     }
-
+    */
     @Override
     public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-
+        /*
         //Get scrollview and determine if we have reached bottom:
         ScrollView scrollview = (ScrollView) view_.findViewById(R.id.scrollView);
         int maxScrollAmount = scrollview.getChildAt(0).getMeasuredHeight();
@@ -321,9 +317,10 @@ public class FragmentMain extends Fragment implements View.OnClickListener, Data
         if(currentScroll >= maxScrollAmount && !isDataRequestActive()){
 
             //Request more data & show spinner:
-            DataAccess.requestData(this, next_path);
+            //DataAccess.requestData(this, next_path);
             getActivity().findViewById(R.id.progressBarContentLoadingFragmentMain).setVisibility(View.VISIBLE);
         }
+        */
     }
 
     //TODO: this is a bit ghetto

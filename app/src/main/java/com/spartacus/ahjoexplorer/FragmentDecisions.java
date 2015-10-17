@@ -2,10 +2,10 @@ package com.spartacus.ahjoexplorer;
 
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
+import android.app.Fragment;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -141,7 +141,7 @@ public class FragmentDecisions extends Fragment implements View.OnClickListener,
             //DataAccess.requestData(this, meeting_id);
 
             //Also pass parameters to AttachmentFragment:
-            ((MainActivity) getActivity()).exchange(2, agenda_id);
+            //((MainActivity) getActivity()).exchange(2, agenda_id);
 
         }
         //Exception is thrown if data was not in correct format or we received something else than expected:
@@ -191,8 +191,17 @@ public class FragmentDecisions extends Fragment implements View.OnClickListener,
 
         //Bitmap received: add to layout
         ImageView img_view = new ImageView(getActivity());
-        img_view.setImageBitmap((Bitmap)data);
+
+        //Layout params
+        //ViewGroup.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        //img_view.setLayoutParams(params);
+        img_view.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+
+        img_view.setImageBitmap((Bitmap) data);
+        img_view.setMinimumWidth(((LinearLayout) view_.findViewById(R.id.imageLayoutVideoPreview)).getWidth());
         ((LinearLayout) view_.findViewById(R.id.imageLayoutVideoPreview)).removeAllViews();
+
+        //view_.findViewById(R.id.imageLayoutVideoPreview).setLayoutParams(params);
         ((LinearLayout) view_.findViewById(R.id.imageLayoutVideoPreview)).addView(img_view);
     }
 
