@@ -31,7 +31,7 @@ import java.util.Map;
  * Use the {@link FragmentMain#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class FragmentMain extends Fragment implements View.OnClickListener, DataAccess.NetworkListener, iFragmentDataExchange, View.OnScrollChangeListener {
+public class FragmentMain extends Fragment implements View.OnClickListener, DataAccess.NetworkListener, iFragmentDataExchange /*, View.OnScrollChangeListener*/ {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -89,7 +89,7 @@ public class FragmentMain extends Fragment implements View.OnClickListener, Data
 
         //Register listeners
         view.findViewById(R.id.buttonTestAPI).setOnClickListener(this);
-        view.findViewById(R.id.scrollView).setOnScrollChangeListener(this);
+        //view.findViewById(R.id.scrollView).setOnScrollChangeListener(this);
         view.findViewById(R.id.buttonBackToUpFragmentMain).setOnClickListener(this);
 
         //Request data if not already available
@@ -321,7 +321,7 @@ public class FragmentMain extends Fragment implements View.OnClickListener, Data
 
     }
 
-    @Override
+    //@Override
     public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
 
         //Get scrollview and determine if we have reached bottom:
