@@ -1,4 +1,4 @@
-package com.spartacus.ahjoexplorer;
+package com.spartacus.helsinki_paatokset;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -12,8 +12,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
-import com.spartacus.ahjoexplorer.data_access.DataAccess;
-import com.spartacus.ahjoexplorer.data_access.iFragmentDataExchange;
+import com.spartacus.helsinki_paatokset.data_access.DataAccess;
+import com.spartacus.helsinki_paatokset.data_access.iFragmentDataExchange;
 
 import java.util.List;
 import java.util.Map;

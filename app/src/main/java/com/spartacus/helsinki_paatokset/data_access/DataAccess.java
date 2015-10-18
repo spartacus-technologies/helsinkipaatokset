@@ -1,9 +1,6 @@
-package com.spartacus.ahjoexplorer.data_access;
+package com.spartacus.helsinki_paatokset.data_access;
 
 import android.util.Log;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Eetu on 1.10.2015.

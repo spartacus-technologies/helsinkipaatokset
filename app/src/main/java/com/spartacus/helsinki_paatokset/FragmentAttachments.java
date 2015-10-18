@@ -1,7 +1,5 @@
-package com.spartacus.ahjoexplorer;
+package com.spartacus.helsinki_paatokset;
 
-import android.app.ActionBar;
-import android.app.Activity;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -14,7 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
-import com.spartacus.ahjoexplorer.data_access.DataAccess;
+import com.spartacus.helsinki_paatokset.data_access.DataAccess;
 
 import java.util.List;
 import java.util.Map;
@@ -27,7 +25,7 @@ import java.util.Map;
  * Use the {@link FragmentAttachments#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class FragmentAttachments extends Fragment implements com.spartacus.ahjoexplorer.data_access.iFragmentDataExchange, DataAccess.NetworkListener {
+public class FragmentAttachments extends Fragment implements com.spartacus.helsinki_paatokset.data_access.iFragmentDataExchange, DataAccess.NetworkListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";

@@ -1,4 +1,4 @@
-package com.spartacus.ahjoexplorer.data_access;
+package com.spartacus.helsinki_paatokset.data_access;
 
 /**
  * Created by Eetu on 5.10.2015.

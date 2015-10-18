@@ -1,10 +1,9 @@
-package com.spartacus.ahjoexplorer.data_access;
+package com.spartacus.helsinki_paatokset.data_access;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.util.Log;
-import android.widget.ImageView;
 
 import java.io.InputStream;
 

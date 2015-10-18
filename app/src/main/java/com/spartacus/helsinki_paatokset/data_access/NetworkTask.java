@@ -1,4 +1,4 @@
-package com.spartacus.ahjoexplorer.data_access;
+package com.spartacus.helsinki_paatokset.data_access;
 
 import android.os.AsyncTask;
 import android.util.Log;

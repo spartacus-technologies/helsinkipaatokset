@@ -1,4 +1,4 @@
-package com.spartacus.ahjoexplorer;
+package com.spartacus.helsinki_paatokset;
 
 import java.util.HashMap;
 import java.util.Locale;
@@ -19,7 +19,7 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.spartacus.ahjoexplorer.data_access.iFragmentDataExchange;
+import com.spartacus.helsinki_paatokset.data_access.iFragmentDataExchange;
 
 public class MainActivity extends AppCompatActivity implements ActionBar.TabListener, FragmentAgenda.OnFragmentInteractionListener, iFragmentDataExchange {
 
