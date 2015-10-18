@@ -8,6 +8,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -17,6 +19,8 @@ import com.spartacus.ahjoexplorer.data_access.iFragmentDataExchange;
 import com.google.gson.Gson;
 
 import com.spartacus.ahjoexplorer.data_access.DataAccess;
+
+import org.w3c.dom.Text;
 
 import java.io.UnsupportedEncodingException;
 import java.util.List;
@@ -42,6 +46,8 @@ public class FragmentAgenda extends Fragment implements View.OnClickListener, Da
     private List agenda_items;
     private String next_path;
     View view_ = null;
+    View popup;
+    boolean isPopupVisible = false;
 
     /**
      * Use this factory method to create a new instance of
@@ -89,6 +95,7 @@ public class FragmentAgenda extends Fragment implements View.OnClickListener, Da
         view.findViewById(R.id.buttonTestAPIFragmentAgenda).setOnClickListener(this);
         //view.findViewById(R.id.scrollView).setOnScrollChangeListener(this);
         view.findViewById(R.id.buttonBackToUpFragmentAgenda).setOnClickListener(this);
+        view_.setOnClickListener(this);
         /*
         //Request data if not already available
         if(agenda_items == null){
@@ -148,6 +155,9 @@ public class FragmentAgenda extends Fragment implements View.OnClickListener, Da
                 ((ScrollView) getActivity().findViewById(R.id.scrollViewFragmentAgenda)).smoothScrollTo(0, 0);
                 break;
         }
+
+        if(popup != null) ((FrameLayout)view_).removeView(popup);
+
     }
 
     @Override
@@ -235,83 +245,39 @@ public class FragmentAgenda extends Fragment implements View.OnClickListener, Da
             //=========
             ((TextView)view.findViewById(R.id.textViewHeader)).setText(temp.get("subject").toString());
             //((TextView)view.findViewById(R.id.textViewDate)).setText(((Map)temp.get("meeting")).get("date").toString());
-            ((TextView)view.findViewById(R.id.textViewDate)).setText(/*temp.get("id").toString()
-                                                                      + "  " + */
-                                                                    ((Map)temp.get("meeting")).get("date").toString()
-                                                                     /*
-                                                                     + "  " +
-                                                                    ((Map)temp.get("meeting")).get("id").toString()*/
-                                                                    );
+            view.findViewById(R.id.textViewDate).setVisibility(View.INVISIBLE);
 
+            view.setTag(temp); //add retrieved JSON as metadata
 
             //Register listeners for link:
-            //View link = view.findViewById(R.id.textViewMeetingLink);
-            //link.setTag(temp); //TODO: add retrieved JSON as metadata
-            ((TextView)view.findViewById(R.id.textViewHeader)).setTag(temp);
-            ((TextView)view.findViewById(R.id.textViewHeader)).setOnClickListener(new View.OnClickListener() {
+            view.setOnClickListener(new View.OnClickListener() {
 
                 @Override
                 public void onClick(View v) {
 
                     //((TextView)((View)v.getParent()).findViewById(R.id.textViewHeader)).getText()
 
-                    Object tag_data =  v.getTag();
+                    Map tag_data = (Map) v.getTag();
 
-                    /*
-                    Toast.makeText(getActivity(), "You clicked agenda item '"
-                            + ((Map) tag_data).get("subject").toString()
-                            + "'.", Toast.LENGTH_LONG).show();
-                    */
-
-                    //Invoke new data request in decisions fragment:
-                    //Fragment fragment = getActivity().getSupportFragmentManager().getFragment(null, "FragmentName");
-
-                    //Log.i("FragmentAgenda", "Fragment tag: " + fragment.getTag());
-
+                    Log.i("FragmentAgenda", tag_data.get("subject").toString());
                     //Fire event to target fragment:
                     Integer meeting_id = Double.valueOf(((Map) v.getTag()).get("id").toString()).intValue();
-                    ((MainActivity) getActivity()).exchange(1, meeting_id);
+                    //((MainActivity) getActivity()).exchange(1, meeting_id);
 
-                    //Switch tab after clicking link
-                    ((MainActivity) getActivity()).getmViewPager().setCurrentItem(1);
+
+                    if(popup != null){
+
+                        ((FrameLayout) view_).removeView(popup);
+                        popup = null;
+                        return;
+                    }
+                    String agenda_data = ((Map)((List)tag_data.get("content")).get(0)).get("text").toString();
+                    popup = getActivity().getLayoutInflater().inflate(R.layout.pop_up_agenda, null, false);
+                    ((TextView)popup.findViewById(R.id.textViewHederPopup)).setText(tag_data.get("subject").toString());
+                    ((WebView)popup.findViewById(R.id.webViewPopup)).loadDataWithBaseURL(null, agenda_data, "text/html", "UTF-8", null);
+                    ((FrameLayout) view_).addView(popup);
                 }
             });
-
-
-
-            /*
-            ((TextView)getActivity().findViewById(R.id.textViewFragmentMainTest)).setText(dates);
-
-            //Create wrapping container for text data:
-            LinearLayout wrapper = new LinearLayout(getActivity());
-            wrapper.setOrientation(LinearLayout.VERTICAL);
-            wrapper.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-            //LinearLayout.LayoutParams params = new LinearLayout.LayoutParams();
-            //params.width = LinearLayout.Fi
-            //wrapper.setLayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-
-            //Create textView for header
-            TextView header = new TextView(getActivity());
-            header.setText( temp.get("policymaker_name").toString());
-            header.setTextSize(18);
-
-            //Create textView for date
-            TextView date = new TextView(getActivity());
-            date.setText(temp.get("date").toString());
-            date.setTextSize(12);
-
-            //Create empty view as spacer
-            View spacer = new View(getActivity());
-            spacer.setMinimumHeight(30);
-
-            //Add all views to wrapper
-            wrapper.addView(header);
-            wrapper.addView(date);
-            wrapper.addView(spacer);
-
-            //Add wrapper to main linear layout
-            ((LinearLayout) getActivity().findViewById(R.id.linearLayoutFragmentMainMeetings)).addView(wrapper);
-            */
         }
 
     }

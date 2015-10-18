@@ -117,13 +117,15 @@ public class FragmentMeetings extends Fragment implements View.OnClickListener, 
 
             m_data = new Gson().fromJson(data, Map.class);
 
+            meetings = (List) m_data.get("objects");
+            /*
             if(meetings == null){
 
-                meetings = (List) m_data.get("objects");
             }else{
                 meetings.addAll((List) m_data.get("objects"));
             }
-            next_path = (String)((Map)m_data.get("meta")).get("next");
+            */
+            //next_path = (String)((Map)m_data.get("meta")).get("next");
         }
         catch (Exception e){
 
@@ -140,6 +142,15 @@ public class FragmentMeetings extends Fragment implements View.OnClickListener, 
 
         //Empty current list:
         ((LinearLayout)view_.findViewById(R.id.linearLayoutFragmentMeetings)).removeAllViews();
+
+        //Check that there actually are meetings:
+        if(meetings.size() == 0){
+
+            View view = getActivity().getLayoutInflater().inflate(R.layout.layout_single_meeting, null, false);
+            ((LinearLayout)view_.findViewById(R.id.linearLayoutFragmentMeetings)).addView(view);
+
+            ((TextView)view.findViewById(R.id.textViewHeader)).setText("Ei kokouksia.");
+        }
 
         String dates = "";
         //Loop all meetings and construct needed UI components with data:
