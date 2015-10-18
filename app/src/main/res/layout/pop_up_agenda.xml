@@ -36,10 +36,29 @@
                 android:id="@+id/scrollView"
                 android:layout_gravity="center" >
 
-                <WebView
+                <LinearLayout
+                    android:orientation="vertical"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/webViewPopup" />
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text="Liitteet:"
+                        android:id="@+id/textView3" />
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:id="@+id/linearLayoutAttachmentsPopupAgenda"
+                        android:layout_height="wrap_content"></LinearLayout>
+
+                    <WebView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/webViewPopup" />
+                </LinearLayout>
             </ScrollView>
         </LinearLayout>
 

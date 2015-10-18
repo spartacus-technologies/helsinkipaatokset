@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.Html;
+import android.text.method.LinkMovementMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -96,18 +98,7 @@ public class FragmentAgenda extends Fragment implements View.OnClickListener, Da
         //view.findViewById(R.id.scrollView).setOnScrollChangeListener(this);
         view.findViewById(R.id.buttonControlBottomFragmentAgenda).setOnClickListener(this);
         view_.setOnClickListener(this);
-        /*
-        //Request data if not already available
-        if(agenda_items == null){
 
-            DataAccess.requestData(this, "/paatokset/v1/agenda_item/?order_by=-meeting");
-            DataAccess.requestData(this, "/paatokset/v1/agenda_item/?order_by=-meeting__date&limit=20&from_minutes=true");
-            view.findViewById(R.id.progressBarContentLoadingFragmentMain).setVisibility(View.VISIBLE);
-        }
-        else{
-            fillMeetingsData();
-        }
-        */
         return view;
     }
 
@@ -282,6 +273,54 @@ public class FragmentAgenda extends Fragment implements View.OnClickListener, Da
                     String agenda_data = ((Map)((List)tag_data.get("content")).get(0)).get("text").toString();
                     popup = getActivity().getLayoutInflater().inflate(R.layout.pop_up_agenda, null, false);
                     ((TextView)popup.findViewById(R.id.textViewHederPopup)).setText(tag_data.get("subject").toString());
+
+                    //Attachments
+                    //===========
+
+                    if(((List)tag_data.get("attachments")).size() == 0){
+
+                        TextView tv =new TextView(getActivity());
+                        tv.setText("(ei liitteitä)");
+                        ((LinearLayout) popup.findViewById(R.id.linearLayoutAttachmentsPopupAgenda)).addView(tv);
+
+                    }else{
+
+                        LinearLayout container = (LinearLayout) popup.findViewById(R.id.linearLayoutAttachmentsPopupAgenda);
+
+                        for (Object attachment : (List)tag_data.get("attachments")) {
+
+                            TextView tv_att = new TextView(getActivity());
+                            TextView tv_type = new TextView(getActivity());
+
+                            LinearLayout inner_container = new LinearLayout(getActivity());
+                            inner_container.setLayoutParams(container.getLayoutParams());
+                            inner_container.setOrientation(LinearLayout.VERTICAL);
+
+                            //Check if attachment is public
+                            if(!(boolean)((Map)attachment).get("public")){
+
+                                tv_att.setText("(sisältö ei julkisesti saatavilla)");
+                            }
+                            else{
+
+                                String html_data = "<a href=" + ((Map)attachment).get("file_uri").toString() + ">" + ((Map)attachment).get("name").toString()
+                                        + " (" + ((Map)attachment).get("file_type").toString() + ")";
+                                tv_att.setText(Html.fromHtml(html_data));
+                                tv_att.setMovementMethod(LinkMovementMethod.getInstance());
+
+                                tv_type.setText(" (" + ((Map)attachment).get("file_type").toString() + ")");
+
+                                //tv_att.setText(((Map) attachment).get("name").toString());
+                            }
+                            inner_container.addView(tv_att);
+                            //inner_container.addView(tv_type);
+                            container.addView(inner_container);
+                        }
+                    }
+
+
+
+
                     ((WebView)popup.findViewById(R.id.webViewPopup)).loadDataWithBaseURL(null, agenda_data, "text/html", "UTF-8", null);
                     ((FrameLayout) view_).addView(popup);
 
