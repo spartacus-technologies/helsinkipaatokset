@@ -144,8 +144,9 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_twitter) {
 
-            String tweetUrl = "https://twitter.com/intent/tweet?text=PUT TEXT HERE"
-                    + "&hashtags=HelsinkiPäätökset";
+            //String tweetUrl = "https://twitter.com/intent/tweet?text=Katselen avointa päätösdata @HKIPaatokset avulla! Katso sinäkin: www.spartacus-technologies.fi&hashtags=HelsinginKaupunki, HelsinkiPäätökset";
+            String tweetUrl = "https://twitter.com/intent/tweet?text=Katselen avointa päätösdata @HKIPaatokset avulla! Katso sinäkin: URL&hashtags=HelsinginKaupunki, HelsinkiPäätökset";
+                    //+ "&hashtags=#HelsinginKaupunki, HelsinkiPäätökset";
             Uri uri = Uri.parse(tweetUrl);
             startActivity(new Intent(Intent.ACTION_VIEW, uri));
             return true;
