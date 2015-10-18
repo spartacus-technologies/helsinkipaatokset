@@ -7,7 +7,7 @@
     <ScrollView
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:id="@+id/scrollView" >
+        android:id="@+id/scrollViewFragmentAgenda" >
 
             <LinearLayout
                 android:orientation="vertical"
@@ -18,14 +18,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Päivitä"
-                    android:id="@+id/buttonTestAPI"
+                    android:id="@+id/buttonTestAPIFragmentAgenda"
                     android:layout_gravity="top|center" />
 
                 <LinearLayout
                     android:orientation="vertical"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:id="@+id/linearLayoutFragmentMainMeetings"
+                    android:id="@+id/linearLayoutFragmentAgenda"
                     android:gravity="center_horizontal"
                     android:paddingLeft="0dp"
                     android:paddingRight="0dp"></LinearLayout>
@@ -44,7 +44,7 @@
         style="?android:attr/progressBarStyleLarge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/progressBarContentLoadingFragmentMain"
+        android:id="@+id/progressBarContentLoadingFragmentAgenda"
         android:layout_gravity="center"
         android:indeterminate="false"
         android:visibility="invisible" />
@@ -52,7 +52,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="↑ ylös"
-        android:id="@+id/buttonBackToUpFragmentMain"
+        android:id="@+id/buttonBackToUpFragmentAgenda"
         android:visibility="visible"
         android:layout_gravity="center_horizontal|bottom" />
 </FrameLayout>

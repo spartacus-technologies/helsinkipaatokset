@@ -39,6 +39,8 @@ public class FragmentMeetings extends Fragment implements View.OnClickListener, 
     private String next_path;
     private List meetings;
 
+    private int policy_maker = -1;
+
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
@@ -78,8 +80,17 @@ public class FragmentMeetings extends Fragment implements View.OnClickListener, 
         view_ = inflater.inflate(R.layout.fragment_meetings, container, false);
 
         //Request meetings data
-        DataAccess.requestData(this, "http://dev.hel.fi/paatokset/v1/meeting/");
 
+        //For all policy makers:
+        /*
+        if(policy_maker < 0){
+            DataAccess.requestData(this, "http://dev.hel.fi/paatokset/v1/meeting/");
+        }
+        //For specific policy maker:
+        else{
+            DataAccess.requestData(this, "http://dev.hel.fi/paatokset/v1/meeting/?limit=1000&offset=0&policymaker=" + policy_maker);
+        }
+        */
         //Register listeners
         view_.findViewById(R.id.buttonUpdateFragmentMeetings).setOnClickListener(this);
         //view.findViewById(R.id.scrollView).setOnScrollChangeListener(this);
@@ -143,7 +154,7 @@ public class FragmentMeetings extends Fragment implements View.OnClickListener, 
 
             //Set data:
             //=========
-            ((TextView)view.findViewById(R.id.textViewHeader)).setText(temp.get("policymaker_name").toString());
+            ((TextView)view.findViewById(R.id.textViewHeader)).setText("Kokous");
             //((TextView)view.findViewById(R.id.textViewDate)).setText(((Map)temp.get("meeting")).get("date").toString());
             ((TextView)view.findViewById(R.id.textViewDate)).setText(/*temp.get("id").toString()
                                                                       + "  " + */
@@ -180,10 +191,10 @@ public class FragmentMeetings extends Fragment implements View.OnClickListener, 
 
                     //Fire event to target fragment:
                     Integer meeting_id = Double.valueOf(((Map) v.getTag()).get("id").toString()).intValue();
-                    ((MainActivity) getActivity()).exchange(1, meeting_id);
+                    ((MainActivity) getActivity()).exchange(2, meeting_id);
 
                     //Switch tab after clicking link
-                    ((MainActivity) getActivity()).getmViewPager().setCurrentItem(1);
+                    ((MainActivity) getActivity()).getmViewPager().setCurrentItem(2);
                 }
             });
 
@@ -256,5 +267,17 @@ public class FragmentMeetings extends Fragment implements View.OnClickListener, 
     @Override
     public void exchange(int target, Object data) {
 
+        //Data provided is policy maker id:
+        try {
+
+            policy_maker = (int) data;
+
+        }catch (Exception e){
+
+            Log.e("FragmentMeetings", "Exception:" + e.getMessage());
+            return;
+        }
+
+        DataAccess.requestData(this, "http://dev.hel.fi/paatokset/v1/meeting/?limit=1000&offset=0&policymaker=" + policy_maker);
     }
 }

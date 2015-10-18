@@ -219,11 +219,11 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
                     frag = FragmentPolicyMakers.newInstance();
                     break;
                 case 1:
-                    frag =  FragmentDecisions.newInstance();
+                    frag =  FragmentMeetings.newInstance();
                     break;
                 case 2:
                     //TODO
-                    frag =  FragmentAttachments.newInstance();
+                    frag =  FragmentAgenda.newInstance();
                     break;
                 default:
                     frag =  null;

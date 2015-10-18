@@ -108,6 +108,9 @@ public class FragmentPolicyMakers extends Fragment implements View.OnClickListen
 
             //All good ->  inflate views
             inflatePolicyMakerData();
+
+            //Hide loading animation:
+            view_.findViewById(R.id.progressBarContentLoadingFragmentPolicyMakers).setVisibility(View.INVISIBLE);
         }
 
     }
@@ -149,8 +152,8 @@ public class FragmentPolicyMakers extends Fragment implements View.OnClickListen
                     Object tag_data = v.getTag();
 
                     //Fire event to target fragment:
-                    Integer meeting_id = Double.valueOf(((Map) v.getTag()).get("id").toString()).intValue();
-                    ((MainActivity) getActivity()).exchange(1, meeting_id);
+                    Integer policy_maker_id = Double.valueOf(((Map) v.getTag()).get("id").toString()).intValue();
+                    ((MainActivity) getActivity()).exchange(1, policy_maker_id);
 
                     //Switch tab after clicking link
                     ((MainActivity) getActivity()).getmViewPager().setCurrentItem(1);

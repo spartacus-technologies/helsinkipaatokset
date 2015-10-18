@@ -47,12 +47,10 @@ public class FragmentAgenda extends Fragment implements View.OnClickListener, Da
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
      * @return A new instance of fragment FragmentAgenda.
      */
     // TODO: Rename and change types and number of parameters
-    public static FragmentAgenda newInstance(String param1, String param2) {
+    public static FragmentAgenda newInstance() {
         FragmentAgenda fragment = new FragmentAgenda();
         Bundle args = new Bundle();
         args.putString("FragmentName", fragment.getClass().toString());
@@ -88,10 +86,10 @@ public class FragmentAgenda extends Fragment implements View.OnClickListener, Da
         view_ = view;
 
         //Register listeners
-        view.findViewById(R.id.buttonTestAPI).setOnClickListener(this);
+        view.findViewById(R.id.buttonTestAPIFragmentAgenda).setOnClickListener(this);
         //view.findViewById(R.id.scrollView).setOnScrollChangeListener(this);
-        view.findViewById(R.id.buttonBackToUpFragmentMain).setOnClickListener(this);
-
+        view.findViewById(R.id.buttonBackToUpFragmentAgenda).setOnClickListener(this);
+        /*
         //Request data if not already available
         if(agenda_items == null){
 
@@ -102,6 +100,7 @@ public class FragmentAgenda extends Fragment implements View.OnClickListener, Da
         else{
             fillMeetingsData();
         }
+        */
         return view;
     }
 
@@ -136,17 +135,17 @@ public class FragmentAgenda extends Fragment implements View.OnClickListener, Da
 
         switch (v.getId()){
 
-            case R.id.buttonTestAPI:
+            case R.id.buttonTestAPIFragmentAgenda:
 
                 //Display loading spinner and remove all children:
-                getActivity().findViewById(R.id.progressBarContentLoadingFragmentMain).setVisibility(View.VISIBLE);
+                getActivity().findViewById(R.id.progressBarContentLoadingFragmentAgenda).setVisibility(View.VISIBLE);
                 //Clear current content
-                ((LinearLayout)getActivity().findViewById(R.id.linearLayoutFragmentMainMeetings)).removeAllViews();
+                ((LinearLayout)getActivity().findViewById(R.id.linearLayoutFragmentAgenda)).removeAllViews();
                 DataAccess.requestData(this, "/paatokset/v1/agenda_item/?order_by=-meeting");
                 break;
-            case R.id.buttonBackToUpFragmentMain:
+            case R.id.buttonBackToUpFragmentAgenda:
 
-                ((ScrollView) getActivity().findViewById(R.id.scrollView)).smoothScrollTo(0, 0);
+                ((ScrollView) getActivity().findViewById(R.id.scrollViewFragmentAgenda)).smoothScrollTo(0, 0);
                 break;
         }
     }
@@ -198,7 +197,7 @@ public class FragmentAgenda extends Fragment implements View.OnClickListener, Da
         fillMeetingsData();
 
         //Hide spinner to indicate loading is complete:
-        getActivity().findViewById(R.id.progressBarContentLoadingFragmentMain).setVisibility(View.INVISIBLE);
+        getActivity().findViewById(R.id.progressBarContentLoadingFragmentAgenda).setVisibility(View.INVISIBLE);
 
     }
 
@@ -219,7 +218,7 @@ public class FragmentAgenda extends Fragment implements View.OnClickListener, Da
         }
 
         //Empty current list:
-        ((LinearLayout)view_.findViewById(R.id.linearLayoutFragmentMainMeetings)).removeAllViews();
+        ((LinearLayout)view_.findViewById(R.id.linearLayoutFragmentAgenda)).removeAllViews();
 
         String dates = "";
         //Loop all meetings and construct needed UI components with data:
@@ -230,7 +229,7 @@ public class FragmentAgenda extends Fragment implements View.OnClickListener, Da
             //String text = temp.get("date").toString() + " " + temp.get("subject").toString() + '\n';
 
             View view = getActivity().getLayoutInflater().inflate(R.layout.layout_single_meeting, null, false);
-            ((LinearLayout)view_.findViewById(R.id.linearLayoutFragmentMainMeetings)).addView(view);
+            ((LinearLayout)view_.findViewById(R.id.linearLayoutFragmentAgenda)).addView(view);
 
             //Set data:
             //=========
@@ -319,6 +318,9 @@ public class FragmentAgenda extends Fragment implements View.OnClickListener, Da
     @Override
     public void exchange(int target, Object data) {
 
+        Log.i("FragmentAgenda", "exchange");
+        DataAccess.requestData(this, "http://dev.hel.fi/paatokset/v1/agenda_item/?limit=1000&offset=0&show_all=1&meeting=" + (int) data);
+        view_.findViewById(R.id.progressBarContentLoadingFragmentAgenda).setVisibility(View.VISIBLE);
     }
 
     //@Override
@@ -338,14 +340,14 @@ public class FragmentAgenda extends Fragment implements View.OnClickListener, Da
 
             //Request more data & show spinner:
             DataAccess.requestData(this, next_path);
-            getActivity().findViewById(R.id.progressBarContentLoadingFragmentMain).setVisibility(View.VISIBLE);
+            getActivity().findViewById(R.id.progressBarContentLoadingFragmentAgenda).setVisibility(View.VISIBLE);
         }
     }
 
     //TODO: this is a bit ghetto
     boolean isDataRequestActive(){
 
-        return getActivity().findViewById(R.id.progressBarContentLoadingFragmentMain).getVisibility() == View.VISIBLE;
+        return getActivity().findViewById(R.id.progressBarContentLoadingFragmentAgenda).getVisibility() == View.VISIBLE;
     }
 
     /**
