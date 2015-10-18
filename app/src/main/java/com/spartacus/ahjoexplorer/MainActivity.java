@@ -216,7 +216,7 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
                 case 0:
 
                     //frag = FragmentAgenda.newInstance(null, null);
-                    frag = FragmentMeetings.newInstance();
+                    frag = FragmentPolicyMakers.newInstance();
                     break;
                 case 1:
                     frag =  FragmentDecisions.newInstance();

@@ -71,6 +71,10 @@ public class FragmentMeetings extends Fragment implements View.OnClickListener, 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+        //view_ = inflater.inflate(R.layout.splashscreen, container, false);
+
+        //return view_;
+
         view_ = inflater.inflate(R.layout.fragment_meetings, container, false);
 
         //Request meetings data
@@ -83,6 +87,7 @@ public class FragmentMeetings extends Fragment implements View.OnClickListener, 
 
         // Inflate the layout for this fragment
         return view_;
+
     }
 
     @Override
@@ -160,7 +165,7 @@ public class FragmentMeetings extends Fragment implements View.OnClickListener, 
 
                     //((TextView)((View)v.getParent()).findViewById(R.id.textViewHeader)).getText()
 
-                    Object tag_data =  v.getTag();
+                    Object tag_data = v.getTag();
 
                     /*
                     Toast.makeText(getActivity(), "You clicked agenda item '"

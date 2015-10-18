@@ -1,0 +1,59 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.spartacus.ahjoexplorer.FragmentPolicyMakers">
+
+    <!-- TODO: Update blank fragment layout -->
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:id="@+id/scrollViewFragmentPolicyMakers" >
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Päivitä"
+                android:id="@+id/buttonUpdateFragmentPolicyMakers"
+                android:layout_gravity="top|center" />
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/linearLayoutFragmentPolicyMakers"
+                android:gravity="center_horizontal"
+                android:paddingLeft="0dp"
+                android:paddingRight="0dp"></LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:text="New Text"
+        android:id="@+id/textViewDebug"
+        android:visibility="gone" />
+
+    <ProgressBar
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/progressBarContentLoadingFragmentPolicyMakers"
+        android:layout_gravity="center"
+        android:indeterminate="false"
+        android:visibility="invisible" />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="↑ ylös"
+        android:id="@+id/buttonBackToUpFragmentPolicyMakers"
+        android:visibility="visible"
+        android:layout_gravity="center_horizontal|bottom" />
+
+</FrameLayout>
