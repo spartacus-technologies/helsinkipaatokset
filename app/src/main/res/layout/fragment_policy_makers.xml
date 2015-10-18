@@ -19,7 +19,8 @@
                 android:layout_height="wrap_content"
                 android:text="Päivitä"
                 android:id="@+id/buttonUpdateFragmentPolicyMakers"
-                android:layout_gravity="top|center" />
+                android:layout_gravity="top|center"
+                android:visibility="gone" />
 
             <LinearLayout
                 android:orientation="vertical"

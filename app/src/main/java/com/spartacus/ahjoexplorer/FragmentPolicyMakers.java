@@ -69,9 +69,11 @@ public class FragmentPolicyMakers extends Fragment implements View.OnClickListen
         //view.findViewById(R.id.scrollView).setOnScrollChangeListener(this);
         view_.findViewById(R.id.buttonBackToUpFragmentPolicyMakers).setOnClickListener(this);
 
-
         //Request data:
-        DataAccess.requestData(this, "http://dev.hel.fi/paatokset/v1/policymaker/?limit=200");
+        if(policy_makers == null)
+            DataAccess.requestData(this, "http://dev.hel.fi/paatokset/v1/policymaker/?limit=200");
+        else
+            inflatePolicyMakerData();
 
         return view_;
     }
@@ -142,9 +144,9 @@ public class FragmentPolicyMakers extends Fragment implements View.OnClickListen
 
             //Register listeners for link:
             //View link = view.findViewById(R.id.textViewMeetingLink);
-            //link.setTag(temp); //TODO: add retrieved JSON as metadata
-            ((TextView) view.findViewById(R.id.textViewHeader)).setTag(temp);
-            ((TextView) view.findViewById(R.id.textViewHeader)).setOnClickListener(new View.OnClickListener() {
+            view.setTag(temp);
+            //view.findViewById(R.id.textViewHeader).setTag(temp);
+            view.setOnClickListener(new View.OnClickListener() {
 
                 @Override
                 public void onClick(View v) {
