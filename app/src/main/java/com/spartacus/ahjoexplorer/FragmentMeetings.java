@@ -167,27 +167,14 @@ public class FragmentMeetings extends Fragment implements View.OnClickListener, 
 
             //Register listeners for link:
             //View link = view.findViewById(R.id.textViewMeetingLink);
-            //link.setTag(temp); //TODO: add retrieved JSON as metadata
-            ((TextView)view.findViewById(R.id.textViewHeader)).setTag(temp);
-            ((TextView)view.findViewById(R.id.textViewHeader)).setOnClickListener(new View.OnClickListener() {
+            view.setTag(temp);
+            //((TextView)view.findViewById(R.id.textViewHeader)).setOnClickListener(new View.OnClickListener() {
+            view.setOnClickListener(new View.OnClickListener() {
 
                 @Override
                 public void onClick(View v) {
 
-                    //((TextView)((View)v.getParent()).findViewById(R.id.textViewHeader)).getText()
-
                     Object tag_data = v.getTag();
-
-                    /*
-                    Toast.makeText(getActivity(), "You clicked agenda item '"
-                            + ((Map) tag_data).get("subject").toString()
-                            + "'.", Toast.LENGTH_LONG).show();
-                    */
-
-                    //Invoke new data request in decisions fragment:
-                    //Fragment fragment = getActivity().getSupportFragmentManager().getFragment(null, "FragmentName");
-
-                    //Log.i("FragmentAgenda", "Fragment tag: " + fragment.getTag());
 
                     //Fire event to target fragment:
                     Integer meeting_id = Double.valueOf(((Map) v.getTag()).get("id").toString()).intValue();
@@ -197,42 +184,6 @@ public class FragmentMeetings extends Fragment implements View.OnClickListener, 
                     ((MainActivity) getActivity()).getmViewPager().setCurrentItem(2);
                 }
             });
-
-
-
-            /*
-            ((TextView)getActivity().findViewById(R.id.textViewFragmentMainTest)).setText(dates);
-
-            //Create wrapping container for text data:
-            LinearLayout wrapper = new LinearLayout(getActivity());
-            wrapper.setOrientation(LinearLayout.VERTICAL);
-            wrapper.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-            //LinearLayout.LayoutParams params = new LinearLayout.LayoutParams();
-            //params.width = LinearLayout.Fi
-            //wrapper.setLayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-
-            //Create textView for header
-            TextView header = new TextView(getActivity());
-            header.setText( temp.get("policymaker_name").toString());
-            header.setTextSize(18);
-
-            //Create textView for date
-            TextView date = new TextView(getActivity());
-            date.setText(temp.get("date").toString());
-            date.setTextSize(12);
-
-            //Create empty view as spacer
-            View spacer = new View(getActivity());
-            spacer.setMinimumHeight(30);
-
-            //Add all views to wrapper
-            wrapper.addView(header);
-            wrapper.addView(date);
-            wrapper.addView(spacer);
-
-            //Add wrapper to main linear layout
-            ((LinearLayout) getActivity().findViewById(R.id.linearLayoutFragmentMainMeetings)).addView(wrapper);
-            */
         }
 
     }
