@@ -17,15 +17,10 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.ViewGroup;
-import android.widget.FrameLayout;
-import android.widget.LinearLayout;
-import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import com.spartacus.ahjoexplorer.data_access.iFragmentDataExchange;
 
-public class MainActivity extends AppCompatActivity implements ActionBar.TabListener, FragmentMain.OnFragmentInteractionListener, iFragmentDataExchange {
+public class MainActivity extends AppCompatActivity implements ActionBar.TabListener, FragmentAgenda.OnFragmentInteractionListener, iFragmentDataExchange {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -44,6 +39,9 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        Log.d("MainActivity", "Starting application...");
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -217,7 +215,8 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
 
                 case 0:
 
-                    frag = FragmentMain.newInstance(null, null);
+                    //frag = FragmentAgenda.newInstance(null, null);
+                    frag = FragmentMeetings.newInstance();
                     break;
                 case 1:
                     frag =  FragmentDecisions.newInstance();
@@ -235,7 +234,7 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
 
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
-            //return FragmentMain.newInstance(null, null);
+            //return FragmentAgenda.newInstance(null, null);
         }
 
         @Override

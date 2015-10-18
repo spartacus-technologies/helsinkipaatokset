@@ -26,12 +26,12 @@ import java.util.Map;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link FragmentMain.OnFragmentInteractionListener} interface
+ * {@link FragmentAgenda.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link FragmentMain#newInstance} factory method to
+ * Use the {@link FragmentAgenda#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class FragmentMain extends Fragment implements View.OnClickListener, DataAccess.NetworkListener, iFragmentDataExchange /*, View.OnScrollChangeListener*/ {
+public class FragmentAgenda extends Fragment implements View.OnClickListener, DataAccess.NetworkListener, iFragmentDataExchange /*, View.OnScrollChangeListener*/ {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -49,11 +49,11 @@ public class FragmentMain extends Fragment implements View.OnClickListener, Data
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment FragmentMain.
+     * @return A new instance of fragment FragmentAgenda.
      */
     // TODO: Rename and change types and number of parameters
-    public static FragmentMain newInstance(String param1, String param2) {
-        FragmentMain fragment = new FragmentMain();
+    public static FragmentAgenda newInstance(String param1, String param2) {
+        FragmentAgenda fragment = new FragmentAgenda();
         Bundle args = new Bundle();
         args.putString("FragmentName", fragment.getClass().toString());
         //args.putString(ARG_PARAM2, param2);
@@ -62,7 +62,7 @@ public class FragmentMain extends Fragment implements View.OnClickListener, Data
         return fragment;
     }
 
-    public FragmentMain() {
+    public FragmentAgenda() {
         // Required empty public constructor
     }
 
@@ -84,7 +84,7 @@ public class FragmentMain extends Fragment implements View.OnClickListener, Data
 
         // Inflate the layout for this fragment
 
-        View view = inflater.inflate(R.layout.fragment_main, container, false);
+        View view = inflater.inflate(R.layout.fragment_agenda, container, false);
         view_ = view;
 
         //Register listeners
@@ -132,7 +132,7 @@ public class FragmentMain extends Fragment implements View.OnClickListener, Data
     @Override
     public void onClick(View v) {
 
-        Log.i("FragmentMain", "onClick");
+        Log.i("FragmentAgenda", "onClick");
 
         switch (v.getId()){
 
@@ -190,7 +190,7 @@ public class FragmentMain extends Fragment implements View.OnClickListener, Data
         }
         catch (Exception e){
 
-            Log.e("FragmentMain", e.getMessage());
+            Log.e("FragmentAgenda", e.getMessage());
             Toast.makeText(getActivity(), "Datahaun yhteydessä tapahtui virhe.", Toast.LENGTH_LONG).show();
         }
 
@@ -214,7 +214,7 @@ public class FragmentMain extends Fragment implements View.OnClickListener, Data
 
         if(agenda_items == null){
 
-            Log.e("FragmentMain", "Error: meetings data was empty!");
+            Log.e("FragmentAgenda", "Error: meetings data was empty!");
             return;
         }
 
@@ -267,7 +267,7 @@ public class FragmentMain extends Fragment implements View.OnClickListener, Data
                     //Invoke new data request in decisions fragment:
                     //Fragment fragment = getActivity().getSupportFragmentManager().getFragment(null, "FragmentName");
 
-                    //Log.i("FragmentMain", "Fragment tag: " + fragment.getTag());
+                    //Log.i("FragmentAgenda", "Fragment tag: " + fragment.getTag());
 
                     //Fire event to target fragment:
                     Integer meeting_id = Double.valueOf(((Map) v.getTag()).get("id").toString()).intValue();
@@ -330,7 +330,7 @@ public class FragmentMain extends Fragment implements View.OnClickListener, Data
         int scrollViewHeight = scrollview.getHeight();
         int currentScroll = scrollViewHeight + scrollview.getScrollY();
 
-        Log.i("FragmentMain", "NewScroll=" + scrollY + " OldScroll=" + oldScrollY + " MaxScrollAmount=" + maxScrollAmount);
+        Log.i("FragmentAgenda", "NewScroll=" + scrollY + " OldScroll=" + oldScrollY + " MaxScrollAmount=" + maxScrollAmount);
         Log.w("ScrollHeight", scrollview.getScrollY() + scrollview.getHeight() + " / " + scrollview.getChildAt(0).getMeasuredHeight());
 
         //We have reached the end:
