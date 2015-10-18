@@ -309,8 +309,6 @@ public class FragmentAgenda extends Fragment implements View.OnClickListener, Da
                                 tv_att.setMovementMethod(LinkMovementMethod.getInstance());
 
                                 tv_type.setText(" (" + ((Map)attachment).get("file_type").toString() + ")");
-
-                                //tv_att.setText(((Map) attachment).get("name").toString());
                             }
                             inner_container.addView(tv_att);
                             //inner_container.addView(tv_type);

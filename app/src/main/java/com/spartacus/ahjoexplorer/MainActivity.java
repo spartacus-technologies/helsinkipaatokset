@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.ActionBar;
@@ -140,7 +141,15 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
         if (id == R.id.action_h_kanava_videot) {
             return true;
         }
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_twitter) {
 
+            String tweetUrl = "https://twitter.com/intent/tweet?text=PUT TEXT HERE"
+                    + "&hashtags=HelsinkiPäätökset";
+            Uri uri = Uri.parse(tweetUrl);
+            startActivity(new Intent(Intent.ACTION_VIEW, uri));
+            return true;
+        }
         return super.onOptionsItemSelected(item);
     }
 
