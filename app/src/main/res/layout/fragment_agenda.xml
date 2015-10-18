@@ -52,7 +52,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="↑ ylös"
-        android:id="@+id/buttonBackToUpFragmentAgenda"
+        android:id="@+id/buttonControlBottomFragmentAgenda"
         android:visibility="visible"
         android:layout_gravity="center_horizontal|bottom" />
 </FrameLayout>

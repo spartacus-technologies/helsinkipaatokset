@@ -94,7 +94,7 @@ public class FragmentAgenda extends Fragment implements View.OnClickListener, Da
         //Register listeners
         view.findViewById(R.id.buttonTestAPIFragmentAgenda).setOnClickListener(this);
         //view.findViewById(R.id.scrollView).setOnScrollChangeListener(this);
-        view.findViewById(R.id.buttonBackToUpFragmentAgenda).setOnClickListener(this);
+        view.findViewById(R.id.buttonControlBottomFragmentAgenda).setOnClickListener(this);
         view_.setOnClickListener(this);
         /*
         //Request data if not already available
@@ -150,9 +150,17 @@ public class FragmentAgenda extends Fragment implements View.OnClickListener, Da
                 ((LinearLayout)getActivity().findViewById(R.id.linearLayoutFragmentAgenda)).removeAllViews();
                 DataAccess.requestData(this, "/paatokset/v1/agenda_item/?order_by=-meeting");
                 break;
-            case R.id.buttonBackToUpFragmentAgenda:
+            case R.id.buttonControlBottomFragmentAgenda:
 
-                ((ScrollView) getActivity().findViewById(R.id.scrollViewFragmentAgenda)).smoothScrollTo(0, 0);
+                if(popup != null){
+                    ((TextView)view_.findViewById(R.id.buttonControlBottomFragmentAgenda)).setText("↑ ylös");
+                    ((FrameLayout) view_).removeView(popup);
+                    popup = null;
+                }
+                else{
+
+                    ((ScrollView) getActivity().findViewById(R.id.scrollViewFragmentAgenda)).smoothScrollTo(0, 0);
+                }
                 break;
         }
 
@@ -276,6 +284,9 @@ public class FragmentAgenda extends Fragment implements View.OnClickListener, Da
                     ((TextView)popup.findViewById(R.id.textViewHederPopup)).setText(tag_data.get("subject").toString());
                     ((WebView)popup.findViewById(R.id.webViewPopup)).loadDataWithBaseURL(null, agenda_data, "text/html", "UTF-8", null);
                     ((FrameLayout) view_).addView(popup);
+
+                    //Set button text for lower control button:
+                    ((TextView)view_.findViewById(R.id.buttonControlBottomFragmentAgenda)).setText("Sulje");
                 }
             });
         }
