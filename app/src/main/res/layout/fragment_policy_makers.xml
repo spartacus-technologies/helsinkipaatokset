@@ -49,12 +49,31 @@
         android:layout_gravity="center"
         android:indeterminate="false"
         android:visibility="invisible" />
-    <Button
-        android:layout_width="wrap_content"
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="↑ ylös"
-        android:id="@+id/buttonBackToUpFragmentPolicyMakers"
-        android:visibility="visible"
-        android:layout_gravity="center_horizontal|bottom" />
+        android:gravity="bottom"
+        android:layout_gravity="center_horizontal|bottom">
+
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="↑"
+            android:id="@+id/buttonBackToUpFragmentPolicyMakers"
+            android:visibility="visible"
+            android:layout_gravity="center_horizontal|bottom"
+            android:textStyle="bold" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|bottom"
+            android:hint="Haku"
+            android:id="@+id/editText"
+            android:background="#FFFFFFFF" />
+    </LinearLayout>
 
 </FrameLayout>
