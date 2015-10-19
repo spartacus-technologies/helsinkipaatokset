@@ -219,6 +219,16 @@ public class FragmentAgenda extends Fragment implements View.OnClickListener, Da
             return;
         }
 
+        //Create headers & date:
+        if(agenda_items.size() > 0){
+
+            String policy_maker = ((Map)((Map)agenda_items.get(0)).get("meeting")).get("policymaker_name").toString();
+            String date = ((Map)((Map)agenda_items.get(0)).get("meeting")).get("date").toString();
+
+            ((TextView)view_.findViewById(R.id.textViewFragmentAgendaDate)).setText(date);
+            ((TextView)view_.findViewById(R.id.textViewPolicyMakerFragmentAgenda)).setText(policy_maker);
+        }
+
         //Empty current list:
         ((LinearLayout)view_.findViewById(R.id.linearLayoutFragmentAgenda)).removeAllViews();
 
