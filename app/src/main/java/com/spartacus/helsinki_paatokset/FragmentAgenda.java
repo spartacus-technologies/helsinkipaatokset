@@ -186,13 +186,8 @@ public class FragmentAgenda extends Fragment implements View.OnClickListener, Da
 
             m_data = new Gson().fromJson(data, Map.class);
 
-            if(agenda_items == null){
+            agenda_items = (List) m_data.get("objects");
 
-                agenda_items = (List) m_data.get("objects");
-            }else{
-                agenda_items.addAll((List) m_data.get("objects"));
-            }
-            next_path = (String)((Map)m_data.get("meta")).get("next");
         }
         catch (Exception e){
 
