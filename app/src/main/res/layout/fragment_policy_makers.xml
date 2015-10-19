@@ -72,7 +72,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal|bottom"
             android:hint="Haku"
-            android:id="@+id/editText"
+            android:id="@+id/editTextSearchFragmentPolicyMakers"
             android:background="#FFFFFFFF" />
     </LinearLayout>
 

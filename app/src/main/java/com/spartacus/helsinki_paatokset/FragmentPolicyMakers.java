@@ -2,10 +2,13 @@ package com.spartacus.helsinki_paatokset;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -28,7 +31,7 @@ import java.util.Map;
  * Use the {@link FragmentPolicyMakers#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class FragmentPolicyMakers extends Fragment implements View.OnClickListener, DataAccess.NetworkListener, iFragmentDataExchange {
+public class FragmentPolicyMakers extends Fragment implements View.OnClickListener, DataAccess.NetworkListener, iFragmentDataExchange, TextWatcher {
 
     private View view_;
     private List policy_makers;
@@ -67,6 +70,7 @@ public class FragmentPolicyMakers extends Fragment implements View.OnClickListen
         view_.findViewById(R.id.buttonUpdateFragmentPolicyMakers).setOnClickListener(this);
         //view.findViewById(R.id.scrollView).setOnScrollChangeListener(this);
         view_.findViewById(R.id.buttonBackToUpFragmentPolicyMakers).setOnClickListener(this);
+        ((EditText)view_.findViewById(R.id.editTextSearchFragmentPolicyMakers)).addTextChangedListener(this);
 
         //Request data:
         if(policy_makers == null)
@@ -225,8 +229,46 @@ public class FragmentPolicyMakers extends Fragment implements View.OnClickListen
         }
     }
 
+    void filterPolicyMakersVisibility(String input){
+
+        //Loop all policymakers and set visibilitystate according to user input:
+        LinearLayout container = (LinearLayout) view_.findViewById(R.id.linearLayoutFragmentPolicyMakers);
+        int count = container.getChildCount();
+
+        View v = null;
+        for(int i=0; i<count; i++) {
+
+            v = container.getChildAt(i);
+            if(!((TextView)v.findViewById(R.id.textViewHeader)).getText().toString().toLowerCase().contains(input.toLowerCase())){
+
+                v.setVisibility(View.GONE);
+            }else{
+                v.setVisibility(View.VISIBLE);
+            }
+        }
+    }
+
+
     @Override
     public void exchange(int target, Object data) {
+
+    }
+
+    @Override
+    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+    }
+
+    @Override
+    public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+        Log.i("FragmentPolicyMakers", "onTextChanged");
+        filterPolicyMakersVisibility(s.toString());
+
+    }
+
+    @Override
+    public void afterTextChanged(Editable s) {
 
     }
 }
