@@ -17,10 +17,9 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.spartacus.helsinki_paatokset.data_access.iFragmentDataExchange;
 import com.google.gson.Gson;
-
 import com.spartacus.helsinki_paatokset.data_access.DataAccess;
+import com.spartacus.helsinki_paatokset.data_access.iFragmentDataExchange;
 
 import java.io.UnsupportedEncodingException;
 import java.util.List;
