@@ -161,7 +161,7 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
+        /*
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
@@ -170,7 +170,8 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
         if (id == R.id.action_h_kanava_videot) {
             return true;
         }
-        //noinspection SimplifiableIfStatement
+        */
+
         if (id == R.id.action_twitter) {
 
             //String tweetUrl = "https://twitter.com/intent/tweet?text=Katselen avointa päätösdata @HKIPaatokset avulla! Katso sinäkin: www.spartacus-technologies.fi&hashtags=HelsinginKaupunki, HelsinkiPäätökset";
