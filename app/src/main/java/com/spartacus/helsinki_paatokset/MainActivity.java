@@ -6,6 +6,7 @@ import java.util.Map;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
@@ -14,6 +15,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.ShareActionProvider;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -37,6 +39,7 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
      * The {@link ViewPager} that will host the section contents.
      */
     ViewPager mViewPager;
+    private ShareActionProvider mShareActionProvider;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,6 +103,13 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
         //findViewById(R.id.buttonTestAPIConnection).setOnClickListener(this);
     }
 
+    // Call to update the share intent
+    private void setShareIntent(Intent shareIntent) {
+        if (mShareActionProvider != null) {
+            mShareActionProvider.setShareIntent(shareIntent);
+        }
+    }
+
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
@@ -123,6 +133,25 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
+
+        // Locate MenuItem with ShareActionProvider
+        MenuItem item = menu.findItem(R.id.menu_item_share);
+
+        mShareActionProvider = new ShareActionProvider(this);
+        // Fetch and store ShareActionProvider
+        MenuItemCompat.setActionProvider(item, mShareActionProvider);
+        //mShareActionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(item);
+
+        //Dummy send intent:
+        //TODO: add real data here...
+        Intent sendIntent = new Intent();
+        sendIntent.setAction(Intent.ACTION_SEND);
+        sendIntent.putExtra(Intent.EXTRA_TEXT, "Katselen avointa päätösdataa @HKIPaatokset avulla! Katso sinäkin: http://app.sprtc.us #HelsinginKaupunki #HelsinkiPäätökset");
+        sendIntent.setType("text/plain");
+        //startActivity(sendIntent);
+        setShareIntent(sendIntent);
+
+
         return true;
     }
 
@@ -145,7 +174,7 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
         if (id == R.id.action_twitter) {
 
             //String tweetUrl = "https://twitter.com/intent/tweet?text=Katselen avointa päätösdata @HKIPaatokset avulla! Katso sinäkin: www.spartacus-technologies.fi&hashtags=HelsinginKaupunki, HelsinkiPäätökset";
-            String tweetUrl = "https://twitter.com/intent/tweet?text=Katselen avointa päätösdata @HKIPaatokset avulla! Katso sinäkin:&url=http://app.sprtc.us&hashtags=HelsinginKaupunki, HelsinkiPäätökset";
+            String tweetUrl = "https://twitter.com/intent/tweet?text=Katselen avointa päätösdataa @HKIPaatokset avulla! Katso sinäkin:&url=http://app.sprtc.us&hashtags=HelsinginKaupunki, HelsinkiPäätökset";
                     //+ "&hashtags=#HelsinginKaupunki, HelsinkiPäätökset";
             Uri uri = Uri.parse(tweetUrl);
             startActivity(new Intent(Intent.ACTION_VIEW, uri));
