@@ -15,6 +15,7 @@ import com.google.gson.Gson;
 import com.spartacus.helsinki_paatokset.data_access.DataAccess;
 import com.spartacus.helsinki_paatokset.data_access.iFragmentDataExchange;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -106,11 +107,42 @@ public class FragmentPolicyMakers extends Fragment implements View.OnClickListen
                 Toast.makeText(getActivity(), "Datahaun yhteydessä tapahtui virhe.", Toast.LENGTH_LONG).show();
             }
 
+            customSortingOfPolicyMakers();
+
             //All good ->  inflate views
             inflatePolicyMakerData();
 
             //Hide loading animation:
             view_.findViewById(R.id.progressBarContentLoadingFragmentPolicyMakers).setVisibility(View.INVISIBLE);
+        }
+
+    }
+
+    //Function for arranging policy makers in desired order instead of random.
+    void customSortingOfPolicyMakers(){
+
+        //Find "Kaupunginvaltuusto" and "Kaupunginhallitus" and move to front
+        List temp_list = new ArrayList<>();
+
+
+
+        Map temp = null;
+        for(Object obj : policy_makers){
+
+            String str = ((Map) obj).get("name").toString();
+
+            if(         str.equals("Kaupunginvaltuusto")
+                    ||  str.equals("Kaupunginhallitus")){
+
+                temp_list.add(obj);
+                //policy_makers.remove(obj);
+            }
+        }
+
+        //Push items back to front:
+        for (Object tmp : temp_list){
+            policy_makers.remove(tmp);
+            policy_makers.add(0, tmp);
         }
 
     }
