@@ -58,26 +58,34 @@
         android:layout_gravity="center_horizontal|bottom"
         android:background="#000000"
         android:paddingLeft="10dp"
-        android:paddingRight="10dp">
+        android:paddingRight="10dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp">
 
-        <Button
+        <ImageButton
             style="?android:attr/buttonStyleSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:background="@drawable/round_button"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:text="↑"
             android:id="@+id/buttonBackToUpFragmentPolicyMakers"
             android:visibility="visible"
             android:layout_gravity="center_horizontal|bottom"
             android:textStyle="bold" />
 
+        <View
+            android:layout_width="15dp"
+            android:layout_height="match_parent"
+            android:id="@+id/viewStub" />
+
         <EditText
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="35dp"
             android:layout_gravity="center_horizontal|bottom"
             android:hint="Haku"
             android:id="@+id/editTextSearchFragmentPolicyMakers"
             android:background="@drawable/edit_text"
-            />
+            android:paddingLeft="15dp" />
     </LinearLayout>
 
 </FrameLayout>

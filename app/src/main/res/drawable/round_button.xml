@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_pressed="false"
+        android:drawable="@mipmap/arrow_up_inv">
+         /> <!-- pressed -->
+        <shape android:shape="oval">
+            <solid android:color="#000000"/>
+        </shape>
+    </item>
+    <item android:state_pressed="true"
+        android:drawable="@mipmap/arrow_up">>
+        <shape android:shape="oval">
+            <solid android:color="#FFFFFF"/>
+        </shape>
+    </item>
+</selector>
