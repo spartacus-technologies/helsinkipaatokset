@@ -43,6 +43,26 @@
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:id="@+id/textViewFragmentAgendaDate"
                         android:text="" />
+
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="► video (MP4)"
+                        android:id="@+id/buttonPlayVideoMP4FragmentAgenda"
+                        android:layout_gravity="top|center"
+                        android:visibility="invisible"
+                        android:typeface="serif"
+                        android:enabled="true" />
+
+                    <TextView
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:text="status"
+                        android:id="@+id/textViewVideoDataAvailabilityMessageFragmentAgenda"
+                        android:gravity="center"
+                        android:visibility="invisible" />
+
                 </LinearLayout>
 
                 <LinearLayout

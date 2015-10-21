@@ -33,7 +33,7 @@
                     android:layout_gravity="top|center"
                     android:visibility="visible"
                     android:typeface="serif"
-                    android:enabled="false" />
+                    android:enabled="true" />
                 <Button
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

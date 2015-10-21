@@ -1,6 +1,8 @@
 package com.spartacus.helsinki_paatokset;
 
 import android.app.Activity;
+import android.content.ActivityNotFoundException;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -43,10 +45,13 @@ public class FragmentAgenda extends Fragment implements View.OnClickListener, Da
 
     private OnFragmentInteractionListener mListener;
     private List agenda_items;
+    private List video_items;
+
     private String next_path;
     View view_ = null;
     View popup;
     boolean isPopupVisible = false;
+    private String video_url;
 
     /**
      * Use this factory method to create a new instance of
@@ -92,6 +97,7 @@ public class FragmentAgenda extends Fragment implements View.OnClickListener, Da
 
         //Register listeners
         view.findViewById(R.id.buttonTestAPIFragmentAgenda).setOnClickListener(this);
+        view.findViewById(R.id.buttonPlayVideoMP4FragmentAgenda).setOnClickListener(this);
         //view.findViewById(R.id.scrollView).setOnScrollChangeListener(this);
         view.findViewById(R.id.buttonControlBottomFragmentAgenda).setOnClickListener(this);
         view_.setOnClickListener(this);
@@ -150,6 +156,20 @@ public class FragmentAgenda extends Fragment implements View.OnClickListener, Da
                     ((ScrollView) getActivity().findViewById(R.id.scrollViewFragmentAgenda)).smoothScrollTo(0, 0);
                 }
                 break;
+
+            case R.id.buttonPlayVideoMP4FragmentAgenda:
+
+                Uri uri = Uri.parse(video_url);
+                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                try {
+                    startActivity(intent);
+                } catch (ActivityNotFoundException e) {
+
+                    Log.w("FragmentDefault", "onClick():ActivityNotFoundException");
+                    Toast.makeText(getActivity(), "Warning: video player not found. Consider installing MX Player.", Toast.LENGTH_LONG).show();
+                }
+
+                break;
         }
 
         if(popup != null) ((FrameLayout)view_).removeView(popup);
@@ -164,14 +184,12 @@ public class FragmentAgenda extends Fragment implements View.OnClickListener, Da
             Toast.makeText(getActivity(), "Ei yhteyttä.", Toast.LENGTH_LONG).show();
             return;
         }
+        //Map object containing parsed JSON:
+        Map m_data;
 
         switch (type) {
 
             case AGENDAS:
-
-                Gson gson = new Gson();
-
-                Map m_data;
 
                 try {
 
@@ -186,8 +204,14 @@ public class FragmentAgenda extends Fragment implements View.OnClickListener, Da
                     Toast.makeText(getActivity(), "Datahaun yhteydessä tapahtui virhe.", Toast.LENGTH_LONG).show();
                 }
 
+                try{
+
+                    fillMeetingsData();
+
+                }catch (Exception e){
+                    Log.e("FragmentAgenda", "Exception:" + e.getMessage());
+                }
                 //Call GUI data updater
-                fillMeetingsData();
 
                 //Hide spinner to indicate loading is complete:
                 getActivity().findViewById(R.id.progressBarContentLoadingFragmentAgenda).setVisibility(View.INVISIBLE);
@@ -197,6 +221,31 @@ public class FragmentAgenda extends Fragment implements View.OnClickListener, Da
             case VIDEO:
 
                 Log.i("FragmentAgenda", "DataAvailable: VIDEO");
+
+                //Video data arrived -> check whether video exists:
+                m_data = new Gson().fromJson(data, Map.class);
+                video_items = (List) m_data.get("objects");
+
+                if(video_items.size() > 0){
+
+                    video_url = ((Map)((Map)video_items.get(0)).get("local_copies")).get("video/mp4").toString();
+                    Log.i("FragmentAgenda", "DataAvailable: VIDEO URL " + video_url);
+
+                    if(video_url != ""){
+
+                        //Display video button
+                        view_.findViewById(R.id.buttonPlayVideoMP4FragmentAgenda).setVisibility(View.VISIBLE);
+                        //view_.findViewById(R.id.textViewVideoDataAvailabilityMessageFragmentAgenda).setVisibility(View.INVISIBLE);
+                        view_.findViewById(R.id.textViewVideoDataAvailabilityMessageFragmentAgenda).setVisibility(View.VISIBLE);
+                        ((TextView)view_.findViewById(R.id.textViewVideoDataAvailabilityMessageFragmentAgenda)).setText(video_url);
+
+                    }
+                }else{
+
+                    view_.findViewById(R.id.textViewVideoDataAvailabilityMessageFragmentAgenda).setVisibility(View.VISIBLE);
+                    ((TextView)view_.findViewById(R.id.textViewVideoDataAvailabilityMessageFragmentAgenda)).setText("Video ei saatavilla.");
+                }
+
 
                 break;
 
@@ -352,6 +401,9 @@ public class FragmentAgenda extends Fragment implements View.OnClickListener, Da
         DataAccess.requestData(this, "http://dev.hel.fi/paatokset/v1/agenda_item/?limit=1000&offset=0&show_all=1&meeting=" + (int) data, RequestType.AGENDAS);
         DataAccess.requestData(this, "http://dev.hel.fi:80/paatokset/v1/video/?meeting=" + (int) data, RequestType.VIDEO);
         view_.findViewById(R.id.progressBarContentLoadingFragmentAgenda).setVisibility(View.VISIBLE);
+
+        //Hide video button
+        view_.findViewById(R.id.buttonPlayVideoMP4FragmentAgenda).setVisibility(View.INVISIBLE);
     }
 
     //@Override
