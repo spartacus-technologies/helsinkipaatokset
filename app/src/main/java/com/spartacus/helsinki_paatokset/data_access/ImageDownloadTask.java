@@ -14,6 +14,7 @@ import java.io.InputStream;
 public class ImageDownloadTask  extends AsyncTask<String, Void, Bitmap> {
 
     private DataAccess.NetworkListener networkListener;
+    private DataAccess.NetworkListener.RequestType type_;
 
     @Override
     protected Bitmap doInBackground(String... urls) {
@@ -37,10 +38,11 @@ public class ImageDownloadTask  extends AsyncTask<String, Void, Bitmap> {
 
     protected void onPostExecute(Bitmap result) {
 
-        networkListener.BinaryDataAvailable(result);
+        networkListener.BinaryDataAvailable(result, type_);
     }
 
-    public void setNetworkListener(DataAccess.NetworkListener networkListener) {
+    public void setNetworkListener(DataAccess.NetworkListener networkListener, DataAccess.NetworkListener.RequestType type) {
         this.networkListener = networkListener;
+        type_ = type;
     }
 }

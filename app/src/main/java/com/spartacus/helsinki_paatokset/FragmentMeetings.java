@@ -102,7 +102,7 @@ public class FragmentMeetings extends Fragment implements View.OnClickListener, 
     }
 
     @Override
-    public void DataAvailable(String data) {
+    public void DataAvailable(String data, RequestType type) {
 
         if (data == null){
             return;
@@ -200,7 +200,7 @@ public class FragmentMeetings extends Fragment implements View.OnClickListener, 
     }
 
     @Override
-    public void BinaryDataAvailable(Object data) {
+    public void BinaryDataAvailable(Object data, RequestType type) {
 
     }
 
@@ -217,7 +217,7 @@ public class FragmentMeetings extends Fragment implements View.OnClickListener, 
                 getActivity().findViewById(R.id.progressBarContentLoadingFragmentMeetings).setVisibility(View.VISIBLE);
                 //Clear current content
                 ((LinearLayout)getActivity().findViewById(R.id.linearLayoutFragmentMeetings)).removeAllViews();
-                DataAccess.requestData(this, "http://dev.hel.fi/paatokset/v1/meeting/");
+                DataAccess.requestData(this, "http://dev.hel.fi/paatokset/v1/meeting/", RequestType.MEETING);
                 break;
             case R.id.buttonBackToUpFragmentMeetings:
 
@@ -240,6 +240,6 @@ public class FragmentMeetings extends Fragment implements View.OnClickListener, 
             return;
         }
 
-        DataAccess.requestData(this, "http://dev.hel.fi/paatokset/v1/meeting/?limit=1000&offset=0&policymaker=" + policy_maker);
+        DataAccess.requestData(this, "http://dev.hel.fi/paatokset/v1/meeting/?limit=1000&offset=0&policymaker=" + policy_maker, RequestType.POLICY_MAKERS);
     }
 }

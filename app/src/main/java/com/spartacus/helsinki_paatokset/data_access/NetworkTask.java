@@ -11,9 +11,11 @@ public class NetworkTask extends AsyncTask<String, Void, Void> {
     DataAccess.NetworkListener listener_;
 
     String response = null;
+    private DataAccess.NetworkListener.RequestType type_;
 
-    public void setNetworkListener(DataAccess.NetworkListener listener){
+    public void setNetworkListener(DataAccess.NetworkListener listener, DataAccess.NetworkListener.RequestType type){
 
+        type_ = type;
         listener_ = listener;
     }
 
@@ -42,7 +44,7 @@ public class NetworkTask extends AsyncTask<String, Void, Void> {
     protected void onPostExecute(Void v) {
 
         Log.i("NetworkTask", "onPostExecute");
-        listener_.DataAvailable(response);
+        listener_.DataAvailable(response, type_);
     }
 
 }

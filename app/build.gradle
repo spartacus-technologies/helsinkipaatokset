@@ -8,8 +8,8 @@ android {
         applicationId "com.spartacus.helsinki_paatokset"
         minSdkVersion 15
         targetSdkVersion 23
-        versionCode 3
-        versionName "1.2b"
+        versionCode 4
+        versionName "1.3b"
     }
     buildTypes {
         release {

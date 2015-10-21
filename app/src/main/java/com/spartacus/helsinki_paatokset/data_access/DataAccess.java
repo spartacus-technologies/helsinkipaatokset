@@ -10,7 +10,7 @@ public class DataAccess {
     final static String API_PATH = "http://dev.hel.fi";
 
     //Registers listener and executes GET Method. After completion executes listeners callback function.
-    public static void requestData(NetworkListener listener, String path) {
+    public static void requestData(NetworkListener listener, String path, NetworkListener.RequestType type) {
 
         //Check if whole path is already present -> add if not:
         if(!path.contains(API_PATH)){
@@ -20,13 +20,13 @@ public class DataAccess {
         Log.i("DataAccess:requestData", "path=" + path);
 
         NetworkTask task = new NetworkTask();
-        task.setNetworkListener(listener);
+        task.setNetworkListener(listener, type);
 
         task.execute(path);
     }
 
     //Registers listener and executes GET Method. After completion executes listeners callback function.
-    public static void requestImageData(NetworkListener listener, String path) {
+    public static void requestImageData(NetworkListener listener, String path, NetworkListener.RequestType type) {
 
         //Check if whole path is already present -> add if not:
         if(!path.contains(API_PATH)){
@@ -36,17 +36,26 @@ public class DataAccess {
         Log.i("DataAccess:requestData", "path=" + path);
 
         ImageDownloadTask task = new ImageDownloadTask();
-        task.setNetworkListener(listener);
-
-        task.execute(path);
+        task.setNetworkListener(listener, type);
     }
 
     //private static List<NetworkListener> listeners;
 
     public interface NetworkListener{
 
-        void DataAvailable(String data);
-        void BinaryDataAvailable(Object data);
+        enum RequestType{
+
+            MEETING,
+            VIDEO,
+            AGENDAS,
+            VIDEO_PREVIEW,
+            AGENDA_ITEM,
+            POLICY_MAKERS,
+            IMAGE
+        }
+
+        void DataAvailable(String data, RequestType type);
+        void BinaryDataAvailable(Object data, RequestType type);
     }
     /*
     //Adds new listener to array
@@ -65,7 +74,7 @@ public class DataAccess {
     public static boolean testConnection(NetworkListener listener){
 
         NetworkTask task = new NetworkTask();
-        task.setNetworkListener(listener);
+        task.setNetworkListener(listener, null);
 
         task.execute("http://dev.hel.fi/paatokset/v1/meeting/");
         //task.execute("http://dev.hel.fi/paatokset/v1/agenda_item/");

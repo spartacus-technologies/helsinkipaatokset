@@ -136,7 +136,7 @@ public class FragmentAgenda extends Fragment implements View.OnClickListener, Da
                 getActivity().findViewById(R.id.progressBarContentLoadingFragmentAgenda).setVisibility(View.VISIBLE);
                 //Clear current content
                 ((LinearLayout)getActivity().findViewById(R.id.linearLayoutFragmentAgenda)).removeAllViews();
-                DataAccess.requestData(this, "/paatokset/v1/agenda_item/?order_by=-meeting");
+                DataAccess.requestData(this, "/paatokset/v1/agenda_item/?order_by=-meeting", RequestType.MEETING);
                 break;
             case R.id.buttonControlBottomFragmentAgenda:
 
@@ -157,53 +157,67 @@ public class FragmentAgenda extends Fragment implements View.OnClickListener, Da
     }
 
     @Override
-    public void DataAvailable(String data) {
+    public void DataAvailable(String data, RequestType type) {
 
-        if(data != null){
-
-            try {
-                Toast.makeText(getActivity(), "Ladattiin " + data.getBytes("UTF-8").length/1000 + " kilobittiä.", Toast.LENGTH_SHORT).show();
-            } catch (UnsupportedEncodingException e) {
-                e.printStackTrace();
-            }
-            //((TextView)getActivity().findViewById(R.id.textViewFragmentMainTest)).setText(dates);
-        }
-        else{
+        if(data == null){
 
             Toast.makeText(getActivity(), "Ei yhteyttä.", Toast.LENGTH_LONG).show();
             return;
         }
 
+        switch (type) {
+
+            case AGENDAS:
+
+                Gson gson = new Gson();
+
+                Map m_data;
+
+                try {
+
+                    m_data = new Gson().fromJson(data, Map.class);
+
+                    agenda_items = (List) m_data.get("objects");
+
+                }
+                catch (Exception e){
+
+                    Log.e("FragmentAgenda", e.getMessage());
+                    Toast.makeText(getActivity(), "Datahaun yhteydessä tapahtui virhe.", Toast.LENGTH_LONG).show();
+                }
+
+                //Call GUI data updater
+                fillMeetingsData();
+
+                //Hide spinner to indicate loading is complete:
+                getActivity().findViewById(R.id.progressBarContentLoadingFragmentAgenda).setVisibility(View.INVISIBLE);
+
+                break;
+
+            case VIDEO:
+
+                Log.i("FragmentAgenda", "DataAvailable: VIDEO");
+
+                break;
+
+            case IMAGE:
+
+                break;
+
+            default:
+
+                Log.e("FragmentAgenda", "Unknown response type.");
+                break;
+        }
 
         //Show received JSON:
         //Examples & source: https://github.com/google/gson/blob/master/examples/android-proguard-example/src/com/google/gson/examples/android/GsonProguardExampleActivity.java
-        Gson gson = new Gson();
 
-        Map m_data;
-
-        try {
-
-            m_data = new Gson().fromJson(data, Map.class);
-
-            agenda_items = (List) m_data.get("objects");
-
-        }
-        catch (Exception e){
-
-            Log.e("FragmentAgenda", e.getMessage());
-            Toast.makeText(getActivity(), "Datahaun yhteydessä tapahtui virhe.", Toast.LENGTH_LONG).show();
-        }
-
-        //Call GUI data updater
-        fillMeetingsData();
-
-        //Hide spinner to indicate loading is complete:
-        getActivity().findViewById(R.id.progressBarContentLoadingFragmentAgenda).setVisibility(View.INVISIBLE);
 
     }
 
     @Override
-    public void BinaryDataAvailable(Object data) {
+    public void BinaryDataAvailable(Object data, RequestType type) {
 
     }
 
@@ -335,7 +349,8 @@ public class FragmentAgenda extends Fragment implements View.OnClickListener, Da
     public void exchange(int target, Object data) {
 
         Log.i("FragmentAgenda", "exchange");
-        DataAccess.requestData(this, "http://dev.hel.fi/paatokset/v1/agenda_item/?limit=1000&offset=0&show_all=1&meeting=" + (int) data);
+        DataAccess.requestData(this, "http://dev.hel.fi/paatokset/v1/agenda_item/?limit=1000&offset=0&show_all=1&meeting=" + (int) data, RequestType.AGENDAS);
+        DataAccess.requestData(this, "http://dev.hel.fi:80/paatokset/v1/video/?meeting=" + (int) data, RequestType.VIDEO);
         view_.findViewById(R.id.progressBarContentLoadingFragmentAgenda).setVisibility(View.VISIBLE);
     }
 
@@ -355,7 +370,7 @@ public class FragmentAgenda extends Fragment implements View.OnClickListener, Da
         if(currentScroll >= maxScrollAmount && !isDataRequestActive()){
 
             //Request more data & show spinner:
-            DataAccess.requestData(this, next_path);
+            DataAccess.requestData(this, next_path, null);
             getActivity().findViewById(R.id.progressBarContentLoadingFragmentAgenda).setVisibility(View.VISIBLE);
         }
     }

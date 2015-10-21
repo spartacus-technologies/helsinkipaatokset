@@ -78,11 +78,11 @@ public class FragmentAttachments extends Fragment implements com.spartacus.helsi
     public void exchange(int target, Object data) {
 
         //Query for data:
-        DataAccess.requestData(this, "http://dev.hel.fi/paatokset/v1/agenda_item/" + data.toString());
+        DataAccess.requestData(this, "http://dev.hel.fi/paatokset/v1/agenda_item/" + data.toString(), null);
     }
 
     @Override
-    public void DataAvailable(String data) {
+    public void DataAvailable(String data, RequestType type) {
 
         if(data == null){
 
@@ -98,7 +98,7 @@ public class FragmentAttachments extends Fragment implements com.spartacus.helsi
     }
 
     @Override
-    public void BinaryDataAvailable(Object data) {
+    public void BinaryDataAvailable(Object data, RequestType type) {
 
     }
 

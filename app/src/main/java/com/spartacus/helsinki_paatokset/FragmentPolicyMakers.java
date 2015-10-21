@@ -74,7 +74,7 @@ public class FragmentPolicyMakers extends Fragment implements View.OnClickListen
 
         //Request data:
         if(policy_makers == null)
-            DataAccess.requestData(this, "http://dev.hel.fi/paatokset/v1/policymaker/?limit=200");
+            DataAccess.requestData(this, "http://dev.hel.fi/paatokset/v1/policymaker/?limit=200", RequestType.POLICY_MAKERS);
         else
             inflatePolicyMakerData();
 
@@ -83,7 +83,7 @@ public class FragmentPolicyMakers extends Fragment implements View.OnClickListen
 
 
     @Override
-    public void DataAvailable(String data) {
+    public void DataAvailable(String data, RequestType type) {
 
         Log.i("FragmentPolicyMakers", "DataAvailable");
 
@@ -202,7 +202,7 @@ public class FragmentPolicyMakers extends Fragment implements View.OnClickListen
     }
 
     @Override
-    public void BinaryDataAvailable(Object data) {
+    public void BinaryDataAvailable(Object data, RequestType type) {
 
     }
 
@@ -219,7 +219,7 @@ public class FragmentPolicyMakers extends Fragment implements View.OnClickListen
                 getActivity().findViewById(R.id.progressBarContentLoadingFragmentPolicyMakers).setVisibility(View.VISIBLE);
                 //Clear current content
                 ((LinearLayout)getActivity().findViewById(R.id.linearLayoutFragmentPolicyMakers)).removeAllViews();
-                DataAccess.requestData(this, "http://dev.hel.fi/paatokset/v1/policymaker/?limit=200");
+                DataAccess.requestData(this, "http://dev.hel.fi/paatokset/v1/policymaker/?limit=200", RequestType.POLICY_MAKERS);
                 break;
 
             case R.id.buttonBackToUpFragmentPolicyMakers:

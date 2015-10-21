@@ -122,7 +122,7 @@ public class FragmentDecisions extends Fragment implements View.OnClickListener,
     }
 
     @Override
-    public void DataAvailable(String data) {
+    public void DataAvailable(String data, RequestType type) {
 
         //Check what data we received:
         try {
@@ -164,7 +164,7 @@ public class FragmentDecisions extends Fragment implements View.OnClickListener,
                 }
                 if(video_screenshot_url != null){
 
-                    DataAccess.requestImageData(this, video_screenshot_url);
+                    DataAccess.requestImageData(this, video_screenshot_url, RequestType.VIDEO_PREVIEW);
                 }
 
                 return;
@@ -187,7 +187,7 @@ public class FragmentDecisions extends Fragment implements View.OnClickListener,
     }
 
     @Override
-    public void BinaryDataAvailable(Object data) {
+    public void BinaryDataAvailable(Object data, RequestType type) {
 
         //Bitmap received: add to layout
         ImageView img_view = new ImageView(getActivity());
@@ -268,14 +268,14 @@ public class FragmentDecisions extends Fragment implements View.OnClickListener,
 
 
         //Data contains agenda id -> execute queries for detailed data
-        DataAccess.requestData(this, "http://dev.hel.fi/paatokset/v1/agenda_item/" + agenda_id);
+        DataAccess.requestData(this, "http://dev.hel.fi/paatokset/v1/agenda_item/" + agenda_id, RequestType.AGENDA_ITEM);
 
         //Also query for matching video:
         //Note: disable video button as there is no quarantee that video file exists before querying:
         view_.findViewById(R.id.buttonPlayVideoMP4).setEnabled(false);
         view_.findViewById(R.id.buttonPlayVideoOGV).setEnabled(false);
 
-        DataAccess.requestData(this, "http://dev.hel.fi/paatokset/v1/video/?agenda_item_=" + agenda_id);
+        DataAccess.requestData(this, "http://dev.hel.fi/paatokset/v1/video/?agenda_item_=" + agenda_id, RequestType.VIDEO);
 
     }
 }
