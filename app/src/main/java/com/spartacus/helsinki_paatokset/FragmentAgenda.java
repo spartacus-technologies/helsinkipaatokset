@@ -24,6 +24,9 @@ import com.spartacus.helsinki_paatokset.data_access.DataAccess;
 import com.spartacus.helsinki_paatokset.data_access.iFragmentDataExchange;
 
 import java.io.UnsupportedEncodingException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -285,9 +288,24 @@ public class FragmentAgenda extends Fragment implements View.OnClickListener, Da
         if(agenda_items.size() > 0){
 
             String policy_maker = ((Map)((Map)agenda_items.get(0)).get("meeting")).get("policymaker_name").toString();
-            String date = ((Map)((Map)agenda_items.get(0)).get("meeting")).get("date").toString();
 
-            ((TextView)view_.findViewById(R.id.textViewFragmentAgendaDate)).setText(date);
+
+
+            String date_str = ((Map)((Map)agenda_items.get(0)).get("meeting")).get("date").toString();
+
+            //Do some formatting:
+            DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+            DateFormat df_print = new SimpleDateFormat("dd.MM.yyyy");
+            try {
+
+                Date result =  df.parse(date_str);
+                date_str = df_print.format(result);
+
+            }catch (Exception e){
+
+            }
+
+            ((TextView)view_.findViewById(R.id.textViewFragmentAgendaDate)).setText(date_str);
             ((TextView)view_.findViewById(R.id.textViewPolicyMakerFragmentAgenda)).setText(policy_maker);
         }
 

@@ -15,6 +15,9 @@ import com.google.gson.Gson;
 import com.spartacus.helsinki_paatokset.data_access.DataAccess;
 import com.spartacus.helsinki_paatokset.data_access.iFragmentDataExchange;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -165,11 +168,25 @@ public class FragmentMeetings extends Fragment implements View.OnClickListener, 
 
             //Set data:
             //=========
+
+            //Do some formatting first:
+            String date_str = "";
+            DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+            DateFormat df_print = new SimpleDateFormat("dd.MM.yyyy");
+            try {
+
+            Date result =  df.parse(temp.get("date").toString());
+                date_str = df_print.format(result);
+            }catch (Exception e){
+
+                date_str = temp.get("date").toString();
+            }
+
             ((TextView)view.findViewById(R.id.textViewHeader)).setText("Kokous");
             //((TextView)view.findViewById(R.id.textViewDate)).setText(((Map)temp.get("meeting")).get("date").toString());
             ((TextView)view.findViewById(R.id.textViewDate)).setText(/*temp.get("id").toString()
                                                                       + "  " + */
-                    temp.get("date").toString()
+                    date_str
                                                                      /*
                                                                      + "  " +
                                                                     ((Map)temp.get("meeting")).get("id").toString()*/
