@@ -82,7 +82,7 @@
             android:layout_width="match_parent"
             android:layout_height="35dp"
             android:layout_gravity="center_horizontal|bottom"
-            android:hint="Haku"
+            android:hint="Hae päättäjistä..."
             android:id="@+id/editTextSearchFragmentPolicyMakers"
             android:background="@drawable/edit_text"
             android:paddingLeft="15dp" />

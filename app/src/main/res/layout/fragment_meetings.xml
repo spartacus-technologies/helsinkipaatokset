@@ -2,7 +2,6 @@
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.spartacus.helsinki_paatokset.FragmentMeetings">
-
     <!-- TODO: Update blank fragment layout -->
     <ScrollView
         android:layout_width="fill_parent"
@@ -34,6 +33,46 @@
         </LinearLayout>
     </ScrollView>
 
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="bottom"
+        android:layout_gravity="center_horizontal|bottom"
+        android:background="#000000"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:visibility="visible">
+
+        <ImageButton
+            style="?android:attr/buttonStyleSmall"
+            android:background="@drawable/round_button"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:text="↑"
+            android:id="@+id/buttonBackToUpFragmentMeetings"
+            android:visibility="visible"
+            android:layout_gravity="center_horizontal|bottom"
+            android:textStyle="bold" />
+
+        <View
+            android:layout_width="15dp"
+            android:layout_height="match_parent"
+            android:id="@+id/viewStub" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:layout_gravity="center_horizontal|bottom"
+            android:hint="Hae kokouksista..."
+            android:enabled="false"
+            android:id="@+id/editTextSearchFragmentPolicyMakers"
+            android:background="@drawable/edit_text"
+            android:paddingLeft="15dp" />
+    </LinearLayout>
+
     <ProgressBar
         style="?android:attr/progressBarStyleLarge"
         android:layout_width="wrap_content"
@@ -42,12 +81,6 @@
         android:layout_gravity="center"
         android:indeterminate="false"
         android:visibility="invisible" />
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="↑ ylös"
-        android:id="@+id/buttonBackToUpFragmentMeetings"
-        android:visibility="visible"
-        android:layout_gravity="center_horizontal|bottom" />
+
 </FrameLayout>
 

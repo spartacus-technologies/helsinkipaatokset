@@ -92,11 +92,44 @@
         android:layout_gravity="center"
         android:indeterminate="false"
         android:visibility="invisible" />
-    <Button
-        android:layout_width="wrap_content"
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="↑ ylös"
-        android:id="@+id/buttonControlBottomFragmentAgenda"
-        android:visibility="visible"
-        android:layout_gravity="center_horizontal|bottom" />
+        android:gravity="bottom"
+        android:layout_gravity="center_horizontal|bottom"
+        android:background="#000000"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp">
+
+        <ImageButton
+            style="?android:attr/buttonStyleSmall"
+            android:background="@drawable/round_button"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:text="↑"
+            android:id="@+id/buttonControlBottomFragmentAgenda"
+            android:visibility="visible"
+            android:layout_gravity="center_horizontal|bottom"
+            android:textStyle="bold" />
+
+        <View
+            android:layout_width="15dp"
+            android:layout_height="match_parent"
+            android:id="@+id/viewStub" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:layout_gravity="center_horizontal|bottom"
+            android:hint="Hae kokouksen sisällöstä..."
+            android:enabled="false"
+            android:id="@+id/editTextSearchFragmentPolicyMakers"
+            android:background="@drawable/edit_text"
+            android:paddingLeft="15dp" />
+    </LinearLayout>
+
 </FrameLayout>
