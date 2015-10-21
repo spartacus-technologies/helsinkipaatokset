@@ -60,6 +60,7 @@
                         android:id="@+id/webViewPopup" />
                 </LinearLayout>
             </ScrollView>
+
         </LinearLayout>
 
         <ProgressBar
@@ -68,6 +69,21 @@
             android:layout_height="wrap_content"
             android:id="@+id/progressBar2"
             android:layout_gravity="center" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|right"
+            android:padding="5dp">
+
+            <ImageButton
+                android:background="@drawable/round_button_close"
+                android:layout_height="35dp"
+                android:layout_width="35dp"
+                android:id="@+id/imageButtonClosePopupAgenda"
+                android:layout_gravity="left|bottom" />
+        </LinearLayout>
 
     </FrameLayout>
 

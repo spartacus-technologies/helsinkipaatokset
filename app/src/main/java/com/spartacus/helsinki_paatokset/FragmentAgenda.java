@@ -357,7 +357,14 @@ public class FragmentAgenda extends Fragment implements View.OnClickListener, Da
                     String agenda_data = ((Map)((List)tag_data.get("content")).get(0)).get("text").toString();
                     popup = getActivity().getLayoutInflater().inflate(R.layout.pop_up_agenda, null, false);
                     ((TextView)popup.findViewById(R.id.textViewHederPopup)).setText(tag_data.get("subject").toString());
+                    popup.findViewById(R.id.imageButtonClosePopupAgenda).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
 
+                            ((FrameLayout) view_).removeView(popup);
+                            popup = null;
+                        }
+                    });
                     //Attachments
                     //===========
 
