@@ -55,7 +55,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="bottom"
-        android:layout_gravity="center_horizontal|bottom">
+        android:layout_gravity="center_horizontal|bottom"
+        android:background="#000000"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp">
 
         <Button
             style="?android:attr/buttonStyleSmall"
@@ -73,7 +76,8 @@
             android:layout_gravity="center_horizontal|bottom"
             android:hint="Haku"
             android:id="@+id/editTextSearchFragmentPolicyMakers"
-            android:background="#FFFFFFFF" />
+            android:background="@drawable/edit_text"
+            />
     </LinearLayout>
 
 </FrameLayout>
