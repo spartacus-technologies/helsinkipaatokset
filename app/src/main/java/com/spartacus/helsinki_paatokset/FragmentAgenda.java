@@ -150,7 +150,8 @@ public class FragmentAgenda extends Fragment implements View.OnClickListener, Da
             case R.id.buttonControlBottomFragmentAgenda:
 
                 if(popup != null){
-                    ((TextView)view_.findViewById(R.id.buttonControlBottomFragmentAgenda)).setText("↑ ylös");
+
+                    //((TextView)view_.findViewById(R.id.buttonControlBottomFragmentAgenda)).setText("↑ ylös");
                     ((FrameLayout) view_).removeView(popup);
                     popup = null;
                 }
@@ -406,7 +407,7 @@ public class FragmentAgenda extends Fragment implements View.OnClickListener, Da
                     ((FrameLayout) view_).addView(popup);
 
                     //Set button text for lower control button:
-                    ((TextView)view_.findViewById(R.id.buttonControlBottomFragmentAgenda)).setText("Sulje");
+                    //((TextView)view_.findViewById(R.id.buttonControlBottomFragmentAgenda)).setText("Sulje");
                 }
             });
         }

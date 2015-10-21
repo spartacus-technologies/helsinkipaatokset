@@ -258,5 +258,7 @@ public class FragmentMeetings extends Fragment implements View.OnClickListener, 
         }
 
         DataAccess.requestData(this, "http://dev.hel.fi/paatokset/v1/meeting/?limit=1000&offset=0&policymaker=" + policy_maker, RequestType.POLICY_MAKERS);
+        ((LinearLayout)getActivity().findViewById(R.id.linearLayoutFragmentMeetings)).removeAllViews();
+        getActivity().findViewById(R.id.progressBarContentLoadingFragmentMeetings).setVisibility(View.VISIBLE);
     }
 }
