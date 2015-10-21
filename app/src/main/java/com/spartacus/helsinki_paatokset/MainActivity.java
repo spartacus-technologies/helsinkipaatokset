@@ -120,7 +120,10 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
 
             }else{
 
-                mViewPager.setCurrentItem(0, true);
+                int index = mViewPager.getCurrentItem();
+                index -= 1;
+                index = index < 0 ? 0 : index;
+                mViewPager.setCurrentItem(index, true);
             }
             return true;
 
