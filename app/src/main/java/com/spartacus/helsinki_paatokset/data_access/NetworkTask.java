@@ -27,10 +27,20 @@ public class NetworkTask extends AsyncTask<String, Void, Void> {
             response = null;
         }
 
+        //first check for existing data in cache:
+        String data = APICache.retrieve(urls[0]);
+
+        if(data != null){
+
+            response = data;
+            return null;
+        }
+
         // params comes from the execute() call: params[0] is the url.
         try {
 
             response = HttpURLConnectionHandler.sendGet(urls[0]);
+            APICache.store(urls[0], response);
 
         } catch (Exception e) {
 

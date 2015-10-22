@@ -169,13 +169,13 @@ public class FragmentPolicyMakers extends Fragment implements View.OnClickListen
 
             Map temp = (Map) policy_maker;
 
-            View view = getActivity().getLayoutInflater().inflate(R.layout.layout_single_meeting, null, false);
+            final View view = getActivity().getLayoutInflater().inflate(R.layout.layout_single_meeting, null, false);
             ((LinearLayout) view_.findViewById(R.id.linearLayoutFragmentPolicyMakers)).addView(view);
 
             //Set data:
             //=========
             ((TextView) view.findViewById(R.id.textViewHeader)).setText(temp.get("name").toString());
-
+            Integer policy_maker_id = Double.valueOf(temp.get("id").toString()).intValue();
             //Register listeners for link:
             //View link = view.findViewById(R.id.textViewMeetingLink);
             view.setTag(temp);
@@ -195,6 +195,41 @@ public class FragmentPolicyMakers extends Fragment implements View.OnClickListen
                     ((MainActivity) getActivity()).getmViewPager().setCurrentItem(1);
                 }
             });
+            /*
+            //Query data in order to count how many meetings policy maker has:
+            DataAccess.requestData(new DataAccess.NetworkListener(){
+
+
+                @Override
+                public void DataAvailable(String data, RequestType type) {
+
+                    Map m_data = new Gson().fromJson(data, Map.class);
+                    int size = ((List)m_data.get("objects")).size();
+
+                    String policy_maker_name = ((Map)((List)m_data.get("objects")).get(0)).get("policymaker_name").toString();
+                    //Loop all policymakers and set visibilitystate according to user input:
+                    //TODO: inefficient!
+                    LinearLayout container = (LinearLayout) view_.findViewById(R.id.linearLayoutFragmentPolicyMakers);
+                    int count = container.getChildCount();
+                    View v = null;
+                    for(int i=0; i<count; i++) {
+
+                        v = container.getChildAt(i);
+                        TextView header = (TextView)v.findViewById(R.id.textViewHeader);
+                        if(!header.getText().toString().toLowerCase().contains(policy_maker_name)){
+
+                            header.setText(size);
+                            break;
+                        }
+                    }
+                }
+
+                @Override
+                public void BinaryDataAvailable(Object data, RequestType type) {
+
+                }
+            }, "http://dev.hel.fi/paatokset/v1/meeting/?limit=1000&offset=0&policymaker=" + policy_maker_id, RequestType.POLICY_MAKERS);
+            */
 
             //Hide date as unused
             view.findViewById(R.id.textViewDate).setVisibility(View.GONE);

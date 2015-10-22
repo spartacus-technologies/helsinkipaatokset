@@ -14,7 +14,10 @@
    id="svg3839"
    version="1.1"
    inkscape:version="0.48.4 r9939"
-   sodipodi:docname="New document 4">
+   sodipodi:docname="close_image.svg"
+   inkscape:export-filename="F:\Dropbox\Projektit\Android\HelsinkiPäätökset\Documentation\close_image.png"
+   inkscape:export-xdpi="966"
+   inkscape:export-ydpi="966">
   <defs
      id="defs3841">
     <marker
@@ -51,9 +54,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="11.2"
-     inkscape:cx="385.33874"
-     inkscape:cy="596.32302"
+     inkscape:zoom="17.846286"
+     inkscape:cx="376.81183"
+     inkscape:cy="615.16512"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -61,7 +64,9 @@
      inkscape:window-height="1017"
      inkscape:window-x="1912"
      inkscape:window-y="-8"
-     inkscape:window-maximized="1" />
+     inkscape:window-maximized="1"
+     inkscape:snap-bbox="true"
+     inkscape:bbox-paths="true" />
   <metadata
      id="metadata3844">
     <rdf:RDF>
@@ -78,6 +83,33 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1">
+    <rect
+       style="fill:#000000;fill-opacity:1;stroke:none"
+       id="rect2991-4-4-1"
+       width="14.471583"
+       height="13.761724"
+       x="375.27399"
+       y="423.97174"
+       ry="6.8808622"
+       rx="0" />
+    <rect
+       style="fill:#000000;fill-opacity:1;stroke:none"
+       id="rect2991-4-4-5"
+       width="14.157946"
+       height="16.216091"
+       x="375.58762"
+       y="409.78702"
+       ry="8.1080456"
+       rx="0" />
+    <rect
+       style="fill:#000000;fill-opacity:1;stroke:none"
+       id="rect2991-4-4"
+       width="14.157946"
+       height="13.761724"
+       x="361.79913"
+       y="423.94852"
+       ry="6.8808622"
+       rx="0" />
     <path
        sodipodi:type="arc"
        style="fill:#000000;fill-opacity:1;stroke:none"
@@ -87,7 +119,7 @@
        sodipodi:rx="12.723214"
        sodipodi:ry="12.723214"
        d="m 361.60716,453.56754 a 12.723214,12.723214 0 1 1 -25.44643,0 12.723214,12.723214 0 1 1 25.44643,0 z"
-       transform="matrix(1.0982456,0,0,1.0982456,-8.3388276,-35.855656)" />
+       transform="matrix(1.0982456,0,0,1.0982456,-7.3878979,-74.368308)" />
     <path
        sodipodi:type="arc"
        style="fill:#ffffff;fill-opacity:1;stroke:none"
@@ -97,17 +129,17 @@
        sodipodi:rx="12.723214"
        sodipodi:ry="12.723214"
        d="m 361.60716,453.56754 a 12.723214,12.723214 0 1 1 -25.44643,0 12.723214,12.723214 0 1 1 25.44643,0 z"
-       transform="translate(25.982143,8.6607142)" />
+       transform="translate(26.933073,-29.851938)" />
     <g
        id="g5218"
-       transform="matrix(0.54308998,0.53092695,-0.53092695,0.54308998,417.61335,41.027815)">
+       transform="matrix(0.46078305,0.45046336,-0.45046336,0.46078305,411.838,66.490332)">
       <rect
          y="435.30862"
          x="333.83929"
          height="1.25"
          width="26.964285"
          id="rect5198"
-         style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:2.23833442;stroke-miterlimit:6;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:14.99999935" />
+         style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:2.63815475;stroke-miterlimit:6;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:14.99999935" />
       <rect
          transform="matrix(0,1,-1,0,0,0)"
          y="-348.03571"
@@ -115,7 +147,7 @@
          height="1.25"
          width="26.964285"
          id="rect5198-6"
-         style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:2.23833442;stroke-miterlimit:6;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:14.99999935" />
+         style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:2.63815475;stroke-miterlimit:6;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:14.99999935" />
     </g>
   </g>
 </svg>
