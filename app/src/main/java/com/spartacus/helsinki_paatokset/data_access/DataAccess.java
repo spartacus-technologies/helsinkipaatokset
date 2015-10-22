@@ -51,7 +51,7 @@ public class DataAccess {
             VIDEO_PREVIEW,
             AGENDA_ITEM,
             POLICY_MAKERS,
-            IMAGE
+            POLICY_MAKER, IMAGE
         }
 
         void DataAvailable(String data, RequestType type);

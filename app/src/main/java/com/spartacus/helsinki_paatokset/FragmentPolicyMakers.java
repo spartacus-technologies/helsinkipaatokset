@@ -18,7 +18,10 @@ import com.google.gson.Gson;
 import com.spartacus.helsinki_paatokset.data_access.DataAccess;
 import com.spartacus.helsinki_paatokset.data_access.iFragmentDataExchange;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -87,38 +90,108 @@ public class FragmentPolicyMakers extends Fragment implements View.OnClickListen
 
         Log.i("FragmentPolicyMakers", "DataAvailable");
 
-        if(data != null){
+        if(data == null){ return;}
 
-            Gson gson = new Gson();
+        switch (type){
 
-            Map m_data;
+            case MEETING:
+                break;
+            case VIDEO:
+                break;
+            case AGENDAS:
+                break;
+            case VIDEO_PREVIEW:
+                break;
+            case AGENDA_ITEM:
+                break;
+            case POLICY_MAKERS:
 
-            try {
+                Map m_data;
+
+                try {
+
+                    m_data = new Gson().fromJson(data, Map.class);
+
+                    if(policy_makers == null){
+
+                        policy_makers = (List) m_data.get("objects");
+                    }else{
+
+                        policy_makers.addAll((List) m_data.get("objects"));
+                    }
+                }
+                catch (Exception e){
+
+                    Log.e("FragmentPolicyMakers", e.getMessage());
+                    Toast.makeText(getActivity(), "Datahaun yhteydessä tapahtui virhe.", Toast.LENGTH_LONG).show();
+                }
+
+                customSortingOfPolicyMakers();
+
+                //All good ->  inflate views
+                inflatePolicyMakerData();
+
+                //Hide loading animation:
+                view_.findViewById(R.id.progressBarContentLoadingFragmentPolicyMakers).setVisibility(View.INVISIBLE);
+                break;
+
+            case POLICY_MAKER:
 
                 m_data = new Gson().fromJson(data, Map.class);
+                int size = ((List)m_data.get("objects")).size();
 
-                if(policy_makers == null){
+                //Skip if empty response:
+                if(size == 0) return;
 
-                    policy_makers = (List) m_data.get("objects");
-                }else{
+                String latest_meeting = ((Map)((List)m_data.get("objects")).get(0)).get("date").toString();
+                String policy_maker_name = ((Map)((List)m_data.get("objects")).get(0)).get("policymaker_name").toString();
 
-                    policy_makers.addAll((List) m_data.get("objects"));
+                //Do some formatting:
+                DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+                DateFormat df_print = new SimpleDateFormat("dd.MM.yyyy");
+                try {
+
+                    Date result =  df.parse(latest_meeting);
+                    latest_meeting = df_print.format(result);
+
+                }catch (Exception e){
+
                 }
-            }
-            catch (Exception e){
 
-                Log.e("FragmentPolicyMakers", e.getMessage());
-                Toast.makeText(getActivity(), "Datahaun yhteydessä tapahtui virhe.", Toast.LENGTH_LONG).show();
-            }
+                //Loop all policymakers and set visibilitystate according to user input:
+                //TODO: inefficient!
+                LinearLayout container = (LinearLayout) view_.findViewById(R.id.linearLayoutFragmentPolicyMakers);
+                int count = container.getChildCount();
+                View v = null;
+                for(int i=0; i<count; i++) {
 
-            customSortingOfPolicyMakers();
+                    v = container.getChildAt(i);
+                    TextView header = (TextView)v.findViewById(R.id.textViewHeader);
+                    String pol_maker_tmp = header.getText().toString();
+                    TextView footer = (TextView)v.findViewById(R.id.textViewFooterText);
 
-            //All good ->  inflate views
-            inflatePolicyMakerData();
+                    if(pol_maker_tmp.toLowerCase().contains(policy_maker_name.toLowerCase())){
+                        try{
 
-            //Hide loading animation:
-            view_.findViewById(R.id.progressBarContentLoadingFragmentPolicyMakers).setVisibility(View.INVISIBLE);
+                            footer.setText(size + " kokousta, viimeisin " + latest_meeting);
+                        }catch (Exception e){
+
+                            Log.e("FragmentPolicyMakers", "Exception " + e.getStackTrace());
+                        }
+                        //header.setText("jeejee");
+                        break;
+                    }
+                }
+
+                break;
+
+            case IMAGE:
+                break;
         }
+
+        Log.e("FragmentPolicyMakers", "The End");
+
+
 
     }
 
@@ -195,41 +268,9 @@ public class FragmentPolicyMakers extends Fragment implements View.OnClickListen
                     ((MainActivity) getActivity()).getmViewPager().setCurrentItem(1);
                 }
             });
-            /*
+
             //Query data in order to count how many meetings policy maker has:
-            DataAccess.requestData(new DataAccess.NetworkListener(){
-
-
-                @Override
-                public void DataAvailable(String data, RequestType type) {
-
-                    Map m_data = new Gson().fromJson(data, Map.class);
-                    int size = ((List)m_data.get("objects")).size();
-
-                    String policy_maker_name = ((Map)((List)m_data.get("objects")).get(0)).get("policymaker_name").toString();
-                    //Loop all policymakers and set visibilitystate according to user input:
-                    //TODO: inefficient!
-                    LinearLayout container = (LinearLayout) view_.findViewById(R.id.linearLayoutFragmentPolicyMakers);
-                    int count = container.getChildCount();
-                    View v = null;
-                    for(int i=0; i<count; i++) {
-
-                        v = container.getChildAt(i);
-                        TextView header = (TextView)v.findViewById(R.id.textViewHeader);
-                        if(!header.getText().toString().toLowerCase().contains(policy_maker_name)){
-
-                            header.setText(size);
-                            break;
-                        }
-                    }
-                }
-
-                @Override
-                public void BinaryDataAvailable(Object data, RequestType type) {
-
-                }
-            }, "http://dev.hel.fi/paatokset/v1/meeting/?limit=1000&offset=0&policymaker=" + policy_maker_id, RequestType.POLICY_MAKERS);
-            */
+            DataAccess.requestData(this, "http://dev.hel.fi/paatokset/v1/meeting/?limit=1000&offset=0&policymaker=" + policy_maker_id, RequestType.POLICY_MAKER);
 
             //Hide date as unused
             view.findViewById(R.id.textViewDate).setVisibility(View.GONE);
