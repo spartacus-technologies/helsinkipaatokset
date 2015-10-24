@@ -3,6 +3,8 @@ package com.spartacus.helsinki_paatokset;
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -14,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
@@ -56,6 +59,7 @@ public class FragmentAgenda extends Fragment implements View.OnClickListener, Da
     View popup;
     boolean isPopupVisible = false;
     private String video_url;
+    private String screen_shot_uri;
 
     /**
      * Use this factory method to create a new instance of
@@ -234,6 +238,14 @@ public class FragmentAgenda extends Fragment implements View.OnClickListener, Da
                 if(video_items.size() > 0){
 
                     video_url = ((Map)((Map)video_items.get(0)).get("local_copies")).get("video/mp4").toString();
+                    screen_shot_uri = ((Map)video_items.get(0)).get("screenshot_uri").toString();
+
+                    if(screen_shot_uri != ""){
+
+                        DataAccess.requestImageData(this, screen_shot_uri, RequestType.IMAGE);
+                    }
+
+
                     Log.i("FragmentAgenda", "DataAvailable: VIDEO URL " + video_url);
 
                     if(video_url != ""){
@@ -273,6 +285,13 @@ public class FragmentAgenda extends Fragment implements View.OnClickListener, Da
     @Override
     public void BinaryDataAvailable(Object data, RequestType type) {
 
+        //Bitmap received: add to layout
+        if(data == null){
+
+            //TODO: set message here that request failed
+            return;
+        }
+        ((ImageView) view_.findViewById(R.id.imageViewVideoPreviewFragmentAgenda)).setImageBitmap((Bitmap) data);
     }
 
     /**
@@ -411,9 +430,6 @@ public class FragmentAgenda extends Fragment implements View.OnClickListener, Da
                         }
                     }
 
-
-
-
                     ((WebView)popup.findViewById(R.id.webViewPopup)).loadDataWithBaseURL(null, agenda_data, "text/html", "UTF-8", null);
                     ((RelativeLayout) view_).addView(popup);
 
@@ -435,9 +451,16 @@ public class FragmentAgenda extends Fragment implements View.OnClickListener, Da
         //Hide video button
         view_.findViewById(R.id.buttonPlayVideoMP4FragmentAgenda).setVisibility(View.INVISIBLE);
 
+        //If popup is visible (most likely some other meeting, hide it)
         if(view_ != null){
 
+            //Empty current list:
+            ((LinearLayout)view_.findViewById(R.id.linearLayoutFragmentAgenda)).removeAllViews();
+
             ((RelativeLayout) view_).removeView(popup);
+
+            Bitmap bm = BitmapFactory.decodeResource(getResources(), R.mipmap.placeholder);
+            ((ImageView) view_.findViewById(R.id.imageViewVideoPreviewFragmentAgenda)).setImageBitmap(bm);
         }
     }
 
@@ -459,6 +482,8 @@ public class FragmentAgenda extends Fragment implements View.OnClickListener, Da
             //Request more data & show spinner:
             DataAccess.requestData(this, next_path, null);
             getActivity().findViewById(R.id.progressBarContentLoadingFragmentAgenda).setVisibility(View.VISIBLE);
+
+
         }
     }
 

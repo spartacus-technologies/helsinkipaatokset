@@ -37,6 +37,8 @@ public class DataAccess {
 
         ImageDownloadTask task = new ImageDownloadTask();
         task.setNetworkListener(listener, type);
+
+        task.execute(path);
     }
 
     //private static List<NetworkListener> listeners;
