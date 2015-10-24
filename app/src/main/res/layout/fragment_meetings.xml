@@ -89,5 +89,13 @@
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true" />
 
+    <ProgressBar
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="3dp"
+        android:id="@+id/progressBarAgendaItemLoading"
+        android:layout_above="@+id/linearLayout2"
+        android:layout_centerHorizontal="true" />
+
 </RelativeLayout>
 

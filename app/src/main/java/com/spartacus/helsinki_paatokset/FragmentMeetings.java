@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -46,6 +47,10 @@ public class FragmentMeetings extends Fragment implements View.OnClickListener, 
     private static CustomDictionary dictionary;
 
     private int policy_maker = -1;
+
+    //Progressbar test
+    int total_count = 1;
+    int current_progress = 0;
 
     /**
      * Use this factory method to create a new instance of
@@ -163,7 +168,8 @@ public class FragmentMeetings extends Fragment implements View.OnClickListener, 
 
                 //Agenda item received: push to dictionary for searching
                 //dictionary.addData();
-
+                current_progress += 1;
+                updateProgressBar();
                 break;
 
             case POLICY_MAKERS:
@@ -191,6 +197,10 @@ public class FragmentMeetings extends Fragment implements View.OnClickListener, 
 
             ((TextView)view.findViewById(R.id.textViewHeader)).setText("Ei kokouksia.");
         }
+        //Update total count
+        total_count = meetings.size();
+        current_progress = 0;
+        updateProgressBar();
 
         String dates = "";
         //Loop all meetings and construct needed UI components with data:
@@ -232,9 +242,8 @@ public class FragmentMeetings extends Fragment implements View.OnClickListener, 
             Integer meeting_id = Double.valueOf(temp.get("id").toString()).intValue();
             //Query for meeting specific data:
 
-            //TODO: this loop request blocks all network communication. add requests to priority buffer
-            //DataAccess.requestData(this, "http://dev.hel.fi/paatokset/v1/agenda_item/?limit=1000&offset=0&show_all=1&meeting=" + meeting_id, RequestType.AGENDA_ITEM);
-
+            //TODO: this loop request blocks all network communication. Task: add requests to priority buffer
+            DataAccess.requestData(this, "http://dev.hel.fi/paatokset/v1/agenda_item/?limit=1000&offset=0&show_all=1&meeting=" + meeting_id, RequestType.AGENDA_ITEM);
 
             //Register listeners for link:
             //View link = view.findViewById(R.id.textViewMeetingLink);
@@ -257,6 +266,17 @@ public class FragmentMeetings extends Fragment implements View.OnClickListener, 
             });
         }
 
+    }
+
+    private void updateProgressBar() {
+
+        if(total_count == 0){
+
+            ((ProgressBar)view_.findViewById(R.id.progressBarAgendaItemLoading)).setProgress(0);
+            return;
+        }
+
+        ((ProgressBar)view_.findViewById(R.id.progressBarAgendaItemLoading)).setProgress(100*current_progress/total_count);
     }
 
     @Override
