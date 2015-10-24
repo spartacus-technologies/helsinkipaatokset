@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -152,7 +153,7 @@ public class FragmentAgenda extends Fragment implements View.OnClickListener, Da
                 if(popup != null){
 
                     //((TextView)view_.findViewById(R.id.buttonControlBottomFragmentAgenda)).setText("↑ ylös");
-                    ((FrameLayout) view_).removeView(popup);
+                    ((RelativeLayout) view_).removeView(popup);
                     popup = null;
                 }
                 else{
@@ -176,7 +177,7 @@ public class FragmentAgenda extends Fragment implements View.OnClickListener, Da
                 break;
         }
 
-        if(popup != null) ((FrameLayout)view_).removeView(popup);
+        if(popup != null) ((RelativeLayout)view_).removeView(popup);
 
     }
 
@@ -350,18 +351,21 @@ public class FragmentAgenda extends Fragment implements View.OnClickListener, Da
 
                     if(popup != null){
 
-                        ((FrameLayout) view_).removeView(popup);
+                        ((RelativeLayout) view_).removeView(popup);
                         popup = null;
                         return;
                     }
                     String agenda_data = ((Map)((List)tag_data.get("content")).get(0)).get("text").toString();
                     popup = getActivity().getLayoutInflater().inflate(R.layout.pop_up_agenda, null, false);
-                    ((TextView)popup.findViewById(R.id.textViewHederPopup)).setText(tag_data.get("subject").toString());
+                    ViewGroup.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+                    popup.setLayoutParams(params);
+
+                    ((TextView) popup.findViewById(R.id.textViewHederPopup)).setText(tag_data.get("subject").toString());
                     popup.findViewById(R.id.imageButtonClosePopupAgenda).setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
 
-                            ((FrameLayout) view_).removeView(popup);
+                            ((RelativeLayout) view_).removeView(popup);
                             popup = null;
                         }
                     });
@@ -411,7 +415,7 @@ public class FragmentAgenda extends Fragment implements View.OnClickListener, Da
 
 
                     ((WebView)popup.findViewById(R.id.webViewPopup)).loadDataWithBaseURL(null, agenda_data, "text/html", "UTF-8", null);
-                    ((FrameLayout) view_).addView(popup);
+                    ((RelativeLayout) view_).addView(popup);
 
                     //Set button text for lower control button:
                     //((TextView)view_.findViewById(R.id.buttonControlBottomFragmentAgenda)).setText("Sulje");
@@ -430,6 +434,11 @@ public class FragmentAgenda extends Fragment implements View.OnClickListener, Da
 
         //Hide video button
         view_.findViewById(R.id.buttonPlayVideoMP4FragmentAgenda).setVisibility(View.INVISIBLE);
+
+        if(view_ != null){
+
+            ((RelativeLayout) view_).removeView(popup);
+        }
     }
 
     //@Override
