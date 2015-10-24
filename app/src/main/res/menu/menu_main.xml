@@ -2,6 +2,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:yourapp="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools" tools:context=".MainActivity">
+
     <item android:id="@+id/action_twitter"
         android:icon="@mipmap/twitter"
         android:title="Twitter"
@@ -14,12 +15,12 @@
         android:title="Share"
         android:actionProviderClass=
             "android.widget.ShareActionProvider"/>
-
+    <item android:id="@+id/action_settings" android:title="@string/action_settings"
+        android:orderInCategory="100" app:showAsAction="never" />
     <!--
         <item android:id="@+id/action_h_kanava_videot" android:title="@string/action_h_kanava_videot"
             android:orderInCategory="100" app:showAsAction="never" />
-        <item android:id="@+id/action_settings" android:title="@string/action_settings"
-            android:orderInCategory="100" app:showAsAction="never" />
+
     -->
 
 </menu>

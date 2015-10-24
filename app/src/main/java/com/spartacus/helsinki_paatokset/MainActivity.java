@@ -20,10 +20,11 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.spartacus.helsinki_paatokset.data_access.iFragmentDataExchange;
 
-public class MainActivity extends AppCompatActivity implements ActionBar.TabListener, FragmentAgenda.OnFragmentInteractionListener, iFragmentDataExchange {
+public class MainActivity extends AppCompatActivity implements ActionBar.TabListener, FragmentAgenda.OnFragmentInteractionListener, iFragmentDataExchange, View.OnClickListener {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -100,7 +101,6 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
         */
 
         //Register listeners:
-        //findViewById(R.id.buttonTestAPIConnection).setOnClickListener(this);
     }
 
     // Call to update the share intent
@@ -155,6 +155,7 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
         sendIntent.setType("text/plain");
         //startActivity(sendIntent);
         setShareIntent(sendIntent);
+        Log.i("ActivityMain", "Version " + BuildConfig.VERSION_NAME);
 
         item.setIcon(R.mipmap.share_white);
 
@@ -167,11 +168,15 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-        /*
+
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+
+            Intent intent = new Intent(this, SettingsActivity.class);
+            startActivity(intent);
             return true;
         }
+        /*
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_h_kanava_videot) {
             return true;
@@ -230,6 +235,12 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
             //Pass actual data:
             ((iFragmentDataExchange)frag).exchange(target, data);
         }
+
+
+    }
+
+    @Override
+    public void onClick(View v) {
 
 
     }
