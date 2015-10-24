@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.spartacus.helsinki_paatokset.data_access.CustomDictionary;
 import com.spartacus.helsinki_paatokset.data_access.DataAccess;
 import com.spartacus.helsinki_paatokset.data_access.iFragmentDataExchange;
 
@@ -42,6 +43,8 @@ public class FragmentMeetings extends Fragment implements View.OnClickListener, 
     private String next_path;
     private List meetings;
 
+    private static CustomDictionary dictionary;
+
     private int policy_maker = -1;
 
     /**
@@ -70,6 +73,11 @@ public class FragmentMeetings extends Fragment implements View.OnClickListener, 
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        if(dictionary == null){
+
+            dictionary = new CustomDictionary();
+        }
+
     }
 
     @Override
@@ -112,33 +120,62 @@ public class FragmentMeetings extends Fragment implements View.OnClickListener, 
         }
 
         //Examples & source: https://github.com/google/gson/blob/master/examples/android-proguard-example/src/com/google/gson/examples/android/GsonProguardExampleActivity.java
-        Gson gson = new Gson();
-
         Map m_data;
 
-        try {
+        switch (type){
 
-            m_data = new Gson().fromJson(data, Map.class);
+            case MEETING:
 
-            meetings = (List) m_data.get("objects");
-            /*
-            if(meetings == null){
+                try {
 
-            }else{
-                meetings.addAll((List) m_data.get("objects"));
-            }
-            */
-            //next_path = (String)((Map)m_data.get("meta")).get("next");
+                    m_data = new Gson().fromJson(data, Map.class);
+
+                    meetings = (List) m_data.get("objects");
+                    /*
+                    if(meetings == null){
+
+                    }else{
+                    meetings.addAll((List) m_data.get("objects"));
+                    }
+                    */
+                    //next_path = (String)((Map)m_data.get("meta")).get("next");
+                    }
+                catch (Exception e){
+
+                    Log.e("FragmentAgenda", e.getMessage());
+                    Toast.makeText(getActivity(), "Datahaun yhteydessä tapahtui virhe.", Toast.LENGTH_LONG).show();
+                }
+
+                inflateMeetingsData();
+                //Hide spinner to indicate loading is complete:
+                getActivity().findViewById(R.id.progressBarContentLoadingFragmentMeetings).setVisibility(View.INVISIBLE);
+
+                break;
+
+            case VIDEO:
+                break;
+            case AGENDAS:
+                break;
+            case VIDEO_PREVIEW:
+                break;
+
+            case AGENDA_ITEM:
+
+                //Agenda item received: push to dictionary for searching
+                //dictionary.addData();
+
+                break;
+
+            case POLICY_MAKERS:
+                break;
+            case POLICY_MAKER:
+                break;
+            case IMAGE:
+                break;
         }
-        catch (Exception e){
 
-            Log.e("FragmentAgenda", e.getMessage());
-            Toast.makeText(getActivity(), "Datahaun yhteydessä tapahtui virhe.", Toast.LENGTH_LONG).show();
-        }
 
-        inflateMeetingsData();
-        //Hide spinner to indicate loading is complete:
-        getActivity().findViewById(R.id.progressBarContentLoadingFragmentMeetings).setVisibility(View.INVISIBLE);
+
     }
 
     private void inflateMeetingsData() {
@@ -191,6 +228,12 @@ public class FragmentMeetings extends Fragment implements View.OnClickListener, 
                                                                      + "  " +
                                                                     ((Map)temp.get("meeting")).get("id").toString()*/
             );
+
+            Integer meeting_id = Double.valueOf(temp.get("id").toString()).intValue();
+            //Query for meeting specific data:
+
+            //TODO: this loop request blocks all network communication. add requests to priority buffer
+            //DataAccess.requestData(this, "http://dev.hel.fi/paatokset/v1/agenda_item/?limit=1000&offset=0&show_all=1&meeting=" + meeting_id, RequestType.AGENDA_ITEM);
 
 
             //Register listeners for link:
@@ -257,7 +300,7 @@ public class FragmentMeetings extends Fragment implements View.OnClickListener, 
             return;
         }
 
-        DataAccess.requestData(this, "http://dev.hel.fi/paatokset/v1/meeting/?limit=1000&offset=0&policymaker=" + policy_maker, RequestType.POLICY_MAKERS);
+        DataAccess.requestData(this, "http://dev.hel.fi/paatokset/v1/meeting/?limit=1000&offset=0&policymaker=" + policy_maker, RequestType.MEETING);
         ((LinearLayout)getActivity().findViewById(R.id.linearLayoutFragmentMeetings)).removeAllViews();
         getActivity().findViewById(R.id.progressBarContentLoadingFragmentMeetings).setVisibility(View.VISIBLE);
     }

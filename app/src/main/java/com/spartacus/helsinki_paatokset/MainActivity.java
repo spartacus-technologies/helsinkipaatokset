@@ -137,13 +137,15 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
 
+
         // Locate MenuItem with ShareActionProvider
-        MenuItem item = menu.findItem(R.id.menu_item_share);
+        MenuItem item = menu.findItem(R.id.menu_item_shares);
 
         mShareActionProvider = new ShareActionProvider(this);
+
         // Fetch and store ShareActionProvider
         MenuItemCompat.setActionProvider(item, mShareActionProvider);
-        //mShareActionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(item);
+        mShareActionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(item);
 
         //Dummy send intent:
         //TODO: add real data here...
@@ -154,6 +156,7 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
         //startActivity(sendIntent);
         setShareIntent(sendIntent);
 
+        item.setIcon(R.mipmap.share_white);
 
         return true;
     }
