@@ -243,7 +243,7 @@ public class FragmentMeetings extends Fragment implements View.OnClickListener, 
             //Query for meeting specific data:
 
             //TODO: this loop request blocks all network communication. Task: add requests to priority buffer
-            //DataAccess.requestData(this, "http://dev.hel.fi/paatokset/v1/agenda_item/?limit=1000&offset=0&show_all=1&meeting=" + meeting_id, RequestType.AGENDA_ITEM);
+            DataAccess.requestData(this, "http://dev.hel.fi/paatokset/v1/agenda_item/?limit=1000&offset=0&show_all=1&meeting=" + meeting_id, RequestType.AGENDA_ITEM);
 
             //Register listeners for link:
             //View link = view.findViewById(R.id.textViewMeetingLink);

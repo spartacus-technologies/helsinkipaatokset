@@ -1,6 +1,12 @@
 package com.spartacus.helsinki_paatokset.data_access;
 
+import android.os.AsyncTask;
+import android.os.Build;
 import android.util.Log;
+
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadPoolExecutor;
 
 /**
  * Created by Eetu on 1.10.2015.
@@ -8,6 +14,7 @@ import android.util.Log;
 public class DataAccess {
 
     final static String API_PATH = "http://dev.hel.fi";
+    static Executor task_executor = null;
 
     //Registers listener and executes GET Method. After completion executes listeners callback function.
     public static void requestData(NetworkListener listener, String path, NetworkListener.RequestType type) {
@@ -17,12 +24,25 @@ public class DataAccess {
 
             path = API_PATH + path;
         }
+
+        if(task_executor == null){
+
+            //task_executor = Executors.newCachedThreadPool();
+            task_executor = Executors.newFixedThreadPool(30);
+        }
+
         Log.i("DataAccess:requestData", "path=" + path);
 
         NetworkTask task = new NetworkTask();
         task.setNetworkListener(listener, type);
 
-        task.execute(path);
+        if( Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB ) {
+            task.executeOnExecutor(task_executor, path);
+        } else {
+            task.execute(path);
+        }
+
+        //task.execute(path);
     }
 
     //Registers listener and executes GET Method. After completion executes listeners callback function.
