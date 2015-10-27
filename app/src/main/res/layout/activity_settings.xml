@@ -20,27 +20,33 @@
             android:text="Ensisijainen videon lähde"
             android:id="@+id/textView4" />
 
-        <RadioButton
+        <RadioGroup
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="MP4"
-            android:id="@+id/radioButton"
-            android:enabled="false"
-            android:checked="true" />
+            android:layout_height="wrap_content">
 
-        <RadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="MP4 (Helsinkikanava)"
-            android:id="@+id/radioButton2"
-            android:enabled="false" />
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="MP4"
+                android:id="@+id/radioButtonMP4"
+                android:enabled="true"
+                android:checked="true" />
 
-        <RadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="OGV"
-            android:id="@+id/radioButton3"
-            android:enabled="false" />
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="MP4 (Helsinkikanava)"
+                android:id="@+id/radioButtonHKIKanava"
+                android:enabled="true" />
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="OGV"
+                android:id="@+id/radioButtonOGV"
+                android:enabled="true" />
+
+        </RadioGroup>
 
         <TextView
             android:layout_width="wrap_content"
