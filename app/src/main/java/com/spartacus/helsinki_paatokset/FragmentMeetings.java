@@ -17,6 +17,8 @@ import com.spartacus.helsinki_paatokset.data_access.CustomDictionary;
 import com.spartacus.helsinki_paatokset.data_access.DataAccess;
 import com.spartacus.helsinki_paatokset.data_access.iFragmentDataExchange;
 
+import org.w3c.dom.Text;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -158,6 +160,10 @@ public class FragmentMeetings extends Fragment implements View.OnClickListener, 
                 break;
 
             case VIDEO:
+
+                current_progress += 1;
+                updateProgressBar();
+                fillMeetingMetaData(data);
                 break;
             case AGENDAS:
                 break;
@@ -170,6 +176,8 @@ public class FragmentMeetings extends Fragment implements View.OnClickListener, 
                 //dictionary.addData();
                 current_progress += 1;
                 updateProgressBar();
+                //fillMeetingMetaData(data);
+
                 break;
 
             case POLICY_MAKERS:
@@ -181,6 +189,35 @@ public class FragmentMeetings extends Fragment implements View.OnClickListener, 
         }
 
 
+
+    }
+
+    //Loop meetings and add meta data once match is found:
+    private void fillMeetingMetaData(String data) {
+
+        LinearLayout container = ((LinearLayout)view_.findViewById(R.id.linearLayoutFragmentMeetings));
+        Map data_m = new Gson().fromJson(data, Map.class);
+
+        //Check for total count: -> return if no video data available
+        if(((List)data_m.get("objects")).size() == 0) return;
+
+        String tmp =  ((Map)((List)data_m.get("objects")).get(0)).get("meeting").toString();
+        tmp = tmp.substring(0, tmp.length() - 1);
+        tmp = tmp.substring(tmp.lastIndexOf("/") + 1, tmp.length());
+        Integer meeting_id = Double.valueOf(tmp).intValue();
+
+
+        for(int i = 0; i < container.getChildCount(); ++i){
+
+            View view  = container.getChildAt(i);
+            if(Double.valueOf(((Map) view.getTag()).get("id").toString()).intValue() == meeting_id){
+
+                //TextView footer = (TextView) view.findViewById(R.id.textViewFooterText);
+                View video_icon= view.findViewById(R.id.imageViewVideoAvailable);
+                video_icon.setVisibility(View.VISIBLE);
+                //footer.setText("vid");
+            }
+        }
 
     }
 
@@ -198,7 +235,7 @@ public class FragmentMeetings extends Fragment implements View.OnClickListener, 
             ((TextView)view.findViewById(R.id.textViewHeader)).setText("Ei kokouksia.");
         }
         //Update total count
-        total_count = meetings.size();
+        total_count = meetings.size()*2;
         current_progress = 0;
         updateProgressBar();
 
@@ -242,8 +279,8 @@ public class FragmentMeetings extends Fragment implements View.OnClickListener, 
             Integer meeting_id = Double.valueOf(temp.get("id").toString()).intValue();
             //Query for meeting specific data:
 
-            //TODO: this loop request blocks all network communication. Task: add requests to priority buffer
             DataAccess.requestData(this, "http://dev.hel.fi/paatokset/v1/agenda_item/?limit=1000&offset=0&show_all=1&meeting=" + meeting_id, RequestType.AGENDA_ITEM);
+            DataAccess.requestData(this, "http://dev.hel.fi:80/paatokset/v1/video/?meeting=" + meeting_id, RequestType.VIDEO);
 
             //Register listeners for link:
             //View link = view.findViewById(R.id.textViewMeetingLink);

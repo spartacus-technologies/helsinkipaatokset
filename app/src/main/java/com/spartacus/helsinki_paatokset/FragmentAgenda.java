@@ -254,7 +254,7 @@ public class FragmentAgenda extends Fragment implements View.OnClickListener, Da
                     }catch(Exception e){}
 
                     try{
-                        source_ogv = ((Map)((Map)video_items.get(0)).get("local_copies")).get("video/ogv").toString();
+                        source_ogv = ((Map)((Map)video_items.get(0)).get("local_copies")).get("video/ogg").toString();
                     }catch(Exception e){}
 
                     try{
@@ -359,6 +359,9 @@ public class FragmentAgenda extends Fragment implements View.OnClickListener, Da
         if(data == null){
 
             //TODO: set message here that request failed
+            Bitmap err_image = BitmapFactory.decodeResource(getResources(), R.mipmap.place_holder_error);
+            ((ImageView) view_.findViewById(R.id.imageViewVideoPreviewFragmentAgenda)).setImageBitmap(err_image);
+
             return;
         }
         ((ImageView) view_.findViewById(R.id.imageViewVideoPreviewFragmentAgenda)).setImageBitmap((Bitmap) data);
