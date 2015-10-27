@@ -97,7 +97,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="150dp"
                             android:id="@+id/imageViewVideoPreviewFragmentAgenda"
-                            android:src="@mipmap/placeholder"
+                            android:src="@mipmap/place_holder_new"
                             android:layout_alignParentBottom="true"
                             android:scaleType="fitCenter"
                             android:layout_alignParentTop="true" />

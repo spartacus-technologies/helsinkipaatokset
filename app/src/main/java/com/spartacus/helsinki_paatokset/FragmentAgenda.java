@@ -24,6 +24,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.spartacus.helsinki_paatokset.data_access.ConfigurationManager;
 import com.spartacus.helsinki_paatokset.data_access.DataAccess;
 import com.spartacus.helsinki_paatokset.data_access.iFragmentDataExchange;
 
@@ -61,6 +62,8 @@ public class FragmentAgenda extends Fragment implements View.OnClickListener, Da
     private String video_url;
     private String screen_shot_uri;
 
+    String primary_video_source = null;
+
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
@@ -91,6 +94,9 @@ public class FragmentAgenda extends Fragment implements View.OnClickListener, Da
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
         */
+
+        ConfigurationManager.initialize(getActivity());
+        primary_video_source = ConfigurationManager.getVideoSource();
     }
 
     @Override
@@ -231,13 +237,77 @@ public class FragmentAgenda extends Fragment implements View.OnClickListener, Da
 
                 Log.i("FragmentAgenda", "DataAvailable: VIDEO");
 
+                primary_video_source = ConfigurationManager.getVideoSource();
+
                 //Video data arrived -> check whether video exists:
                 m_data = new Gson().fromJson(data, Map.class);
                 video_items = (List) m_data.get("objects");
 
                 if(video_items.size() > 0){
 
-                    video_url = ((Map)((Map)video_items.get(0)).get("local_copies")).get("video/mp4").toString();
+                    String source_mp4 = null;
+                    String source_ogv = null;
+                    String source_hki = null;
+
+                    try{
+                        source_mp4 = ((Map)((Map)video_items.get(0)).get("local_copies")).get("video/mp4").toString();
+                    }catch(Exception e){}
+
+                    try{
+                        source_ogv = ((Map)((Map)video_items.get(0)).get("local_copies")).get("video/ogv").toString();
+                    }catch(Exception e){}
+
+                    try{
+                        source_hki = ((Map)video_items.get(0)).get("url").toString();
+                    }catch(Exception e){}
+
+
+                    if(primary_video_source.equals("MP4")){
+
+                        if(source_mp4 != null){
+
+                            video_url = source_mp4;
+
+                        }else if(source_ogv != null){
+
+                            video_url = source_ogv;
+                        }
+                        else if(source_hki != null){
+
+                            video_url = source_hki;
+                        }
+                    }
+                    if(primary_video_source.equals("OGV")){
+
+                        if(source_ogv != null){
+
+                            video_url = source_ogv;
+
+                        }else if(source_mp4 != null){
+
+                            video_url = source_mp4;
+                        }
+                        else if(source_hki != null){
+
+                            video_url = source_hki;
+                        }
+                    }
+                    if(primary_video_source.equals("HKI")){
+
+                        if(source_hki != null){
+
+                            video_url = source_hki;
+
+                        }else if(source_mp4 != null){
+
+                            video_url = source_mp4;
+                        }
+                        else if(source_ogv != null){
+
+                            video_url = source_ogv;
+                        }
+                    }
+                    //video_url = ((Map)((Map)video_items.get(0)).get("local_copies")).get("video/mp4").toString();
                     screen_shot_uri = ((Map)video_items.get(0)).get("screenshot_uri").toString();
 
                     if(screen_shot_uri != ""){
@@ -254,13 +324,13 @@ public class FragmentAgenda extends Fragment implements View.OnClickListener, Da
                         view_.findViewById(R.id.buttonPlayVideoMP4FragmentAgenda).setVisibility(View.VISIBLE);
                         //view_.findViewById(R.id.textViewVideoDataAvailabilityMessageFragmentAgenda).setVisibility(View.INVISIBLE);
                         view_.findViewById(R.id.textViewVideoDataAvailabilityMessageFragmentAgenda).setVisibility(View.VISIBLE);
-                        ((TextView)view_.findViewById(R.id.textViewVideoDataAvailabilityMessageFragmentAgenda)).setText(video_url);
+                        ((TextView) view_.findViewById(R.id.textViewVideoDataAvailabilityMessageFragmentAgenda)).setText(video_url);
 
                     }
                 }else{
 
                     view_.findViewById(R.id.textViewVideoDataAvailabilityMessageFragmentAgenda).setVisibility(View.VISIBLE);
-                    ((TextView)view_.findViewById(R.id.textViewVideoDataAvailabilityMessageFragmentAgenda)).setText("Video ei saatavilla.");
+                    ((TextView) view_.findViewById(R.id.textViewVideoDataAvailabilityMessageFragmentAgenda)).setText("Video ei saatavilla.");
                 }
 
 
@@ -459,7 +529,7 @@ public class FragmentAgenda extends Fragment implements View.OnClickListener, Da
 
             ((RelativeLayout) view_).removeView(popup);
 
-            Bitmap bm = BitmapFactory.decodeResource(getResources(), R.mipmap.placeholder);
+            Bitmap bm = BitmapFactory.decodeResource(getResources(), R.mipmap.place_holder_new);
             ((ImageView) view_.findViewById(R.id.imageViewVideoPreviewFragmentAgenda)).setImageBitmap(bm);
         }
     }
