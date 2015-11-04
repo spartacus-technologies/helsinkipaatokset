@@ -53,7 +53,7 @@ public class NetworkTask extends AsyncTask<String, Void, Void> {
     @Override
     protected void onPostExecute(Void v) {
 
-        Log.i("NetworkTask", "onPostExecute");
+        //Log.i("NetworkTask", "onPostExecute");
         listener_.DataAvailable(response, type_);
     }
 

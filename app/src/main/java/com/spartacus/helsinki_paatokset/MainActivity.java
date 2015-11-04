@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.v4.view.MenuItemCompat;
@@ -34,7 +35,7 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
      * may be best to switch to a
      * {@link android.support.v4.app.FragmentStatePagerAdapter}.
      */
-    SectionsPagerAdapter mSectionsPagerAdapter;
+    MyAdapter mSectionsPagerAdapter; //TODO: remove staticness
 
     /**
      * The {@link ViewPager} that will host the section contents.
@@ -56,7 +57,7 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
-        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+        mSectionsPagerAdapter = new MyAdapter(getSupportFragmentManager());
 
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.pager);
@@ -80,7 +81,7 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
             // this tab is selected.
             actionBar.addTab(
                     actionBar.newTab()
-                            .setText(mSectionsPagerAdapter.getPageTitle(i))
+                            .setText(mSectionsPagerAdapter.getPageTitle(i, this))
                             .setTabListener(this));
         }
 
@@ -101,6 +102,12 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
         */
 
         //Register listeners:
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+
     }
 
     // Call to update the share intent
@@ -226,6 +233,16 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
 
         if(frag == null){
 
+            /*
+            //TODO: Temporal fix: create new frgment if old has been destroyed
+            switch (target){
+
+                case 1:
+                    f
+                    break;
+
+            }
+            */
             Log.e("MainActivity", "Fragment with id " + target + " not found");
         }
         else{
@@ -249,11 +266,12 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
      * one of the sections/tabs/pages.
      */
-    public class SectionsPagerAdapter extends FragmentPagerAdapter {
+
+    public class MyAdapter extends FragmentPagerAdapter {
 
         Map<Integer, Fragment> fragment_container;   //TODO: this is a bit ghetto solution but works for now.
 
-        public SectionsPagerAdapter(FragmentManager fm) {
+        public MyAdapter(FragmentManager fm) {
             super(fm);
             fragment_container = new HashMap<>();
         }
@@ -294,25 +312,26 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
             //return FragmentAgenda.newInstance(null, null);
         }
 
+
         @Override
         public int getCount() {
             // Show 3 total pages.
             return 3;
         }
 
-        @Override
-        public CharSequence getPageTitle(int position) {
+        public CharSequence getPageTitle(int position, Context context) {
             Locale l = Locale.getDefault();
             switch (position) {
                 case 0:
-                    return getString(R.string.title_section1).toUpperCase(l);
+                    return context.getString(R.string.title_section1).toUpperCase(l);
                 case 1:
-                    return getString(R.string.title_section2).toUpperCase(l);
+                    return context.getString(R.string.title_section2).toUpperCase(l);
                 case 2:
-                    return getString(R.string.title_section3).toUpperCase(l);
+                    return context.getString(R.string.title_section3).toUpperCase(l);
             }
             return null;
         }
     }
+
 
 }

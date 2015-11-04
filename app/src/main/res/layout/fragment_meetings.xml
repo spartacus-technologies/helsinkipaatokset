@@ -42,7 +42,7 @@
             android:layout_gravity="center_horizontal|bottom"
             android:hint="Hae kokouksista..."
             android:enabled="false"
-            android:id="@+id/editTextSearchFragmentPolicyMakers"
+            android:id="@+id/editTextSearchFragmentMeetings"
             android:background="@drawable/edit_text"
             android:paddingLeft="15dp" />
     </LinearLayout>

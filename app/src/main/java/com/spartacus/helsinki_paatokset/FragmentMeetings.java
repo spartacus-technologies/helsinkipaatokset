@@ -2,10 +2,13 @@ package com.spartacus.helsinki_paatokset;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
@@ -32,7 +35,7 @@ import java.util.Map;
  * Use the {@link FragmentMeetings#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class FragmentMeetings extends Fragment implements View.OnClickListener, DataAccess.NetworkListener, iFragmentDataExchange {
+public class FragmentMeetings extends Fragment implements View.OnClickListener, DataAccess.NetworkListener, iFragmentDataExchange /*, TextWatcher*/ {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -44,7 +47,11 @@ public class FragmentMeetings extends Fragment implements View.OnClickListener, 
     private String mParam2;
     private View view_;
     private String next_path;
-    private List meetings;
+
+    private static List meetings;           //TODO: remove staticness and pass information some other means
+    private List meeetings_video_data;
+
+    //Map m_data = null;
 
     private static CustomDictionary dictionary;
 
@@ -94,8 +101,8 @@ public class FragmentMeetings extends Fragment implements View.OnClickListener, 
         //view_ = inflater.inflate(R.layout.splashscreen, container, false);
 
         //return view_;
-
-        view_ = inflater.inflate(R.layout.fragment_meetings, container, false);
+        if(view_ == null)
+            view_ = inflater.inflate(R.layout.fragment_meetings, container, false);
 
         //Request meetings data
 
@@ -113,6 +120,10 @@ public class FragmentMeetings extends Fragment implements View.OnClickListener, 
         view_.findViewById(R.id.buttonUpdateFragmentMeetings).setOnClickListener(this);
         //view.findViewById(R.id.scrollView).setOnScrollChangeListener(this);
         view_.findViewById(R.id.buttonBackToUpFragmentMeetings).setOnClickListener(this);
+        //((EditText)view_.findViewById(R.id.editTextSearchFragmentMeetings)).addTextChangedListener(this);
+
+
+        inflateMeetingsData();
 
         // Inflate the layout for this fragment
         return view_;
@@ -125,10 +136,8 @@ public class FragmentMeetings extends Fragment implements View.OnClickListener, 
         if (data == null){
             return;
         }
-
-        //Examples & source: https://github.com/google/gson/blob/master/examples/android-proguard-example/src/com/google/gson/examples/android/GsonProguardExampleActivity.java
         Map m_data;
-
+        //Examples & source: https://github.com/google/gson/blob/master/examples/android-proguard-example/src/com/google/gson/examples/android/GsonProguardExampleActivity.java
         switch (type){
 
             case MEETING:
@@ -161,9 +170,11 @@ public class FragmentMeetings extends Fragment implements View.OnClickListener, 
 
             case VIDEO:
 
+                meeetings_video_data = (List) new Gson().fromJson(data, Map.class).get("objects");
+
                 current_progress += 1;
                 updateProgressBar();
-                fillMeetingMetaData(data);
+                fillMeetingMetaData();
                 break;
             case AGENDAS:
                 break;
@@ -174,6 +185,28 @@ public class FragmentMeetings extends Fragment implements View.OnClickListener, 
 
                 //Agenda item received: push to dictionary for searching
                 //dictionary.addData();
+
+                try {
+
+                    m_data = new Gson().fromJson(data, Map.class);
+
+                    List agenda_items = (List) m_data.get("objects");
+
+                    if(agenda_items.size() > 0){
+
+                        Integer meeting_id = (int)Double.parseDouble(((Map) ((Map) agenda_items.get(0)).get("meeting")).get("id").toString());
+
+                        dictionary.addData(meeting_id, data);
+                    }
+                    //Get meeting id:
+                }
+                catch (Exception e){
+
+                    Log.e("FragmentAgenda", e.getMessage());
+                }
+
+
+
                 current_progress += 1;
                 updateProgressBar();
                 //fillMeetingMetaData(data);
@@ -193,15 +226,15 @@ public class FragmentMeetings extends Fragment implements View.OnClickListener, 
     }
 
     //Loop meetings and add meta data once match is found:
-    private void fillMeetingMetaData(String data) {
+    private void fillMeetingMetaData() {
 
         LinearLayout container = ((LinearLayout)view_.findViewById(R.id.linearLayoutFragmentMeetings));
-        Map data_m = new Gson().fromJson(data, Map.class);
+        //Map data_m = new Gson().fromJson(data, Map.class);
 
         //Check for total count: -> return if no video data available
-        if(((List)data_m.get("objects")).size() == 0) return;
+        if(meeetings_video_data == null || meeetings_video_data.size() == 0) return;
 
-        String tmp =  ((Map)((List)data_m.get("objects")).get(0)).get("meeting").toString();
+        String tmp =  ((Map)meeetings_video_data.get(0)).get("meeting").toString();
         tmp = tmp.substring(0, tmp.length() - 1);
         tmp = tmp.substring(tmp.lastIndexOf("/") + 1, tmp.length());
         Integer meeting_id = Double.valueOf(tmp).intValue();
@@ -225,6 +258,9 @@ public class FragmentMeetings extends Fragment implements View.OnClickListener, 
 
         //Empty current list:
         ((LinearLayout)view_.findViewById(R.id.linearLayoutFragmentMeetings)).removeAllViews();
+
+        //First run -> return
+        if(meetings == null) return;
 
         //Check that there actually are meetings:
         if(meetings.size() == 0){
@@ -346,6 +382,9 @@ public class FragmentMeetings extends Fragment implements View.OnClickListener, 
     @Override
     public void exchange(int target, Object data) {
 
+        //Clear any current list of meetings:
+        meetings = null;
+
         //Data provided is policy maker id:
         try {
 
@@ -361,4 +400,28 @@ public class FragmentMeetings extends Fragment implements View.OnClickListener, 
         ((LinearLayout)getActivity().findViewById(R.id.linearLayoutFragmentMeetings)).removeAllViews();
         getActivity().findViewById(R.id.progressBarContentLoadingFragmentMeetings).setVisibility(View.VISIBLE);
     }
+    /*
+    @Override
+    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+    }
+
+    @Override
+    public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+        CustomDictionary.Tuple<Integer, String> matching_meetings = dictionary.searchForMeeting(s.toString());
+
+        for (:
+        ){
+
+        }
+        dictionary.
+
+    }
+
+    @Override
+    public void afterTextChanged(Editable s) {
+
+    }
+    */
 }

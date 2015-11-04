@@ -189,10 +189,7 @@ public class FragmentPolicyMakers extends Fragment implements View.OnClickListen
                 break;
         }
 
-        Log.e("FragmentPolicyMakers", "The End");
-
-
-
+        //Log.e("FragmentPolicyMakers", "The End");
     }
 
     //Function for arranging policy makers in desired order instead of random.
