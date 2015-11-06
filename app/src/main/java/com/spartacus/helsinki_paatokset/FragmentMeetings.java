@@ -91,7 +91,6 @@ public class FragmentMeetings extends Fragment implements View.OnClickListener, 
 
             dictionary = new CustomDictionary();
         }
-
     }
 
     @Override
@@ -121,6 +120,7 @@ public class FragmentMeetings extends Fragment implements View.OnClickListener, 
         //view.findViewById(R.id.scrollView).setOnScrollChangeListener(this);
         view_.findViewById(R.id.buttonBackToUpFragmentMeetings).setOnClickListener(this);
         //((EditText)view_.findViewById(R.id.editTextSearchFragmentMeetings)).addTextChangedListener(this);
+
 
 
         inflateMeetingsData();
@@ -196,7 +196,7 @@ public class FragmentMeetings extends Fragment implements View.OnClickListener, 
 
                         Integer meeting_id = (int)Double.parseDouble(((Map) ((Map) agenda_items.get(0)).get("meeting")).get("id").toString());
 
-                        dictionary.addData(meeting_id, data);
+                        //dictionary.addData(meeting_id, data);
                     }
                     //Get meeting id:
                 }
@@ -204,8 +204,6 @@ public class FragmentMeetings extends Fragment implements View.OnClickListener, 
 
                     Log.e("FragmentAgenda", e.getMessage());
                 }
-
-
 
                 current_progress += 1;
                 updateProgressBar();
@@ -220,9 +218,6 @@ public class FragmentMeetings extends Fragment implements View.OnClickListener, 
             case IMAGE:
                 break;
         }
-
-
-
     }
 
     //Loop meetings and add meta data once match is found:
@@ -251,7 +246,6 @@ public class FragmentMeetings extends Fragment implements View.OnClickListener, 
                 //footer.setText("vid");
             }
         }
-
     }
 
     private void inflateMeetingsData() {
@@ -338,7 +332,6 @@ public class FragmentMeetings extends Fragment implements View.OnClickListener, 
                 }
             });
         }
-
     }
 
     private void updateProgressBar() {

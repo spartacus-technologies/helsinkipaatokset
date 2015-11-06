@@ -68,7 +68,6 @@ public class CustomDictionary {
                     Log.e("CustomDictionary", "Exception: " + e.getMessage());
                 }
             }
-
         }
     }
 

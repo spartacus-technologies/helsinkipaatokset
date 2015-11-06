@@ -18,7 +18,6 @@ public class APICache {
         storage.put(key, data);
     }
 
-
     public static String retrieve(String key){
 
         if(storage == null){
@@ -26,5 +25,4 @@ public class APICache {
         }
         return storage.get(key);
     }
-
 }

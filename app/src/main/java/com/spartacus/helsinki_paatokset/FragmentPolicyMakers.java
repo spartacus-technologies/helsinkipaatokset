@@ -76,8 +76,11 @@ public class FragmentPolicyMakers extends Fragment implements View.OnClickListen
         ((EditText)view_.findViewById(R.id.editTextSearchFragmentPolicyMakers)).addTextChangedListener(this);
 
         //Request data:
-        if(policy_makers == null)
+        if(policy_makers == null){
+
+            view_.findViewById(R.id.progressBarContentLoadingFragmentPolicyMakers).setVisibility(View.VISIBLE);
             DataAccess.requestData(this, "http://dev.hel.fi/paatokset/v1/policymaker/?limit=200", RequestType.POLICY_MAKERS);
+        }
         else
             inflatePolicyMakerData();
 
@@ -90,7 +93,12 @@ public class FragmentPolicyMakers extends Fragment implements View.OnClickListen
 
         Log.i("FragmentPolicyMakers", "DataAvailable");
 
-        if(data == null){ return;}
+        if(data == null){
+
+            Toast.makeText(getActivity(), "Ei yhteyttä", Toast.LENGTH_SHORT).show();
+            view_.findViewById(R.id.progressBarContentLoadingFragmentPolicyMakers).setVisibility(View.INVISIBLE);
+            return;
+        }
 
         switch (type){
 
@@ -159,7 +167,7 @@ public class FragmentPolicyMakers extends Fragment implements View.OnClickListen
                 }
 
                 //Loop all policymakers and set visibilitystate according to user input:
-                //TODO: inefficient!
+                //TODO: inefficient!?
                 LinearLayout container = (LinearLayout) view_.findViewById(R.id.linearLayoutFragmentPolicyMakers);
                 int count = container.getChildCount();
                 View v = null;

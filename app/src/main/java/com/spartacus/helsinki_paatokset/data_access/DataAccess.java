@@ -28,7 +28,7 @@ public class DataAccess {
         if(task_executor == null){
 
             //task_executor = Executors.newCachedThreadPool();
-            task_executor = Executors.newFixedThreadPool(30);
+            task_executor = Executors.newFixedThreadPool(10);
         }
 
         Log.i("DataAccess:requestData", "path=" + path);
@@ -73,7 +73,8 @@ public class DataAccess {
             VIDEO_PREVIEW,
             AGENDA_ITEM,
             POLICY_MAKERS,
-            POLICY_MAKER, IMAGE
+            POLICY_MAKER,
+            IMAGE
         }
 
         void DataAvailable(String data, RequestType type);
