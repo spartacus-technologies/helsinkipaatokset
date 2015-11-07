@@ -3,11 +3,15 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
+        <item name="actionBarWidgetTheme">@style/Theme.AppCompat.CustomShareIcon</item>
+        <item name="android:actionBarWidgetTheme">@style/Theme.AppCompat.CustomShareIcon</item>
         <item name="colorPrimary">#003380</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
-
+    <style name="Theme.AppCompat.CustomShareIcon" parent="@style/Theme.AppCompat">
+        <item name="actionModeShareDrawable">@mipmap/share_white</item> <!-- your icon goes here -->
+    </style>
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>

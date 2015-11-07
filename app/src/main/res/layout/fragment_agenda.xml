@@ -43,7 +43,7 @@
             android:hint="Hae kokouksen sisällöstä..."
             android:enabled="false"
             android:id="@+id/editTextSearchFragmentPolicyMakers"
-            android:background="@drawable/edit_text"
+            android:background="@drawable/edit_text_disabled"
             android:paddingLeft="15dp" />
     </LinearLayout>
 
@@ -107,7 +107,7 @@
                             android:layout_height="wrap_content"
                             android:id="@+id/buttonPlayVideoMP4FragmentAgenda"
                             android:layout_gravity="top|center"
-                            android:visibility="visible"
+                            android:visibility="invisible"
                             android:src="@mipmap/play_back"
                             android:enabled="true"
                             android:layout_centerVertical="true"

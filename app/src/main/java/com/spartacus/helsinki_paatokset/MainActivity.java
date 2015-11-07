@@ -117,7 +117,7 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
 
-
+        /*
         // Locate MenuItem with ShareActionProvider
         MenuItem item = menu.findItem(R.id.menu_item_shares);
 
@@ -126,6 +126,8 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
         // Fetch and store ShareActionProvider
         MenuItemCompat.setActionProvider(item, mShareActionProvider);
         mShareActionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(item);
+        item.setIcon(R.mipmap.share_white);
+        */
 
         //Dummy send intent:
         //TODO: add real data here...
@@ -137,7 +139,6 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
         setShareIntent(sendIntent);
         Log.i("ActivityMain", "Version " + BuildConfig.VERSION_NAME);
 
-        item.setIcon(R.mipmap.share_white);
 
         return true;
     }
@@ -162,6 +163,20 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
             return true;
         }
         */
+
+        if(id == R.id.menu_item_shares){
+
+            //String tweetUrl = "https://twitter.com/intent/tweet?text=Katselen avointa päätösdata @HKIPaatokset avulla! Katso sinäkin: www.spartacus-technologies.fi&hashtags=HelsinginKaupunki, HelsinkiPäätökset";
+            String text = "Katselen avointa päätösdataa @HKIPaatokset avulla! Katso sinäkin: http://app.sprtc.us #HelsinginKaupunki #HelsinkiPäätökset";
+
+            Intent sendIntent = new Intent();
+            sendIntent.setAction(Intent.ACTION_SEND);
+            sendIntent.putExtra(Intent.EXTRA_TEXT, text);
+            sendIntent.setType("text/plain");
+            startActivity(sendIntent);
+
+            return true;
+        }
 
         if (id == R.id.action_twitter) {
 
