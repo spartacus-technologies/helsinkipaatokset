@@ -7,6 +7,9 @@ import java.util.Map;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.support.design.widget.TabLayout;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.ActionBar;
@@ -17,6 +20,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.ShareActionProvider;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -35,7 +39,7 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
      * may be best to switch to a
      * {@link android.support.v4.app.FragmentStatePagerAdapter}.
      */
-    MyAdapter mSectionsPagerAdapter; //TODO: remove staticness
+    SectionsPagerAdapter mSectionsPagerAdapter; //TODO: remove staticness
 
     /**
      * The {@link ViewPager} that will host the section contents.
@@ -51,57 +55,35 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Set up the action bar.
-        final ActionBar actionBar = getSupportActionBar();
-        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 
+        try{
+
+            setSupportActionBar(toolbar);
+
+        }catch(Exception e){
+
+            Log.e("MainActivity", e.getMessage());
+        }
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
-        mSectionsPagerAdapter = new MyAdapter(getSupportFragmentManager());
+        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
         // Set up the ViewPager with the sections adapter.
-        mViewPager = (ViewPager) findViewById(R.id.pager);
+        mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
-        // When swiping between different sections, select the corresponding
-        // tab. We can also use ActionBar.Tab#select() to do this if we have
-        // a reference to the Tab.
-        mViewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
+        tabLayout.setupWithViewPager(mViewPager);
+
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onPageSelected(int position) {
-                actionBar.setSelectedNavigationItem(position);
+            public void onClick(View view) {
+                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
             }
         });
-
-        // For each of the sections in the app, add a tab to the action bar.
-        for (int i = 0; i < mSectionsPagerAdapter.getCount(); i++) {
-            // Create a tab with text corresponding to the page title defined by
-            // the adapter. Also specify this Activity object, which implements
-            // the TabListener interface, as the callback (listener) for when
-            // this tab is selected.
-            actionBar.addTab(
-                    actionBar.newTab()
-                            .setText(mSectionsPagerAdapter.getPageTitle(i, this))
-                            .setTabListener(this));
-        }
-
-        //Add spinner to main layout
-        //TODO: doesn't really show anything...
-        /*
-        FrameLayout.LayoutParams full_window = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-
-        FrameLayout frame = new FrameLayout(this);
-        frame.setLayoutParams(full_window);
-
-        TextView prog = new TextView(this);
-        prog.setText("jeejee");
-        prog.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-
-                ((ViewPager) findViewById(R.id.pager)).addView(frame);
-        frame.addView(prog);
-        */
-
-        //Register listeners:
     }
 
     @Override
@@ -229,20 +211,12 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
     @Override
     public void exchange(int target, Object data) {
 
+
         Fragment frag = mSectionsPagerAdapter.getFragmentByPosition(target);
 
         if(frag == null){
 
-            /*
-            //TODO: Temporal fix: create new frgment if old has been destroyed
-            switch (target){
 
-                case 1:
-                    f
-                    break;
-
-            }
-            */
             Log.e("MainActivity", "Fragment with id " + target + " not found");
         }
         else{
@@ -252,14 +226,77 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
             //Pass actual data:
             ((iFragmentDataExchange)frag).exchange(target, data);
         }
-
-
     }
 
     @Override
     public void onClick(View v) {
 
 
+    }
+
+    /**
+     * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
+     * one of the sections/tabs/pages.
+     */
+    public class SectionsPagerAdapter extends FragmentPagerAdapter {
+
+        Map<Integer, Fragment> fragment_container;   //TODO: this is a bit ghetto solution but works for now.
+
+        Fragment getFragmentByPosition(int pos){
+
+            return fragment_container.get(pos);
+        }
+
+        public SectionsPagerAdapter(FragmentManager fm) {
+
+            super(fm);
+            fragment_container = new HashMap<>();
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            Fragment frag;
+
+            switch (position){
+
+                case 0:
+
+                    //frag = FragmentAgenda.newInstance(null, null);
+                    frag = FragmentPolicyMakers.newInstance();
+                    break;
+                case 1:
+                    frag =  FragmentMeetings.newInstance();
+                    break;
+                case 2:
+                    //TODO
+                    frag =  FragmentAgenda.newInstance();
+                    break;
+                default:
+                    frag =  null;
+            }
+
+            fragment_container.put(position, frag);
+            return frag;
+        }
+
+        @Override
+        public int getCount() {
+            // Show 3 total pages.
+            return 3;
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            switch (position) {
+                case 0:
+                    return "SECTION 1";
+                case 1:
+                    return "SECTION 2";
+                case 2:
+                    return "SECTION 3";
+            }
+            return null;
+        }
     }
 
     /**

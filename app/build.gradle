@@ -3,7 +3,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 23
-    buildToolsVersion "19.1.0"
+    buildToolsVersion "23.0.2"
 
     defaultConfig {
         applicationId "com.spartacus.helsinki_paatokset"
@@ -24,4 +24,5 @@ dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.android.support:appcompat-v7:23.1.0'
     compile files('libs/gson-2.3.1.jar')
+    compile 'com.android.support:design:23.1.0'
 }
