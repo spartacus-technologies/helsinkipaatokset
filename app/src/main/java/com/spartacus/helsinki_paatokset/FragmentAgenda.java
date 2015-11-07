@@ -413,7 +413,7 @@ public class FragmentAgenda extends Fragment implements View.OnClickListener, Da
             Map temp = (Map) agenda_item;
             //String text = temp.get("date").toString() + " " + temp.get("subject").toString() + '\n';
 
-            View view = getActivity().getLayoutInflater().inflate(R.layout.layout_single_meeting, null, false);
+            View view = getActivity().getLayoutInflater().inflate(R.layout.layout_list_item, null, false);
             ((LinearLayout)view_.findViewById(R.id.linearLayoutFragmentAgenda)).addView(view);
 
             //Set data:

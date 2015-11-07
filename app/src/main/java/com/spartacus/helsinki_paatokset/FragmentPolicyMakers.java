@@ -247,7 +247,7 @@ public class FragmentPolicyMakers extends Fragment implements View.OnClickListen
 
             Map temp = (Map) policy_maker;
 
-            final View view = getActivity().getLayoutInflater().inflate(R.layout.layout_single_meeting, null, false);
+            final View view = getActivity().getLayoutInflater().inflate(R.layout.layout_list_item, null, false);
             ((LinearLayout) view_.findViewById(R.id.linearLayoutFragmentPolicyMakers)).addView(view);
 
             //Set data:

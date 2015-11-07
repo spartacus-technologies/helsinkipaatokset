@@ -2,13 +2,10 @@ package com.spartacus.helsinki_paatokset;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
@@ -19,8 +16,6 @@ import com.google.gson.Gson;
 import com.spartacus.helsinki_paatokset.data_access.CustomDictionary;
 import com.spartacus.helsinki_paatokset.data_access.DataAccess;
 import com.spartacus.helsinki_paatokset.data_access.iFragmentDataExchange;
-
-import org.w3c.dom.Text;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -270,7 +265,7 @@ public class FragmentMeetings extends Fragment implements View.OnClickListener, 
         //Check that there actually are meetings:
         if(meetings.size() == 0){
 
-            View view = getActivity().getLayoutInflater().inflate(R.layout.layout_single_meeting, null, false);
+            View view = getActivity().getLayoutInflater().inflate(R.layout.layout_list_item, null, false);
             ((LinearLayout)view_.findViewById(R.id.linearLayoutFragmentMeetings)).addView(view);
 
             ((TextView)view.findViewById(R.id.textViewHeader)).setText("Ei kokouksia.");
@@ -288,7 +283,7 @@ public class FragmentMeetings extends Fragment implements View.OnClickListener, 
             Map temp = (Map) single_meeting;
             //String text = temp.get("date").toString() + " " + temp.get("subject").toString() + '\n';
 
-            View view = getActivity().getLayoutInflater().inflate(R.layout.layout_single_meeting, null, false);
+            View view = getActivity().getLayoutInflater().inflate(R.layout.layout_list_item, null, false);
             ((LinearLayout)view_.findViewById(R.id.linearLayoutFragmentMeetings)).addView(view);
 
             //Set data:
