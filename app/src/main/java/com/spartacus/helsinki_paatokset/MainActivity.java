@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
      * may be best to switch to a
      * {@link android.support.v4.app.FragmentStatePagerAdapter}.
      */
-    SectionsPagerAdapter mSectionsPagerAdapter; //TODO: remove staticness
+    SectionsPagerAdapter mSectionsPagerAdapter;
 
     /**
      * The {@link ViewPager} that will host the section contents.
@@ -68,14 +68,14 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
-
+        mSectionsPagerAdapter.setContext(this);
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
-
+        /*
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -84,6 +84,7 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
                         .setAction("Action", null).show();
             }
         });
+        */
     }
 
     @Override
@@ -240,7 +241,13 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
      */
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
-        Map<Integer, Fragment> fragment_container;   //TODO: this is a bit ghetto solution but works for now.
+        Map<Integer, Fragment> fragment_container;      //TODO: this is a bit ghetto solution but works for now.
+        Context context;                                //TODO: also quite ghetto. Find alternative if time.
+
+        public void setContext(Context con){
+
+            context = con;
+        }
 
         Fragment getFragmentByPosition(int pos){
 
@@ -285,15 +292,16 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
             return 3;
         }
 
-        @Override
         public CharSequence getPageTitle(int position) {
+
+            Locale l = Locale.getDefault();
             switch (position) {
                 case 0:
-                    return "SECTION 1";
+                    return context.getString(R.string.title_section1).toUpperCase(l);
                 case 1:
-                    return "SECTION 2";
+                    return context.getString(R.string.title_section2).toUpperCase(l);
                 case 2:
-                    return "SECTION 3";
+                    return context.getString(R.string.title_section3).toUpperCase(l);
             }
             return null;
         }
