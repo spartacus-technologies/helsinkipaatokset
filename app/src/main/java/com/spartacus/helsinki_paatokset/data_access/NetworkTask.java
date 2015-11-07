@@ -12,6 +12,7 @@ public class NetworkTask extends AsyncTask<String, Void, Void> {
 
     String response = null;
     private DataAccess.NetworkListener.RequestType type_;
+    private Integer delay;
 
     public void setNetworkListener(DataAccess.NetworkListener listener, DataAccess.NetworkListener.RequestType type){
 
@@ -25,6 +26,18 @@ public class NetworkTask extends AsyncTask<String, Void, Void> {
         if(listener_ == null){
             Log.e("NetworkTask", "No listener was set!");
             response = null;
+        }
+
+        if(delay > 0){
+
+            try {
+                Thread.sleep(delay);
+
+            } catch (InterruptedException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+
         }
 
         //first check for existing data in cache:
@@ -57,4 +70,7 @@ public class NetworkTask extends AsyncTask<String, Void, Void> {
         listener_.DataAvailable(response, type_);
     }
 
+    public void setDelay(Integer delay) {
+        this.delay = delay;
+    }
 }

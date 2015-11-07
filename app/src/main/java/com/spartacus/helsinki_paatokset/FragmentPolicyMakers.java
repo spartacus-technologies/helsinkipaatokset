@@ -79,7 +79,7 @@ public class FragmentPolicyMakers extends Fragment implements View.OnClickListen
         if(policy_makers == null){
 
             view_.findViewById(R.id.progressBarContentLoadingFragmentPolicyMakers).setVisibility(View.VISIBLE);
-            DataAccess.requestData(this, "http://dev.hel.fi/paatokset/v1/policymaker/?limit=200", RequestType.POLICY_MAKERS);
+            DataAccess.requestData(this, "http://dev.hel.fi/paatokset/v1/policymaker/?limit=200", RequestType.POLICY_MAKERS, 1000);
         }
         else
             inflatePolicyMakerData();
@@ -275,7 +275,7 @@ public class FragmentPolicyMakers extends Fragment implements View.OnClickListen
             });
 
             //Query data in order to count how many meetings policy maker has:
-            DataAccess.requestData(this, "http://dev.hel.fi/paatokset/v1/meeting/?limit=1000&offset=0&policymaker=" + policy_maker_id, RequestType.POLICY_MAKER);
+            DataAccess.requestData(this, "http://dev.hel.fi/paatokset/v1/meeting/?limit=1000&offset=0&policymaker=" + policy_maker_id, RequestType.POLICY_MAKER, 1000);
 
             //Hide date as unused
             view.findViewById(R.id.textViewDate).setVisibility(View.GONE);

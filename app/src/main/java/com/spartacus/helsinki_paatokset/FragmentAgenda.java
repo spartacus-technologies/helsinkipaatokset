@@ -15,7 +15,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -28,7 +27,6 @@ import com.spartacus.helsinki_paatokset.data_access.ConfigurationManager;
 import com.spartacus.helsinki_paatokset.data_access.DataAccess;
 import com.spartacus.helsinki_paatokset.data_access.iFragmentDataExchange;
 
-import java.io.UnsupportedEncodingException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;

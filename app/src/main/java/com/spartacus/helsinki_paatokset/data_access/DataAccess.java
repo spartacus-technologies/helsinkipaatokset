@@ -17,7 +17,14 @@ public class DataAccess {
     static Executor task_executor = null;
 
     //Registers listener and executes GET Method. After completion executes listeners callback function.
-    public static void requestData(NetworkListener listener, String path, NetworkListener.RequestType type) {
+    public static void requestData(NetworkListener listener, String path, NetworkListener.RequestType type){
+
+        //Call request data with zero delay
+        requestData(listener, path, type, 0);
+    }
+
+    //Registers listener and executes GET Method. After completion executes listeners callback function. Also contains delay for delayed call
+    public static void requestData(NetworkListener listener, String path, NetworkListener.RequestType type, Integer delay_ms) {
 
         //Check if whole path is already present -> add if not:
         if(!path.contains(API_PATH)){
@@ -35,6 +42,7 @@ public class DataAccess {
 
         NetworkTask task = new NetworkTask();
         task.setNetworkListener(listener, type);
+        task.setDelay(delay_ms);
 
         if( Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB ) {
             task.executeOnExecutor(task_executor, path);

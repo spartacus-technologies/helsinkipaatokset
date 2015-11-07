@@ -170,6 +170,7 @@ public class FragmentMeetings extends Fragment implements View.OnClickListener, 
 
             case VIDEO:
 
+                Log.w("FragmentMeetings", "Video metadata");
                 meeetings_video_data = (List) new Gson().fromJson(data, Map.class).get("objects");
 
                 current_progress += 1;
@@ -232,11 +233,12 @@ public class FragmentMeetings extends Fragment implements View.OnClickListener, 
     //Loop meetings and add meta data once match is found:
     private void fillMeetingMetaData() {
 
-        LinearLayout container = ((LinearLayout)view_.findViewById(R.id.linearLayoutFragmentMeetings));
         //Map data_m = new Gson().fromJson(data, Map.class);
 
         //Check for total count: -> return if no video data available
         if(meeetings_video_data == null || meeetings_video_data.size() == 0) return;
+
+        LinearLayout container = ((LinearLayout)view_.findViewById(R.id.linearLayoutFragmentMeetings));
 
         String tmp =  ((Map)meeetings_video_data.get(0)).get("meeting").toString();
         tmp = tmp.substring(0, tmp.length() - 1);
@@ -274,7 +276,7 @@ public class FragmentMeetings extends Fragment implements View.OnClickListener, 
             ((TextView)view.findViewById(R.id.textViewHeader)).setText("Ei kokouksia.");
         }
         //Update total count
-        total_count = meetings.size()*2;
+        total_count = meetings.size();// *2;
         current_progress = 0;
         updateProgressBar();
 
@@ -316,9 +318,9 @@ public class FragmentMeetings extends Fragment implements View.OnClickListener, 
             );
 
             Integer meeting_id = Double.valueOf(temp.get("id").toString()).intValue();
-            //Query for meeting specific data:
 
-            DataAccess.requestData(this, "http://dev.hel.fi/paatokset/v1/agenda_item/?limit=1000&offset=0&show_all=1&meeting=" + meeting_id, RequestType.AGENDA_ITEM);
+            //Query for meeting specific data:
+            //DataAccess.requestData(this, "http://dev.hel.fi/paatokset/v1/agenda_item/?limit=1000&offset=0&show_all=1&meeting=" + meeting_id, RequestType.AGENDA_ITEM);
             DataAccess.requestData(this, "http://dev.hel.fi:80/paatokset/v1/video/?meeting=" + meeting_id, RequestType.VIDEO);
 
             //Register listeners for link:
@@ -398,7 +400,7 @@ public class FragmentMeetings extends Fragment implements View.OnClickListener, 
             return;
         }
 
-        DataAccess.requestData(this, "http://dev.hel.fi/paatokset/v1/meeting/?limit=1000&offset=0&policymaker=" + policy_maker, RequestType.MEETING);
+        DataAccess.requestData(this, "http://dev.hel.fi/paatokset/v1/meeting/?limit=1000&offset=0&policymaker=" + policy_maker, RequestType.MEETING, 1000);
         ((LinearLayout)getActivity().findViewById(R.id.linearLayoutFragmentMeetings)).removeAllViews();
         getActivity().findViewById(R.id.progressBarContentLoadingFragmentMeetings).setVisibility(View.VISIBLE);
     }

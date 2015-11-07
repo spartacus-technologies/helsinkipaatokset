@@ -231,8 +231,8 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
      */
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
-        Map<Integer, Fragment> fragment_container;      //TODO: this is a bit ghetto solution but works for now.
-        Context context;                                //TODO: also quite ghetto. Find alternative if time.
+        Map<Integer, Fragment> fragment_container;      //TODO: this is a bit lazy solution but works for now.
+        Context context;                                //TODO: also quite lazy. Find alternative if time.
 
         public void setContext(Context con){
 
@@ -304,7 +304,7 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
 
     public class MyAdapter extends FragmentPagerAdapter {
 
-        Map<Integer, Fragment> fragment_container;   //TODO: this is a bit ghetto solution but works for now.
+        Map<Integer, Fragment> fragment_container;   //TODO: this is a bit lazy solution but works for now.
 
         public MyAdapter(FragmentManager fm) {
             super(fm);
