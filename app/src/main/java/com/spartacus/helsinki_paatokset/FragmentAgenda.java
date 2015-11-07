@@ -222,14 +222,15 @@ public class FragmentAgenda extends Fragment implements View.OnClickListener, Da
                 try{
 
                     fillMeetingsData();
+                    //Hide spinner to indicate loading is complete:
+                    getActivity().findViewById(R.id.progressBarContentLoadingFragmentAgenda).setVisibility(View.INVISIBLE);
 
                 }catch (Exception e){
                     Log.e("FragmentAgenda", "Exception:" + e.getMessage());
+                    return;
                 }
                 //Call GUI data updater
 
-                //Hide spinner to indicate loading is complete:
-                getActivity().findViewById(R.id.progressBarContentLoadingFragmentAgenda).setVisibility(View.INVISIBLE);
 
                 break;
 

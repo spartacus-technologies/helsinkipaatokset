@@ -13,8 +13,12 @@
         android:icon="@mipmap/share_white"
         yourapp:showAsAction="ifRoom"
         android:title="Share"
-        android:actionProviderClass=
-            "android.widget.ShareActionProvider"/>
+
+    />
+    <!--
+    android:actionProviderClass=
+        "android.widget.ShareActionProvider"
+        -->
     <item android:id="@+id/action_settings" android:title="@string/action_settings"
         android:orderInCategory="100" app:showAsAction="never" />
     <!--

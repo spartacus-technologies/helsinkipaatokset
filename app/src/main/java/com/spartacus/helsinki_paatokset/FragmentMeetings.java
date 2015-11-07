@@ -173,8 +173,17 @@ public class FragmentMeetings extends Fragment implements View.OnClickListener, 
                 meeetings_video_data = (List) new Gson().fromJson(data, Map.class).get("objects");
 
                 current_progress += 1;
-                updateProgressBar();
-                fillMeetingMetaData();
+
+                try{
+
+                    updateProgressBar();
+                    fillMeetingMetaData();
+
+                }catch (Exception e){
+
+                    Log.e("FragmentMeetings", e.getMessage());
+                    return;
+                }
                 break;
             case AGENDAS:
                 break;
