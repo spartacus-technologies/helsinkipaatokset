@@ -1,12 +1,10 @@
 package com.spartacus.helsinki_paatokset.data_access;
 
-import android.os.AsyncTask;
 import android.os.Build;
 import android.util.Log;
 
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
-import java.util.concurrent.ThreadPoolExecutor;
 
 /**
  * Created by Eetu on 1.10.2015.
