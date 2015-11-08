@@ -33,7 +33,11 @@ public class ConfigurationManager {
         editor.putString("VideoMode", source);
         editor.commit();
     }
+    public static void setIsFav(String key, boolean value){
 
+        editor.putBoolean(key, value);
+        editor.commit();
+    }
 
 
     //Getters
@@ -46,5 +50,8 @@ public class ConfigurationManager {
 
         return pref.getString("VideoMode", "MP4");
     }
+    public static boolean getIsFav(String key){
 
+        return pref.getBoolean(key, false);
+    }
 }

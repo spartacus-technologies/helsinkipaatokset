@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.spartacus.helsinki_paatokset.data_access.ConfigurationManager;
 import com.spartacus.helsinki_paatokset.data_access.DataAccess;
 import com.spartacus.helsinki_paatokset.data_access.ListItem;
 import com.spartacus.helsinki_paatokset.data_access.iFragmentDataExchange;
@@ -62,6 +63,7 @@ public class FragmentPolicyMakers extends Fragment implements View.OnClickListen
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ConfigurationManager.initialize(getActivity());
     }
 
     @Override
@@ -257,10 +259,20 @@ public class FragmentPolicyMakers extends Fragment implements View.OnClickListen
             //Set data:
             //=========
             ((TextView) view.findViewById(R.id.textViewHeader)).setText(temp.get("name").toString());
-            Integer policy_maker_id = Double.valueOf(temp.get("id").toString()).intValue();
+            final Integer policy_maker_id = Double.valueOf(temp.get("id").toString()).intValue();
             //Register listeners for link:
             //View link = view.findViewById(R.id.textViewMeetingLink);
             view.setTag(temp);
+
+            //Set fav state based on configuration:
+            ImageView iv = (ImageView) view.findViewById(R.id.imageViewFavIcon);
+            if (ConfigurationManager.getIsFav("policy_maker=" + policy_maker_id)) {
+
+                iv.setImageResource(R.mipmap.fav_icon_selected);
+            }
+            else{
+                iv.setImageResource(R.mipmap.fav_icon_unselected);
+            }
 
             view.findViewById(R.id.relativeLayoutListItem).setOnClickListener(new View.OnClickListener() {
 
@@ -273,11 +285,13 @@ public class FragmentPolicyMakers extends Fragment implements View.OnClickListen
                     ImageView iv = (ImageView) v.findViewById(R.id.imageViewFavIcon);
                     if (state == 0) {
 
+                        ConfigurationManager.setIsFav("policy_maker=" + policy_maker_id, true);
                         iv.setImageResource(R.mipmap.fav_icon_selected);
                         state = 1;
                     }
                     else{
                         state = 0;
+                        ConfigurationManager.setIsFav("policy_maker=" + policy_maker_id, false);
                         iv.setImageResource(R.mipmap.fav_icon_unselected);
                     }
 
