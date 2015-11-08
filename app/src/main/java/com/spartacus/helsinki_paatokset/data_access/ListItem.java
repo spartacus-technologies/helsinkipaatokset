@@ -14,21 +14,23 @@ import com.spartacus.helsinki_paatokset.R;
 /**
  * Created by Eetu on 8.11.2015.
  */
-public class ListItem extends Fragment{
+public class ListItem extends View{
 
     View view_;
 
-    public static ListItem newInstance() {
-
-        ListItem fragment = new ListItem();
-        return fragment;
+    public ListItem(Context context) {
+        super(context);
     }
 
-    public ListItem() {
-        // Required empty public constructor
+    public static ListItem newInstance(Context context) {
+
+        ListItem item = new ListItem(context);
+
+        //this.inf
+
+        return item;
     }
-
-
+    /*
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -38,4 +40,5 @@ public class ListItem extends Fragment{
 
         return view_;
     }
+    */
 }

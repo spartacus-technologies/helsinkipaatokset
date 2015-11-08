@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -16,6 +17,7 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.spartacus.helsinki_paatokset.data_access.DataAccess;
+import com.spartacus.helsinki_paatokset.data_access.ListItem;
 import com.spartacus.helsinki_paatokset.data_access.iFragmentDataExchange;
 
 import java.text.DateFormat;
@@ -247,8 +249,10 @@ public class FragmentPolicyMakers extends Fragment implements View.OnClickListen
 
             Map temp = (Map) policy_maker;
 
+            //ListItem new_list_item = ListItem.newInstance();
+
             final View view = getActivity().getLayoutInflater().inflate(R.layout.layout_list_item, null, false);
-            ((LinearLayout) view_.findViewById(R.id.linearLayoutFragmentPolicyMakers)).addView(view);
+            //((LinearLayout) view_.findViewById(R.id.linearLayoutFragmentPolicyMakers)).addView((Fragment) new_list_item);
 
             //Set data:
             //=========
@@ -257,6 +261,24 @@ public class FragmentPolicyMakers extends Fragment implements View.OnClickListen
             //Register listeners for link:
             //View link = view.findViewById(R.id.textViewMeetingLink);
             view.setTag(temp);
+
+            view.findViewById(R.id.imageViewFavIcon).setOnClickListener(new View.OnClickListener() {
+
+
+                int state = 0;
+                @Override
+                public void onClick(View v) {
+
+                    ImageView iv = (ImageView) v;
+                    if(state == 0){
+
+                        iv.setImageResource(R.mipmap.fav_icon_selected);
+                    }
+
+
+                }
+            });
+
             //view.findViewById(R.id.textViewHeader).setTag(temp);
             view.setOnClickListener(new View.OnClickListener() {
 
