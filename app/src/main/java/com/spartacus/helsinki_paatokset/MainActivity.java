@@ -1,22 +1,21 @@
 package com.spartacus.helsinki_paatokset;
 
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
-
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.ShareActionProvider;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -27,7 +26,11 @@ import android.view.View;
 
 import com.spartacus.helsinki_paatokset.data_access.iFragmentDataExchange;
 
-public class MainActivity extends AppCompatActivity implements ActionBar.TabListener, FragmentAgenda.OnFragmentInteractionListener, iFragmentDataExchange, View.OnClickListener {
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
+
+public class MainActivity extends AppCompatActivity implements ActionBar.TabListener, FragmentSearch.OnFragmentInteractionListener, FragmentAgenda.OnFragmentInteractionListener, iFragmentDataExchange, View.OnClickListener {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -283,6 +286,9 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
                     //TODO
                     frag =  FragmentAgenda.newInstance();
                     break;
+                case 3:
+                    frag =  FragmentSearch.newInstance();
+                    break;
                 default:
                     frag =  null;
             }
@@ -293,8 +299,8 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
 
         @Override
         public int getCount() {
-            // Show 3 total pages.
-            return 3;
+            // Show 4 total pages.
+            return 4;
         }
 
         public CharSequence getPageTitle(int position) {
@@ -307,7 +313,8 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
                     return context.getString(R.string.title_section2).toUpperCase(l);
                 case 2:
                     return context.getString(R.string.title_section3).toUpperCase(l);
-            }
+                case 3:
+                    return context.getString(R.string.title_section4).toUpperCase(l);            }
             return null;
         }
     }
@@ -350,7 +357,11 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
                     //TODO
                     frag =  FragmentAgenda.newInstance();
                     break;
-                default:
+                case 3:
+                    //TODO
+                    frag =  FragmentSearch.newInstance();
+                    break;
+                    default:
                     frag =  null;
             }
 
@@ -378,7 +389,8 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
                     return context.getString(R.string.title_section2).toUpperCase(l);
                 case 2:
                     return context.getString(R.string.title_section3).toUpperCase(l);
-            }
+                case 3:
+                    return context.getString(R.string.title_section4).toUpperCase(l);            }
             return null;
         }
     }

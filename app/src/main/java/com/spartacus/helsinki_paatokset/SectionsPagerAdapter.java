@@ -49,6 +49,10 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
                 //TODO
                 frag =  FragmentAgenda.newInstance();
                 break;
+            case 3:
+                //TODO
+                frag =  FragmentSearch.newInstance();
+                break;
             default:
                 frag =  null;
         }
@@ -70,7 +74,8 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
                 return context.getString(R.string.title_section2).toUpperCase(l);
             case 2:
                 return context.getString(R.string.title_section3).toUpperCase(l);
-        }
+            case 3:
+                return context.getString(R.string.title_section4).toUpperCase(l);        }
         return null;
     }
 
