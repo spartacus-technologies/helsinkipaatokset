@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.spartacus.helsinki_paatokset.data_access.ConfigurationManager;
 import com.spartacus.helsinki_paatokset.data_access.CustomDictionary;
 import com.spartacus.helsinki_paatokset.data_access.DataAccess;
 import com.spartacus.helsinki_paatokset.data_access.iFragmentDataExchange;
@@ -283,8 +285,42 @@ public class FragmentMeetings extends Fragment implements View.OnClickListener, 
             Map temp = (Map) single_meeting;
             //String text = temp.get("date").toString() + " " + temp.get("subject").toString() + '\n';
 
+            final Integer meeting_id = Double.valueOf(temp.get("id").toString()).intValue();
             View view = getActivity().getLayoutInflater().inflate(R.layout.layout_list_item, null, false);
             ((LinearLayout)view_.findViewById(R.id.linearLayoutFragmentMeetings)).addView(view);
+
+            //Set fav state based on configuration:
+            ImageView iv = (ImageView) view.findViewById(R.id.imageViewFavIcon);
+            if (ConfigurationManager.getIsFav("meeting_id=" + meeting_id)) {
+
+                iv.setImageResource(R.mipmap.fav_icon_selected);
+            }
+            else{
+                iv.setImageResource(R.mipmap.fav_icon_unselected);
+            }
+
+            view.findViewById(R.id.relativeLayoutListItem).setOnClickListener(new View.OnClickListener() {
+
+
+                int state = 0;
+
+                @Override
+                public void onClick(View v) {
+
+                    ImageView iv = (ImageView) v.findViewById(R.id.imageViewFavIcon);
+                    if (state == 0) {
+
+                        ConfigurationManager.setIsFav("meeting_id=" + meeting_id, true);
+                        iv.setImageResource(R.mipmap.fav_icon_selected);
+                        state = 1;
+                    } else {
+                        state = 0;
+                        ConfigurationManager.setIsFav("meeting_id=" + meeting_id, false);
+                        iv.setImageResource(R.mipmap.fav_icon_unselected);
+                    }
+
+                }
+            });
 
             //Set data:
             //=========
@@ -312,7 +348,6 @@ public class FragmentMeetings extends Fragment implements View.OnClickListener, 
                                                                     ((Map)temp.get("meeting")).get("id").toString()*/
             );
 
-            Integer meeting_id = Double.valueOf(temp.get("id").toString()).intValue();
 
             //Query for meeting specific data:
             //DataAccess.requestData(this, "http://dev.hel.fi/paatokset/v1/agenda_item/?limit=1000&offset=0&show_all=1&meeting=" + meeting_id, RequestType.AGENDA_ITEM);
