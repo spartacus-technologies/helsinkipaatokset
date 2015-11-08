@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
-import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
@@ -14,8 +13,6 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.ShareActionProvider;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -26,7 +23,9 @@ import android.view.View;
 
 import com.spartacus.helsinki_paatokset.data_access.iFragmentDataExchange;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -249,7 +248,7 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
      */
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
-        Map<Integer, Fragment> fragment_container;      //TODO: this is a bit lazy solution but works for now.
+       Fragment fragment_container[];      //TODO: this is a bit lazy solution but works for now.
         Context context;                                //TODO: also quite lazy. Find alternative if time.
 
         public void setContext(Context con){
@@ -259,13 +258,13 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
 
         Fragment getFragmentByPosition(int pos){
 
-            return fragment_container.get(pos);
+            return fragment_container[pos];
         }
 
         public SectionsPagerAdapter(FragmentManager fm) {
 
             super(fm);
-            fragment_container = new HashMap<>();
+            fragment_container = new Fragment[COUNT];
         }
 
         @Override
@@ -293,14 +292,15 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
                     frag =  null;
             }
 
-            fragment_container.put(position, frag);
+            fragment_container[position] = frag;
             return frag;
         }
 
+        final int COUNT = 4;
         @Override
         public int getCount() {
             // Show 4 total pages.
-            return 4;
+            return COUNT;
         }
 
         public CharSequence getPageTitle(int position) {
@@ -354,23 +354,17 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
                     frag =  FragmentMeetings.newInstance();
                     break;
                 case 2:
-                    //TODO
                     frag =  FragmentAgenda.newInstance();
                     break;
                 case 3:
-                    //TODO
                     frag =  FragmentSearch.newInstance();
                     break;
-                    default:
+                default:
                     frag =  null;
             }
 
             fragment_container.put(position, frag);
             return frag;
-
-            // getItem is called to instantiate the fragment for the given page.
-            // Return a PlaceholderFragment (defined as a static inner class below).
-            //return FragmentAgenda.newInstance(null, null);
         }
 
 
@@ -395,6 +389,4 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
             return null;
         }
     }
-
-
 }

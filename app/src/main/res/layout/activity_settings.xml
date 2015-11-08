@@ -35,16 +35,16 @@
             <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="MP4 (Helsinkikanava)"
-                android:id="@+id/radioButtonHKIKanava"
+                android:text="OGV"
+                android:id="@+id/radioButtonOGV"
                 android:enabled="true" />
 
             <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="OGV"
-                android:id="@+id/radioButtonOGV"
-                android:enabled="true" />
+                android:text="MP4 (Helsinkikanava)"
+                android:id="@+id/radioButtonHKIKanava"
+                android:enabled="false" />
 
         </RadioGroup>
 
