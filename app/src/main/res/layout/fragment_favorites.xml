@@ -1,0 +1,101 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.spartacus.helsinki_paatokset.FragmentMeetings">
+    <!-- TODO: Update blank fragment layout -->
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="bottom"
+        android:layout_gravity="center_horizontal|bottom"
+        android:background="#000000"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:visibility="visible"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/linearLayout2">
+
+        <ImageButton
+            style="?android:attr/buttonStyleSmall"
+            android:background="@drawable/round_button"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:text="↑"
+            android:id="@+id/buttonBackToUpFragmentMeetings"
+            android:visibility="visible"
+            android:layout_gravity="center_horizontal|bottom"
+            android:textStyle="bold" />
+
+        <View
+            android:layout_width="15dp"
+            android:layout_height="match_parent"
+            android:id="@+id/viewStub" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:layout_gravity="center_horizontal|bottom"
+            android:hint="Hae kokouksista..."
+            android:enabled="false"
+            android:id="@+id/editTextSearchFragmentMeetings"
+            android:background="@drawable/edit_text_disabled"
+            android:paddingLeft="15dp" />
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:id="@+id/scrollViewFragmentMeetings"
+        android:layout_above="@+id/linearLayout2">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Päivitä"
+                android:id="@+id/buttonUpdateFragmentMeetings"
+                android:layout_gravity="top|center"
+                android:visibility="gone" />
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/linearLayoutFragmentMeetings"
+                android:gravity="center_horizontal"
+                android:paddingLeft="0dp"
+                android:paddingRight="0dp"></LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+    <ProgressBar
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/progressBarContentLoadingFragmentMeetings"
+        android:layout_gravity="center"
+        android:indeterminate="false"
+        android:visibility="invisible"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
+
+    <ProgressBar
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="3dp"
+        android:id="@+id/progressBarAgendaItemLoading"
+        android:layout_above="@+id/linearLayout2"
+        android:layout_centerHorizontal="true" />
+
+</RelativeLayout>
+

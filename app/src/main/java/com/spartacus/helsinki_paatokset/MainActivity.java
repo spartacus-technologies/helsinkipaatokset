@@ -283,6 +283,10 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
                     //TODO
                     frag =  FragmentAgenda.newInstance();
                     break;
+                case 3:
+                    //TODO
+                    frag =  FragmentFavorites.newInstance();
+                    break;
                 default:
                     frag =  null;
             }
@@ -294,7 +298,7 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
         @Override
         public int getCount() {
             // Show 3 total pages.
-            return 3;
+            return 4;
         }
 
         public CharSequence getPageTitle(int position) {
@@ -307,6 +311,8 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
                     return context.getString(R.string.title_section2).toUpperCase(l);
                 case 2:
                     return context.getString(R.string.title_section3).toUpperCase(l);
+                case 3:
+                    return "Suosikit"; //TODO
             }
             return null;
         }
