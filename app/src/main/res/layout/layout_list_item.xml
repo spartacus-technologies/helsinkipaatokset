@@ -87,16 +87,18 @@
 	<RelativeLayout
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
-		android:layout_weight="10">
+		android:layout_weight="10"
+		android:layout_gravity="center">
 
-		<RatingBar
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/ratingBar"
-            android:numStars="1"
-            android:layout_gravity="center"
-			android:layout_alignParentBottom="true"
+		<ImageView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:id="@+id/imageViewFavIcon"
+			android:src="@mipmap/fav_icon_unselected"
+			android:scaleType="center"
+			android:layout_centerVertical="true"
 			android:layout_centerHorizontal="true" />
+
 	</RelativeLayout>
 
 	<requestFocus
