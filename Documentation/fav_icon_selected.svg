@@ -20,7 +20,7 @@
    xml:space="preserve"
    inkscape:version="0.48.4 r9939"
    sodipodi:docname="fav_icon_selected.svg"
-   inkscape:export-filename="F:\Dropbox\Projektit\Android\HelsinkiPäätökset\Documentation\fav_icon_unselected.png"
+   inkscape:export-filename="F:\Dropbox\Projektit\Android\HelsinkiPäätökset\Documentation\fav_icon_selected.png"
    inkscape:export-xdpi="26.367188"
    inkscape:export-ydpi="26.367188"><metadata
    id="metadata9"><rdf:RDF><cc:Work
@@ -49,7 +49,7 @@
 
 <path
    sodipodi:type="star"
-   style="fill:#fffa5d;fill-opacity:1;stroke:none"
+   style="fill:#d8d340;fill-opacity:1;stroke:none"
    id="path3072"
    sodipodi:sides="5"
    sodipodi:cx="-96.542374"

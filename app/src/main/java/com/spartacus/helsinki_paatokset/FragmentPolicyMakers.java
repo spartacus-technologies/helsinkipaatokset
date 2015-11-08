@@ -252,7 +252,7 @@ public class FragmentPolicyMakers extends Fragment implements View.OnClickListen
             //ListItem new_list_item = ListItem.newInstance();
 
             final View view = getActivity().getLayoutInflater().inflate(R.layout.layout_list_item, null, false);
-            //((LinearLayout) view_.findViewById(R.id.linearLayoutFragmentPolicyMakers)).addView((Fragment) new_list_item);
+            ((LinearLayout) view_.findViewById(R.id.linearLayoutFragmentPolicyMakers)).addView(view);
 
             //Set data:
             //=========
@@ -262,19 +262,24 @@ public class FragmentPolicyMakers extends Fragment implements View.OnClickListen
             //View link = view.findViewById(R.id.textViewMeetingLink);
             view.setTag(temp);
 
-            view.findViewById(R.id.imageViewFavIcon).setOnClickListener(new View.OnClickListener() {
+            view.findViewById(R.id.relativeLayoutListItem).setOnClickListener(new View.OnClickListener() {
 
 
                 int state = 0;
+
                 @Override
                 public void onClick(View v) {
 
-                    ImageView iv = (ImageView) v;
-                    if(state == 0){
+                    ImageView iv = (ImageView) v.findViewById(R.id.imageViewFavIcon);
+                    if (state == 0) {
 
                         iv.setImageResource(R.mipmap.fav_icon_selected);
+                        state = 1;
                     }
-
+                    else{
+                        state = 0;
+                        iv.setImageResource(R.mipmap.fav_icon_unselected);
+                    }
 
                 }
             });
