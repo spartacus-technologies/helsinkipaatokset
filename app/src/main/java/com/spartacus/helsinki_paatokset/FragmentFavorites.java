@@ -44,11 +44,6 @@ import java.util.Map;
  */
 public class FragmentFavorites extends Fragment implements View.OnClickListener, DataAccess.NetworkListener, iFragmentDataExchange /*, View.OnScrollChangeListener*/ {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    //private static final String ARG_PARAM1 = "param1";
-    //private static final String ARG_PARAM2 = "param2";
-
     private OnFragmentInteractionListener mListener;
     private List agenda_items;
     private List video_items;
@@ -93,8 +88,8 @@ public class FragmentFavorites extends Fragment implements View.OnClickListener,
         }
         */
 
-        ConfigurationManager.initialize(getActivity());
-        primary_video_source = ConfigurationManager.getVideoSource();
+        //ConfigurationManager.initialize(getActivity());
+        //primary_video_source = ConfigurationManager.getVideoSource();
     }
 
     @Override

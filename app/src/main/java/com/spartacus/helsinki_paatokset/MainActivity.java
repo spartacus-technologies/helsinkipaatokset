@@ -6,8 +6,10 @@ import java.util.Map;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.support.design.widget.TabLayout;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.ActionBar;
@@ -19,6 +21,9 @@ import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.ShareActionProvider;
 import android.support.v7.widget.Toolbar;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.ImageSpan;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -27,7 +32,7 @@ import android.view.View;
 
 import com.spartacus.helsinki_paatokset.data_access.iFragmentDataExchange;
 
-public class MainActivity extends AppCompatActivity implements ActionBar.TabListener, FragmentAgenda.OnFragmentInteractionListener, iFragmentDataExchange, View.OnClickListener {
+public class MainActivity extends AppCompatActivity implements FragmentAgenda.OnFragmentInteractionListener, FragmentFavorites.OnFragmentInteractionListener, iFragmentDataExchange, View.OnClickListener {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -191,21 +196,6 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
     }
 
     @Override
-    public void onTabSelected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
-        // When the given tab is selected, switch to the corresponding page in
-        // the ViewPager.
-        mViewPager.setCurrentItem(tab.getPosition());
-    }
-
-    @Override
-    public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
-    }
-
-    @Override
-    public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
-    }
-
-    @Override
     public void onFragmentInteraction(Uri uri) {
 
     }
@@ -301,6 +291,37 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
             return 4;
         }
 
+
+        private int[] imageResId = {
+                R.mipmap.arrow_up,
+                R.mipmap.arrow_up_inv,
+                R.mipmap.close_image,
+                R.mipmap.close_image
+        };
+
+        public CharSequence getPageTitle(int position) {
+
+            Locale l = Locale.getDefault();
+            switch (position) {
+                case 0:
+                    return context.getString(R.string.title_section1).toUpperCase(l);
+                case 1:
+                    return context.getString(R.string.title_section2).toUpperCase(l);
+                case 2:
+                    return context.getString(R.string.title_section3).toUpperCase(l);
+                case 3:
+                    Drawable image = ContextCompat.getDrawable(context, imageResId[position]);
+                    image.setBounds(0, 0, image.getIntrinsicWidth(), image.getIntrinsicHeight());
+                    SpannableString sb = new SpannableString(" ");
+                    ImageSpan imageSpan = new ImageSpan(image, ImageSpan.ALIGN_BOTTOM);
+                    sb.setSpan(imageSpan, 0, 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                    return sb;
+            }
+            return null;
+
+        }
+
+        /*
         public CharSequence getPageTitle(int position) {
 
             Locale l = Locale.getDefault();
@@ -316,78 +337,7 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
             }
             return null;
         }
+        */
     }
-
-    /**
-     * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
-     * one of the sections/tabs/pages.
-     */
-
-    public class MyAdapter extends FragmentPagerAdapter {
-
-        Map<Integer, Fragment> fragment_container;   //TODO: this is a bit lazy solution but works for now.
-
-        public MyAdapter(FragmentManager fm) {
-            super(fm);
-            fragment_container = new HashMap<>();
-        }
-
-        Fragment getFragmentByPosition(int pos){
-
-            return fragment_container.get(pos);
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-
-            Fragment frag;
-
-            switch (position){
-
-                case 0:
-
-                    //frag = FragmentAgenda.newInstance(null, null);
-                    frag = FragmentPolicyMakers.newInstance();
-                    break;
-                case 1:
-                    frag =  FragmentMeetings.newInstance();
-                    break;
-                case 2:
-                    //TODO
-                    frag =  FragmentAgenda.newInstance();
-                    break;
-                default:
-                    frag =  null;
-            }
-
-            fragment_container.put(position, frag);
-            return frag;
-
-            // getItem is called to instantiate the fragment for the given page.
-            // Return a PlaceholderFragment (defined as a static inner class below).
-            //return FragmentAgenda.newInstance(null, null);
-        }
-
-
-        @Override
-        public int getCount() {
-            // Show 3 total pages.
-            return 3;
-        }
-
-        public CharSequence getPageTitle(int position, Context context) {
-            Locale l = Locale.getDefault();
-            switch (position) {
-                case 0:
-                    return context.getString(R.string.title_section1).toUpperCase(l);
-                case 1:
-                    return context.getString(R.string.title_section2).toUpperCase(l);
-                case 2:
-                    return context.getString(R.string.title_section3).toUpperCase(l);
-            }
-            return null;
-        }
-    }
-
 
 }
