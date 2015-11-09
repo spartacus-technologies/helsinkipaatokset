@@ -33,7 +33,6 @@ public class FragmentSearch extends Fragment implements DataAccess.NetworkListen
 
     private View view_;
     private WebView webView_;
-
     private OnFragmentInteractionListener mListener;
 
     /**
@@ -45,8 +44,7 @@ public class FragmentSearch extends Fragment implements DataAccess.NetworkListen
     // TODO: Rename and change types and number of parameters
     public static FragmentSearch newInstance() {
         FragmentSearch fragment = new FragmentSearch();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
+
         return fragment;
     }
 
@@ -57,7 +55,6 @@ public class FragmentSearch extends Fragment implements DataAccess.NetworkListen
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @Override

@@ -414,7 +414,45 @@ public class FragmentAgenda extends Fragment implements View.OnClickListener, Da
             //String text = temp.get("date").toString() + " " + temp.get("subject").toString() + '\n';
 
             View view = getActivity().getLayoutInflater().inflate(R.layout.layout_list_item, null, false);
+            final Integer agenda_item_id = Double.valueOf(temp.get("id").toString()).intValue();
             ((LinearLayout)view_.findViewById(R.id.linearLayoutFragmentAgenda)).addView(view);
+
+            //final Integer meeting_id = Double.valueOf(temp.get("id").toString()).intValue();
+
+            //((LinearLayout)view_.findViewById(R.id.linearLayoutFragmentMeetings)).addView(view);
+
+            //Set fav state based on configuration:
+            ImageView iv = (ImageView) view.findViewById(R.id.imageViewFavIcon);
+            if (ConfigurationManager.getIsFav("agenda_item_id=" + agenda_item_id)) {
+
+                iv.setImageResource(R.mipmap.fav_icon_selected);
+            }
+            else{
+                iv.setImageResource(R.mipmap.fav_icon_unselected);
+            }
+
+            view.findViewById(R.id.relativeLayoutListItem).setOnClickListener(new View.OnClickListener() {
+
+
+                int state = 0;
+
+                @Override
+                public void onClick(View v) {
+
+                    ImageView iv = (ImageView) v.findViewById(R.id.imageViewFavIcon);
+                    if (state == 0) {
+
+                        ConfigurationManager.setIsFav("agenda_item_id=" + agenda_item_id, true);
+                        iv.setImageResource(R.mipmap.fav_icon_selected);
+                        state = 1;
+                    } else {
+                        state = 0;
+                        ConfigurationManager.setIsFav("agenda_item_id=" + agenda_item_id, false);
+                        iv.setImageResource(R.mipmap.fav_icon_unselected);
+                    }
+
+                }
+            });
 
             //Set data:
             //=========
@@ -436,7 +474,6 @@ public class FragmentAgenda extends Fragment implements View.OnClickListener, Da
 
                     Log.i("FragmentAgenda", tag_data.get("subject").toString());
                     //Fire event to target fragment:
-                    Integer meeting_id = Double.valueOf(((Map) v.getTag()).get("id").toString()).intValue();
                     //((MainActivity) getActivity()).exchange(1, meeting_id);
 
 
