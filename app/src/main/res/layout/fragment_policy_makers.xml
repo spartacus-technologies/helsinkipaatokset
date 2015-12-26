@@ -26,15 +26,16 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:text="↑"
-            android:id="@+id/buttonBackToUpFragmentPolicyMakers"
-            android:visibility="visible"
+            android:id="@+id/buttonBackToUpFragmentPolicyMakers_old"
+            android:visibility="gone"
             android:layout_gravity="center_horizontal|bottom"
             android:textStyle="bold" />
 
         <View
             android:layout_width="15dp"
             android:layout_height="match_parent"
-            android:id="@+id/viewStub" />
+            android:id="@+id/viewStub"
+            android:visibility="gone" />
 
         <EditText
             android:layout_width="match_parent"
@@ -94,5 +95,20 @@
         android:visibility="invisible"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true" />
+
+    <ImageButton
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        style="?android:attr/buttonStyleSmall"
+        android:id="@+id/buttonBackToUpFragmentPolicyMakers"
+        android:src="@mipmap/arrow_up"
+        android:background="#00000000"
+        android:scaleType="fitXY"
+        android:layout_alignBottom="@+id/scrollViewFragmentPolicyMakers"
+        android:layout_alignRight="@+id/scrollViewFragmentPolicyMakers"
+        android:layout_marginBottom="25dp"
+        android:layout_marginRight="25dp"
+
+        />
 
 </RelativeLayout>

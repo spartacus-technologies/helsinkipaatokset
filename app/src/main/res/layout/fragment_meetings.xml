@@ -3,6 +3,23 @@
     android:layout_height="match_parent"
     tools:context="com.spartacus.helsinki_paatokset.FragmentMeetings">
     <!-- TODO: Update blank fragment layout -->
+
+
+    <ImageButton
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        style="?android:attr/buttonStyleSmall"
+        android:id="@+id/buttonBackToUpFragmentMeetings"
+        android:src="@mipmap/arrow_up"
+        android:background="#00000000"
+        android:scaleType="fitXY"
+        android:layout_alignBottom="@+id/scrollViewFragmentMeetings"
+        android:layout_alignRight="@+id/scrollViewFragmentMeetings"
+        android:layout_marginBottom="25dp"
+        android:layout_marginRight="25dp"
+
+        />
+
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
@@ -26,7 +43,7 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:text="↑"
-            android:id="@+id/buttonBackToUpFragmentMeetings"
+            android:id="@+id/buttonBackToUpFragmentMeetings_old"
             android:visibility="visible"
             android:layout_gravity="center_horizontal|bottom"
             android:textStyle="bold" />
