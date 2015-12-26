@@ -8,6 +8,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -41,6 +44,7 @@ public class FragmentPolicyMakers extends Fragment implements View.OnClickListen
 
     private View view_;
     private List policy_makers;
+    private String TAG = "FragmentPolicyMakers";
 
     /**
      * Use this factory method to create a new instance of
@@ -78,6 +82,36 @@ public class FragmentPolicyMakers extends Fragment implements View.OnClickListen
         //view.findViewById(R.id.scrollView).setOnScrollChangeListener(this);
         view_.findViewById(R.id.buttonBackToUpFragmentPolicyMakers).setOnClickListener(this);
         ((EditText)view_.findViewById(R.id.editTextSearchFragmentPolicyMakers)).addTextChangedListener(this);
+
+        final ScrollView scrollView = (ScrollView) view_.findViewById(R.id.scrollViewFragmentPolicyMakers);
+
+        scrollView.getViewTreeObserver().addOnScrollChangedListener(new ViewTreeObserver.OnScrollChangedListener() {
+
+            @Override
+            public void onScrollChanged() {
+
+                int scrollX = scrollView.getScrollX(); //for horizontalScrollView
+                int scrollY = scrollView.getScrollY(); //for verticalScrollView
+                //DO SOMETHING WITH THE SCROLL COORDINATES
+                Log.i(TAG, "ScrollY= " + scrollY);
+
+                //Use some fancy animation
+                Animation fade_in = AnimationUtils.loadAnimation(getActivity(), R.anim.fade_in);
+                Animation fade_out = AnimationUtils.loadAnimation(getActivity(), R.anim.fade_out);
+
+                //If scroll is someting else than top, show scroll to top button:
+                if(scrollY > 0 && view_.findViewById(R.id.buttonBackToUpFragmentPolicyMakers).getVisibility() != View.VISIBLE){
+
+                    view_.findViewById(R.id.buttonBackToUpFragmentPolicyMakers).startAnimation(fade_in);
+                    view_.findViewById(R.id.buttonBackToUpFragmentPolicyMakers).setVisibility(View.VISIBLE);
+                }
+                else if(scrollY <= 0){
+                    view_.findViewById(R.id.buttonBackToUpFragmentPolicyMakers).startAnimation(fade_out);
+                    view_.findViewById(R.id.buttonBackToUpFragmentPolicyMakers).setVisibility(View.GONE);
+                }
+
+            }
+        });
 
         //Request data:
         if(policy_makers == null){

@@ -6,6 +6,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -38,6 +41,7 @@ public class FragmentMeetings extends Fragment implements View.OnClickListener, 
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    private static final String TAG = "FragmentMeetings";
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -100,6 +104,36 @@ public class FragmentMeetings extends Fragment implements View.OnClickListener, 
         if(view_ == null)
             view_ = inflater.inflate(R.layout.fragment_meetings, container, false);
 
+        final ScrollView scrollView = (ScrollView) view_.findViewById(R.id.scrollViewFragmentMeetings);
+
+        scrollView.getViewTreeObserver().addOnScrollChangedListener(new ViewTreeObserver.OnScrollChangedListener() {
+
+            @Override
+            public void onScrollChanged() {
+
+                int scrollX = scrollView.getScrollX(); //for horizontalScrollView
+                int scrollY = scrollView.getScrollY(); //for verticalScrollView
+                //DO SOMETHING WITH THE SCROLL COORDINATES
+                Log.i(TAG, "ScrollY= " + scrollY);
+
+                //Use some fancy animation
+                Animation fade_in = AnimationUtils.loadAnimation(getActivity(), R.anim.fade_in);
+                Animation fade_out = AnimationUtils.loadAnimation(getActivity(), R.anim.fade_out);
+
+                //If scroll is someting else than top, show scroll to top button:
+                if(scrollY > 0 && view_.findViewById(R.id.buttonBackToUpFragmentMeetings).getVisibility() != View.VISIBLE){
+
+                    view_.findViewById(R.id.buttonBackToUpFragmentMeetings).startAnimation(fade_in);
+                    view_.findViewById(R.id.buttonBackToUpFragmentMeetings).setVisibility(View.VISIBLE);
+                }
+                else if(scrollY <= 0){
+                    view_.findViewById(R.id.buttonBackToUpFragmentMeetings).startAnimation(fade_out);
+                    view_.findViewById(R.id.buttonBackToUpFragmentMeetings).setVisibility(View.GONE);
+                }
+
+            }
+        });
+        
         //Request meetings data
 
         //For all policy makers:

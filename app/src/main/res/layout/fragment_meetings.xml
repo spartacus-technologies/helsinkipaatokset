@@ -17,7 +17,7 @@
         android:layout_alignRight="@+id/scrollViewFragmentMeetings"
         android:layout_marginBottom="25dp"
         android:layout_marginRight="25dp"
-
+        android:visibility="gone"
         />
 
     <LinearLayout
