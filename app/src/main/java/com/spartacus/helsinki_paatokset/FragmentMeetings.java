@@ -305,6 +305,7 @@ public class FragmentMeetings extends Fragment implements View.OnClickListener, 
             ((LinearLayout)view_.findViewById(R.id.linearLayoutFragmentMeetings)).addView(view);
 
             ((TextView)view.findViewById(R.id.textViewHeader)).setText("Ei kokouksia.");
+            view.findViewById(R.id.imageViewFavIcon).setVisibility(View.INVISIBLE);
         }
         //Update total count
         total_count = meetings.size();// *2;
@@ -467,6 +468,9 @@ public class FragmentMeetings extends Fragment implements View.OnClickListener, 
         DataAccess.requestData(this, "http://dev.hel.fi/paatokset/v1/meeting/?limit=1000&offset=0&policymaker=" + policy_maker, RequestType.MEETING, 1000);
         ((LinearLayout)getActivity().findViewById(R.id.linearLayoutFragmentMeetings)).removeAllViews();
         getActivity().findViewById(R.id.progressBarContentLoadingFragmentMeetings).setVisibility(View.VISIBLE);
+
+        //Hide info message:
+        view_.findViewById(R.id.textViewMeetingsInfoMessage).setVisibility(View.GONE);
     }
     /*
     @Override

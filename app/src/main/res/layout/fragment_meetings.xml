@@ -75,6 +75,14 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Valitse päätöksentekijä nähdäksesi kokoukset."
+                android:id="@+id/textViewMeetingsInfoMessage"
+                android:gravity="center_horizontal" />
+
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
