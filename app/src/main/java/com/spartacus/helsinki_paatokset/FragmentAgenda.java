@@ -557,6 +557,8 @@ public class FragmentAgenda extends Fragment implements View.OnClickListener, Da
         DataAccess.requestData(this, "http://dev.hel.fi:80/paatokset/v1/video/?meeting=" + (int) data, RequestType.VIDEO);
         view_.findViewById(R.id.progressBarContentLoadingFragmentAgenda).setVisibility(View.VISIBLE);
 
+        view_.findViewById(R.id.textViewAgendaInfoMessage).setVisibility(View.GONE);
+
         //Hide video button
         view_.findViewById(R.id.buttonPlayVideoMP4FragmentAgenda).setVisibility(View.INVISIBLE);
 

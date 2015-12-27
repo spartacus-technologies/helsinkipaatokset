@@ -1,14 +1,23 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.spartacus.helsinki_paatokset.FragmentAgenda">
 
     <!-- TODO: Update blank fragment layout -->
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Valitse kokous nähdäksesi tehdyt päätökset."
+        android:id="@+id/textViewDecisionsInfoMessage_obs"
+        android:gravity="center_horizontal" />
+
     <ScrollView
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:id="@+id/scrollViewFragmentDecisions" >
+        android:id="@+id/scrollViewFragmentDecisions"
+        android:background="#333333">
 
         <LinearLayout
             android:orientation="vertical"
@@ -18,32 +27,6 @@
             android:gravity="center_horizontal"
             android:paddingLeft="20dp"
             android:paddingRight="20dp">
-
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal">
-
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="► video (MP4)"
-                    android:id="@+id/buttonPlayVideoMP4"
-                    android:layout_gravity="top|center"
-                    android:visibility="visible"
-                    android:typeface="serif"
-                    android:enabled="true" />
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="► video (OGV)"
-                    android:id="@+id/buttonPlayVideoOGV"
-                    android:layout_gravity="top|center"
-                    android:visibility="visible"
-                    android:typeface="serif"
-                    android:enabled="false" />
-            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -88,12 +71,4 @@
         android:id="@+id/videoView"
         android:visibility="gone" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="↑ ylös"
-        android:id="@+id/buttonBackToUpFragmentDecisions"
-        android:visibility="visible"
-        android:layout_gravity="center_horizontal|bottom" />
-
-</FrameLayout>
+</RelativeLayout>

@@ -72,9 +72,9 @@ public class FragmentDecisions extends Fragment implements View.OnClickListener,
         //view_.findViewById(R.id.progressBarContentLoadingFragmentDecisions).setVisibility(View.INVISIBLE);
 
         //Register listeners
-        view.findViewById(R.id.buttonPlayVideoMP4).setOnClickListener(this);
-        view.findViewById(R.id.buttonPlayVideoOGV).setOnClickListener(this);
-        view.findViewById(R.id.buttonBackToUpFragmentDecisions).setOnClickListener(this);
+        //view.findViewById(R.id.buttonPlayVideoMP4).setOnClickListener(this);
+        //view.findViewById(R.id.buttonPlayVideoOGV).setOnClickListener(this);
+        //view.findViewById(R.id.buttonBackToUpFragmentDecisions).setOnClickListener(this);
 
         //Add new listener for webview content loading
         //TODO: workaround implemented
@@ -111,7 +111,7 @@ public class FragmentDecisions extends Fragment implements View.OnClickListener,
         int childHeight = ((LinearLayout)view_.findViewById(R.id.linearLayoutFragmentDecisions)).getHeight();
         int scrollViewHeight = scrollView.getHeight();
         boolean isScrollable = scrollView.getHeight() < childHeight + scrollView.getPaddingTop() + scrollView.getPaddingBottom();
-
+        /*
         //Hide/show scroll to top if needed:
         if(isScrollable){
 
@@ -119,6 +119,7 @@ public class FragmentDecisions extends Fragment implements View.OnClickListener,
         }else{
             view_.findViewById(R.id.buttonBackToUpFragmentDecisions).setVisibility(View.INVISIBLE);
         }
+        */
     }
 
     @Override
@@ -153,7 +154,7 @@ public class FragmentDecisions extends Fragment implements View.OnClickListener,
                 video_screenshot_url = ((Map)((List)m_data.get("objects")).get(0)).get("screenshot_uri").toString();
                 video_path_pm4 = ((Map)((Map)((List)m_data.get("objects")).get(0)).get("local_copies")).get("video/mp4").toString();
                 video_path_ogv = ((Map)((Map)((List)m_data.get("objects")).get(0)).get("local_copies")).get("video/ogg").toString();
-
+                /*
                 if(video_path_pm4 != null){
 
                     view_.findViewById(R.id.buttonPlayVideoMP4).setEnabled(true);
@@ -162,6 +163,7 @@ public class FragmentDecisions extends Fragment implements View.OnClickListener,
 
                     view_.findViewById(R.id.buttonPlayVideoOGV).setEnabled(true);
                 }
+                */
                 if(video_screenshot_url != null){
 
                     DataAccess.requestImageData(this, video_screenshot_url, RequestType.VIDEO_PREVIEW);
@@ -216,7 +218,7 @@ public class FragmentDecisions extends Fragment implements View.OnClickListener,
     public void onClick(View v) {
 
         switch (v.getId()){
-
+            /*
             case R.id.buttonPlayVideoMP4:
 
                 Uri uri = Uri.parse(video_path_pm4);
@@ -249,7 +251,7 @@ public class FragmentDecisions extends Fragment implements View.OnClickListener,
                 ((ScrollView) view_.findViewById(R.id.scrollViewFragmentDecisions)).smoothScrollTo(0, 0);
                 break;
 
-
+            */
             default:
                 Log.w("FragmentDecisions", "Unknown button");
                 break;
@@ -261,6 +263,8 @@ public class FragmentDecisions extends Fragment implements View.OnClickListener,
     public void exchange(int target, Object data) {
 
         getActivity().findViewById(R.id.progressBarContentLoadingFragmentDecisions).setVisibility(View.VISIBLE);
+        view_.findViewById(R.id.textViewAgendaInfoMessage).setVisibility(View.GONE);
+
         agenda_id = data.toString();
 
         //DataAccess.requestData(this, "http://dev.hel.fi/paatokset/v1/" + data.toString());
@@ -272,8 +276,8 @@ public class FragmentDecisions extends Fragment implements View.OnClickListener,
 
         //Also query for matching video:
         //Note: disable video button as there is no quarantee that video file exists before querying:
-        view_.findViewById(R.id.buttonPlayVideoMP4).setEnabled(false);
-        view_.findViewById(R.id.buttonPlayVideoOGV).setEnabled(false);
+        //view_.findViewById(R.id.buttonPlayVideoMP4).setEnabled(false);
+        //view_.findViewById(R.id.buttonPlayVideoOGV).setEnabled(false);
 
         DataAccess.requestData(this, "http://dev.hel.fi/paatokset/v1/video/?agenda_item_=" + agenda_id, RequestType.VIDEO);
 
