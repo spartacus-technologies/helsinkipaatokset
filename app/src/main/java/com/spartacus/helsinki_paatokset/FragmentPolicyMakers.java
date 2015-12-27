@@ -105,7 +105,7 @@ public class FragmentPolicyMakers extends Fragment implements View.OnClickListen
                     view_.findViewById(R.id.buttonBackToUpFragmentPolicyMakers).startAnimation(fade_in);
                     view_.findViewById(R.id.buttonBackToUpFragmentPolicyMakers).setVisibility(View.VISIBLE);
                 }
-                else if(scrollY <= 0){
+                else if(scrollY <= 0 &&  view_.findViewById(R.id.buttonBackToUpFragmentPolicyMakers).getVisibility() != View.GONE){
                     view_.findViewById(R.id.buttonBackToUpFragmentPolicyMakers).startAnimation(fade_out);
                     view_.findViewById(R.id.buttonBackToUpFragmentPolicyMakers).setVisibility(View.GONE);
                 }

@@ -126,7 +126,7 @@ public class FragmentMeetings extends Fragment implements View.OnClickListener, 
                     view_.findViewById(R.id.buttonBackToUpFragmentMeetings).startAnimation(fade_in);
                     view_.findViewById(R.id.buttonBackToUpFragmentMeetings).setVisibility(View.VISIBLE);
                 }
-                else if(scrollY <= 0){
+                else if(scrollY <= 0 &&  view_.findViewById(R.id.buttonBackToUpFragmentMeetings).getVisibility() != View.GONE){
                     view_.findViewById(R.id.buttonBackToUpFragmentMeetings).startAnimation(fade_out);
                     view_.findViewById(R.id.buttonBackToUpFragmentMeetings).setVisibility(View.GONE);
                 }
