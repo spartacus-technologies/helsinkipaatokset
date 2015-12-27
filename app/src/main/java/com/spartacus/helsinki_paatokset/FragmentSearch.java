@@ -23,7 +23,7 @@ import com.spartacus.helsinki_paatokset.data_access.DataAccess;
  * Use the {@link FragmentSearch#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class FragmentSearch extends Fragment implements DataAccess.NetworkListener{
+public class FragmentSearch extends Fragment implements DataAccess.NetworkListener, View.OnClickListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 
@@ -84,6 +84,10 @@ public class FragmentSearch extends Fragment implements DataAccess.NetworkListen
 
         webView_.loadUrl("https://decisions.dcentproject.eu/");
 
+        //Register listeners
+        view_.findViewById(R.id.buttonWebViewBack).setOnClickListener(this);
+        view_.findViewById(R.id.buttonWebViewForward).setOnClickListener(this);
+
         return view_;
     }
 
@@ -118,6 +122,25 @@ public class FragmentSearch extends Fragment implements DataAccess.NetworkListen
 
     @Override
     public void BinaryDataAvailable(Object data, RequestType type) {
+
+    }
+
+    @Override
+    public void onClick(View v) {
+
+        switch (v.getId()){
+
+            case R.id.buttonWebViewBack:
+
+                webView_.goBack();
+
+                break;
+            case R.id.buttonWebViewForward:
+
+                webView_.goForward();
+
+                break;
+        }
 
     }
 

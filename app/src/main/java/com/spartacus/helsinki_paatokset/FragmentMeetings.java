@@ -114,7 +114,7 @@ public class FragmentMeetings extends Fragment implements View.OnClickListener, 
                 int scrollX = scrollView.getScrollX(); //for horizontalScrollView
                 int scrollY = scrollView.getScrollY(); //for verticalScrollView
                 //DO SOMETHING WITH THE SCROLL COORDINATES
-                Log.i(TAG, "ScrollY= " + scrollY);
+                //Log.i(TAG, "ScrollY= " + scrollY);
 
                 //Use some fancy animation
                 Animation fade_in = AnimationUtils.loadAnimation(getActivity(), R.anim.fade_in);
